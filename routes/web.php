@@ -14,3 +14,7 @@
 $app->get('/transactions', 'TransactionController@index');
 
 $app->post('/transactions', 'TransactionController@store');
+
+$app->post('/oauth/access_token', function() use($app){
+    return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
+});

@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('TransactionsTableSeeder');
+        //$this->call('TransactionsTableSeeder');
+        $this->call('OAuthClientsTableSeeder');
     }
 }

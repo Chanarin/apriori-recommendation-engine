@@ -1,19 +1,26 @@
-<?php
-
-namespace App\Http\Controllers;
+<?php   namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 use App\Transaction;
 use App\Combination;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('oauth');
+        $this->middleware('oauth-client');
+    }
+    
     public function index()
     {
-        $transactions = Transaction::all();
-        
-        return response()->json(['transactions' => $transactions], 200);
+        return response()->json([
+            'transactions' => Transaction::all(),
+            'client'       => Authorizer::getResourceOwnerId()
+        ], 200);
     }
     
     public function store(Request $request)
