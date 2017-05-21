@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call('TransactionsTableSeeder');
-        $this->call('OAuthClientsTableSeeder');
+        $this->call('OauthClientsTableSeeder');
+        $this->call('ModelsTableSeeder');
     }
 }

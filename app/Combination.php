@@ -9,7 +9,7 @@ class Combination extends Association
     /**
      * @var int constant MAX_SIZE 
      */
-    const MAX_SIZE = 4;
+    const MAX_SIZE = 3;
     
     public function __construct(string $combinationKey, string $transactionKey)
     {

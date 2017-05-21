@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
-class OAuthClientsTableSeeder extends Seeder
+use App\OauthClient;
+
+class OauthClientsTableSeeder extends Seeder
 {
     /**
      * @var int
@@ -16,13 +18,27 @@ class OAuthClientsTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->resetTables();
+        
         for($i = 0; $i < self::ITERATIONS; $i++)
         {
-            \DB::table('oauth_clients')->insert([
+            OAuthClient::create([
                 'id'     => 'id' . $i,
                 'secret' => 'secret' . $i,
                 'name'   => 'name' . $i
             ]);
         }
+    }
+    
+    /**
+     * Truncate all tables and Redis Keys.
+     * 
+     * @return void
+     */
+    private function resetTables()
+    {
+        \Schema::disableForeignKeyConstraints();
+        OauthClient::truncate();
+        \Schema::enableForeignKeyConstraints();
     }
 }

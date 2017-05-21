@@ -32,4 +32,15 @@ class Transaction extends Model
     protected $casts = [
         'items' => 'array',
     ];
+    
+    /**
+     * Belongs-to-one Key relationship
+     * 
+     * @return mixed
+     */
+    public function redisKey()
+    {
+        return $this->belongsToOne('App\RedisKey');
+    }
+    
 }

@@ -15,6 +15,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('redis_key_id')->unsigned();
+            $table->foreign('redis_key_id')->references('id')->on('redis_keys');
             $table->json('items');
             $table->timestamps();
         });

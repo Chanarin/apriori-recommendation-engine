@@ -12,14 +12,13 @@ class TransactionController extends Controller
     public function __construct()
     {
         $this->middleware('oauth');
-        $this->middleware('oauth-client');
+        $this->middleware('oauth-user');
     }
     
     public function index()
     {
-        return response()->json([
-            'transactions' => Transaction::all(),
-            'client'       => Authorizer::getResourceOwnerId()
+        return$this->createSuccessResponse([
+            'transactions' => Transaction::all()
         ], 200);
     }
     

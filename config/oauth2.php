@@ -28,10 +28,18 @@ return [
     */
 
     'grant_types' => [
-        'client_credentials' => [
-            'class' => '\League\OAuth2\Server\Grant\ClientCredentialsGrant',
+        
+//      'client_credentials' => [
+//          'class' => '\League\OAuth2\Server\Grant\ClientCredentialsGrant',
+//          'access_token_ttl' => 3600
+//      ]
+        
+        'password' => [
+            'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
+            'callback' => '\App\User@verify',
             'access_token_ttl' => 3600
         ]
+        
     ],
 
     /*
