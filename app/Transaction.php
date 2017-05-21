@@ -24,7 +24,7 @@ class Transaction extends Model
         'id',
     ];
     
-     /**
+    /**
      * The attributes that are going to be entered as JSON in the database.
      *
      * @var array
@@ -32,6 +32,14 @@ class Transaction extends Model
     protected $casts = [
         'items' => 'array',
     ];
+    
+    /**
+     * Instantiate a Transaction
+     */
+    public function __construct(array $items = [])
+    {
+        if(count($items)) $this->items = $items;
+    }
     
     /**
      * Belongs-to-one Key relationship
@@ -42,5 +50,4 @@ class Transaction extends Model
     {
         return $this->belongsToOne('App\RedisKey');
     }
-    
 }

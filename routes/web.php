@@ -11,9 +11,14 @@
 |
 */
 
-$app->get('/transactions', 'TransactionController@index');
-
 $app->post('/transactions', 'TransactionController@store');
+$app->get('/transactions/{id}', 'TransactionController@show');
+
+$app->get('/redis_key/{id}/transactions', 'RedisKeyTransactionController@index');
+
+$app->post('redis_keys', 'RedisKeyController@store');
+$app->get('/redis_keys/{id}', 'RedisKeyController@show');
+$app->get('/redis_keys', 'RedisKeyController@index');
 
 $app->post('/oauth/access_token', function() use($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());

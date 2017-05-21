@@ -1,4 +1,6 @@
-<?php   namespace App\Http\Controllers;
+<?php   
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -6,6 +8,8 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 use App\Transaction;
 use App\Combination;
+use App\RedisKey;
+use App\User;
 
 class TransactionController extends Controller
 {
@@ -15,28 +19,64 @@ class TransactionController extends Controller
         $this->middleware('oauth-user');
     }
     
-    public function index()
-    {
-        return$this->createSuccessResponse([
-            'transactions' => Transaction::all()
-        ], 200);
-    }
-    
+    /**
+     * @param Request   $request
+     * 
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'transactions_key' => 'required|min:5',
-            'combinations_key' => 'required|min:5',
-            'items.*'          => 'required|integer'
+            'master_key' => 'required|exists:redis_keys,master_key',
+            'items.*'    => 'required|integer'
         ]);
         
-        $transaction = Transaction::create([
-            'items' => $request->items
-        ]);
+        $redisKey = RedisKey::where('master_key', '=', $request->master_key)
+                        ->where('user_id', '=', Authorizer::getResourceOwnerId())
+                        ->get()
+                        ->first();
+                        
+        if(is_null($redisKey))
+        {
+            return $this->error('Client and master key are not associated.', 404);
+        }
         
-        (new Combination($request->combinations_key, $request->transactions_key))
+        $transaction = new Transaction($request->items);
+        
+        $redisKey->addTransaction($transaction);
+        
+        $this->combination($redisKey, $transaction);
+        
+        return $this->success('Transaction added successfully.', 200);
+    }
+    
+    /**
+     * @param Request   $request
+     * 
+     * @return mixed
+     */
+    public function show($transaction)
+    {
+        
+        $transaction = Transaction::find($transaction);
+        
+        if($transaction && RedisKey::find($transaction->redis_key_id)->user_id == Authorizer::getResourceOwnerId())
+        {
+            return $this->success($transaction, 200);
+        }
+        
+        return $this->error('Client and transaction are not associated.', 404);
+    }
+    
+    /**
+     * @param RedisKey      $redisKey
+     * @param Transaction   $transaction
+     * 
+     * @return void
+     */
+    private function combination(RedisKey $redisKey, Transaction $transaction)
+    {
+        (new Combination($redisKey->combinations_key, $redisKey->transactions_key))
             ->zincrby($transaction->items, null, $transaction->id);
-        
-        return $this->createSuccessResponse('SUCCESS', 200);
     }
 }
