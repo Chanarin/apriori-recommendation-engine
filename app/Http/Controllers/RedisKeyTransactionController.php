@@ -30,6 +30,6 @@ class RedisKeyTransactionController extends Controller
             return $this->success($redisKey->transactions, 200);
         }
         
-        return $this->error('Client and master key are not associated.', 404);
+        return $this->error('Client and master key are not associated.', 422);
     }
 }

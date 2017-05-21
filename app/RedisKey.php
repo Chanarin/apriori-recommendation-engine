@@ -44,6 +44,15 @@ class RedisKey extends Model
         return $this->hasMany('App\Transaction');
     }
     
+    public function setKeys(string $masterKey)
+    {
+        $this->master_key = $masterKey;
+        $this->transactions_key = 'transactions-' . $masterKey . '-' . time();
+        $this->combinations_key = 'combinations-' . $masterKey . '-' . time();
+        
+        return $this;
+    }
+    
     /**
      * Add a transaction to a redis key
      * 

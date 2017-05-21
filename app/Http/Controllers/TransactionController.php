@@ -38,7 +38,7 @@ class TransactionController extends Controller
                         
         if(is_null($redisKey))
         {
-            return $this->error('Client and master key are not associated.', 404);
+            return $this->error('Client and master key are not associated.', 422);
         }
         
         $transaction = new Transaction($request->items);
@@ -65,7 +65,7 @@ class TransactionController extends Controller
             return $this->success($transaction, 200);
         }
         
-        return $this->error('Client and transaction are not associated.', 404);
+        return $this->error('Client and transaction are not associated.', 422);
     }
     
     /**
