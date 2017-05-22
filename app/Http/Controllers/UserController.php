@@ -22,23 +22,14 @@ class UserController extends Controller
         $this->validateRequest($request);
         
         $secret = $this->generateCredentials();
-        $id = $this->generateCredentials();
-        
-        OauthClient::create([
-            'id'     => $id,
-            'secret' => $secret,
-            'name'   => $request->get('email'),
-        ]);
-        
-		$user = User::create([
-		    'name'     => $request->name,
-			'email'    => $request->get('email'),
-			'password' => Hash::make($request->get('password')),
-			'client'   => $id,
-			'secret'   => $secret,
-		]);
+        $client = $this->generateCredentials();
+		
+		(new OauthClient)->setOauthClient($client, $secret, $request->get('name'))->save();
+		
+		$user = (new User)->setUser($request, $client, $secret);
+		$user->save();
 				
-		return $this->success('User {$user->id} successfully created', 201);
+		return $this->success('User  successfully created', 201);
     }
     
     private function generateCredentials() : string

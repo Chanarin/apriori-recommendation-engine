@@ -12,7 +12,7 @@ class OauthClient extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'id', 'secret'
+        'name', 'id',
     ];
 
     /**
@@ -23,4 +23,20 @@ class OauthClient extends Model
     protected $hidden = [
         'secret',
     ];
+    
+    /**
+     * @param string    $id
+     * @param string    $secret
+     * @param string    $name
+     * 
+     * @return OauthClient
+     */ 
+    public function setOauthClient(string $id, string $secret, string $name) : OauthClient
+    {
+		$this->id = $id;
+		$this->secret = $secret;
+		$this->name = $name;
+		
+		return $this;
+    }
 }

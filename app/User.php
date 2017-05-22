@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -19,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'client', 'secret', 'password'
+        'name', 'email', 'client', //'secret', 'password'
     ];
 
     /**
@@ -60,14 +61,34 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * 
      * @return int|boolean
      */
-    public function verify($email, $password, $clientId){
+    public function verify(string $email, string $password, string $clientId)
+    {
         
-        $user = User::where('email', $email)->first();
+        $user = self::where('email', $email)->first();
         
         if($user && Hash::check($password, $user->password) && $clientId == $user->client){
             return $user->id;
         }
         
         return false;
+    }
+    
+    /**
+     * @param Request   $request
+     * @param string    $request
+     * @param string    $client
+     * @param string    $secret
+     * 
+     * @return User
+     */ 
+    public function setUser(Request $request, $client, $secret) : User
+    {
+		$this->name = $request->get('name');
+		$this->email = $request->get('email');
+		$this->secret = $secret;
+		$this->client = $client;
+		$this->password = Hash::make($request->get('password'));
+		
+		return $this;
     }
 }
