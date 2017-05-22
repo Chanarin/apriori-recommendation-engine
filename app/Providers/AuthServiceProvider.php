@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\User;
+
 use Illuminate\Support\Facades\Gate;
+
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -35,5 +37,41 @@ class AuthServiceProvider extends ServiceProvider
                 return User::where('api_token', $request->input('api_token'))->first();
             }
         });
+        
+        $this->isAdmin([
+            'users' => ['destroyUser']
+        ]);
+    }
+    
+    /**
+     * Define abilities that checks if the current user is admin.
+     *
+     * @param  array  $arguments
+     * @return boolean
+     */
+    private function isAdmin($arguments)
+    {
+        foreach ($arguments as $resource => $actions) 
+        {
+            foreach ($actions as $action) 
+            {
+                Gate::define($this->ability($action, $resource), function ($user) {
+                    return $user->is_admin;
+                });
+            }
+        }
+    }
+    
+    /**
+     * Define ability string.
+     * 
+     * @param  string  $action
+     * @param  string  $resource
+     * 
+     * @return string
+     */
+    private function ability($action, $resource)
+    {
+        return '{' . $action . '}-{' . $resource . '}';
     }
 }

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('is_admin')->default(false);
             $table->string('client', 40)->unique();
             $table->string('secret', 40)->unique();
             $table->timestamps();

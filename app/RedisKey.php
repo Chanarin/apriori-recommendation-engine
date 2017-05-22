@@ -12,7 +12,7 @@ class RedisKey extends Model
      * @var array
      */
     protected $fillable = [
-        'master_key', 'transactions_key', 'combinations_key',
+        'id','master_key', 'transactions_key', 'combinations_key',
     ];
 
     /**
@@ -21,7 +21,7 @@ class RedisKey extends Model
      * @var array
      */
     protected $hidden = [
-        'id', 'user_id',
+        'user_id',
     ];
     
     /**

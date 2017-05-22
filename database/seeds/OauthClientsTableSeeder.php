@@ -22,7 +22,7 @@ class OauthClientsTableSeeder extends Seeder
         
         for($i = 0; $i < self::ITERATIONS; $i++)
         {
-            OAuthClient::create([
+            OauthClient::create([
                 'id'     => 'id' . $i,
                 'secret' => 'secret' . $i,
                 'name'   => 'name' . $i
@@ -30,11 +30,7 @@ class OauthClientsTableSeeder extends Seeder
         }
     }
     
-    /**
-     * Truncate all tables and Redis Keys.
-     * 
-     * @return void
-     */
+    
     private function resetTables()
     {
         \Schema::disableForeignKeyConstraints();

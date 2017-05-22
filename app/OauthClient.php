@@ -12,7 +12,7 @@ class OauthClient extends Model
      * @var array
      */
     protected $fillable = [
-        'name','id'
+        'name', 'id', 'secret'
     ];
 
     /**
@@ -21,6 +21,6 @@ class OauthClient extends Model
      * @var array
      */
     protected $hidden = [
-        'secret'
+        'secret',
     ];
 }

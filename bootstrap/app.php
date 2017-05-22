@@ -74,8 +74,9 @@ $app->routeMiddleware([
 //  'auth' => App\Http\Middleware\Authenticate::class,
     'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
     'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
-    'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
+//  'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
     'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
+    'authorize' => App\Http\Middleware\Authorize::class,
 ]);
 
 /*
@@ -96,7 +97,7 @@ $app->register(\LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider:
 $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*

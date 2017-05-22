@@ -23,7 +23,7 @@ class RedisKeyTransactionController extends Controller
      */
     public function index($redisKey)
     {
-        $redisKey = RedisKey::find($redisKey);
+        $redisKey = RedisKey::where($redisKey);
         
         if($redisKey && $redisKey->user_id == Authorizer::getResourceOwnerId())
         {
