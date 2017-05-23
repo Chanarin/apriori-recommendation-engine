@@ -24,37 +24,6 @@ class TransactionController extends Controller
      * 
      * @return mixed
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'master_key' => 'required|exists:redis_keys,master_key',
-            'items.*'    => 'required|integer'
-        ]);
-        
-        $redisKey = RedisKey::where('master_key', '=', $request->master_key)
-                        ->where('user_id', '=', Authorizer::getResourceOwnerId())
-                        ->get()
-                        ->first();
-                        
-        if(is_null($redisKey))
-        {
-            return $this->error('Client and master key are not associated.', 422);
-        }
-        
-        $transaction = new Transaction($request->items);
-        
-        $redisKey->addTransaction($transaction);
-        
-        $this->combination($redisKey, $transaction);
-        
-        return $this->success('Transaction added successfully.', 200);
-    }
-    
-    /**
-     * @param Request   $request
-     * 
-     * @return mixed
-     */
     public function show($transaction)
     {
         
@@ -66,17 +35,5 @@ class TransactionController extends Controller
         }
         
         return $this->error('Client and transaction are not associated.', 422);
-    }
-    
-    /**
-     * @param RedisKey      $redisKey
-     * @param Transaction   $transaction
-     * 
-     * @return void
-     */
-    private function combination(RedisKey $redisKey, Transaction $transaction)
-    {
-        (new Combination($redisKey->combinations_key, $redisKey->transactions_key))
-            ->zincrby($transaction->items, null, $transaction->id);
     }
 }

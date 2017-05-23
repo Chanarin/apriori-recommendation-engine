@@ -32,15 +32,65 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        $this->app['auth']->viaRequest('api', function ($request) {
+        /*$this->app['auth']->viaRequest('api', function ($request) {
             if ($request->input('api_token')) {
                 return User::where('api_token', $request->input('api_token'))->first();
             }
-        });
+        });*/
+        
+        $this->isOwner([
+            'redis_keys'       => ['destroy', 'update', 'show','transactions', 'store'],
+        ]);
+        
+        $this->isUserOwner([
+            'users' => ['credentials', 'update', 'show', 'destroy'],
+            'users_redis_keys' => ['store', 'index']
+        ]);
         
         $this->isAdmin([
-            'users' => ['destroyUser', 'index']
+            'users' => ['destroy', 'index', 'show']
         ]);
+    }
+    
+    /**
+     * Define abilities that checks if the current user is the owner of the requested resource.
+     * In case of admin user, it will return true.
+     *
+     * @param  array  $arguments
+     * @return boolean
+     */
+    private function isOwner(array $arguments = [])
+    {
+        foreach ($arguments as $resource => $actions) 
+        {
+            foreach ($actions as $action) 
+            {
+                Gate::define($this->ability($action, $resource), function ($user, $arg) {
+                    if(is_null($arg)) return false;
+                    return $arg->user_id === $user->id || $user->is_admin;
+                });            
+            }
+        }
+    }
+    
+    /**
+     * Define abilities that checks if the current user is the owned by the client.
+     *
+     * @param  array  $arguments
+     * @return boolean
+     */
+    private function isUserOwner(array $arguments = [])
+    {
+        foreach ($arguments as $resource => $actions) 
+        {
+            foreach ($actions as $action) 
+            {
+                Gate::define($this->ability($action, $resource), function ($user, $arg) {
+                    if(is_null($arg)) return false;
+                    return $arg->id === $user->id || $user->is_admin;
+                });            
+            }
+        }
     }
     
     /**
@@ -49,7 +99,7 @@ class AuthServiceProvider extends ServiceProvider
      * @param  array  $arguments
      * @return boolean
      */
-    private function isAdmin($arguments)
+    private function isAdmin(array $arguments = [])
     {
         foreach ($arguments as $resource => $actions) 
         {

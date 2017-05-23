@@ -11,17 +11,23 @@
 |
 */
 
-$app->post('/transactions', 'TransactionController@store');
 $app->get('/transactions/{id}', 'TransactionController@show');
 
-$app->get('/redis_key/{id}/transactions', 'RedisKeyTransactionController@index');
+$app->get('/redis_keys/{id}/transactions', 'RedisKeyTransactionController@transactions');
+$app->post('/redis_keys/{id}/transactions', 'RedisKeyTransactionController@store');
 
-$app->post('/redis_keys', 'RedisKeyController@store');
 $app->get('/redis_keys/{id}', 'RedisKeyController@show');
-$app->get('/redis_keys', 'RedisKeyController@index');
+
+$app->post('/users/{id}/redis_keys', 'UserRedisKeyController@store');
+$app->get('/users/{id}/redis_keys', 'UserRedisKeyController@index');
 
 $app->post('/users', 'UserController@store');
 $app->get('/users', 'UserController@index');
+$app->get('/users/{id}', 'UserController@show');
+$app->patch('/users/{id}', 'UserController@update');
+$app->put('/users/{id}', 'UserController@update');
+$app->patch('/users/{id}/credentials', 'UserController@credentials');
+$app->put('/users/{id}/credentials', 'UserController@credentials');
 
 $app->post('/oauth/access_token', function() use($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());

@@ -81,13 +81,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * 
      * @return User
      */ 
-    public function setUser(Request $request, $client, $secret) : User
+    public function setUser(Request $request = null, string $client = null, $secret = null) : User
     {
-		$this->name = $request->get('name');
-		$this->email = $request->get('email');
-		$this->secret = $secret;
-		$this->client = $client;
-		$this->password = Hash::make($request->get('password'));
+		if(!is_null($request))
+		{
+		    $this->name = $request->get('name');
+    		$this->email = $request->get('email');
+    		$this->password = Hash::make($request->get('password'));
+		}
+		
+		if(!is_null($secret) && !is_null($client))
+		{
+		    $this->secret = $secret;
+		    $this->client = $client;
+		}
 		
 		return $this;
     }

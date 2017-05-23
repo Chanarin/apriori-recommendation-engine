@@ -59,7 +59,16 @@ class Controller extends BaseController
         return explode('@', $request->route()[1]["uses"], 2)[1];
     }
 
-    
+    /**
+     * Get the parameters in route.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getArgs(Request $request){
+        return $request->route()[2];
+    }
+        
     /**
      * Check if user is authorized.
      *
