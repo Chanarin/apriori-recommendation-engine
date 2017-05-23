@@ -15,6 +15,12 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('oauth', ['except' => ['store']]);
+        $this->middleware('authorize:' . __CLASS__ , ['except' => ['store']]);
+    }
+    
+    public function index()
+    {
+        return $this->success(User::all(), 200);
     }
     
     public function store(Request $request)
@@ -29,7 +35,7 @@ class UserController extends Controller
 		$user = (new User)->setUser($request, $client, $secret);
 		$user->save();
 				
-		return $this->success('User  successfully created', 201);
+		return $this->success('User successfully created.', 201);
     }
     
     private function generateCredentials() : string
@@ -45,5 +51,11 @@ class UserController extends Controller
 			'password' => 'required|min:6',
 			'name'     => 'required|max:180',
 		]);
+	}
+	
+	public function isAuthorized(Request $request){
+		$resource = "users";
+		
+		return $this->authorizeUser($request, $resource);
 	}
 }

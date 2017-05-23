@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         
         $this->isAdmin([
-            'users' => ['destroyUser']
+            'users' => ['destroyUser', 'index']
         ]);
     }
     

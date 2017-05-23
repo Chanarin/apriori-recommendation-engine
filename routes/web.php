@@ -21,7 +21,7 @@ $app->get('/redis_keys/{id}', 'RedisKeyController@show');
 $app->get('/redis_keys', 'RedisKeyController@index');
 
 $app->post('/users', 'UserController@store');
-
+$app->get('/users', 'UserController@index');
 
 $app->post('/oauth/access_token', function() use($app){
     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());

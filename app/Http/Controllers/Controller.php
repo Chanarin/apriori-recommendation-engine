@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use Gate;
+use App\User;
 
 class Controller extends BaseController
 {
-    protected function success($data, $code)
+    public function success($data, $code)
     {
         return response()->json(['data' => $data], $code);
     }
     
-    protected function error($message, $code)
+    public function error($message, $code)
     {
         return response()->json(['message' => $message, 'code' => $code], $code);
     }
