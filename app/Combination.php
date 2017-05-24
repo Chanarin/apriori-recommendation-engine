@@ -111,9 +111,9 @@ class Combination extends Association
             throw new \InvalidArgumentException('Ups! The set count must be at least 0.');
         }
         
-        if( $score <= 0 || !is_numeric($score) )
+        if( $score == 0 || !is_numeric($score) )
         {
-            throw new \InvalidArgumentException('Ups! The score must be a positive integer.');
+            throw new \InvalidArgumentException('Ups! The score must be an integer other than 0.');
         }
     }
     
@@ -137,8 +137,7 @@ class Combination extends Association
         
         $count = count($set);
         
-        if( is_null($size) && $count <= self::MAX_SIZE ) $size = $count;
-        elseif( is_null($size) &&  $count > self::MAX_SIZE ) $size = self::MAX_SIZE;
+        $size = $this->setSize($size, $count);
         
         $set = self::prepare($set);
         
@@ -154,6 +153,39 @@ class Combination extends Association
         
         if(is_null($txId)) $txId = time(); 
         
-        Redis::command('ZINCRBY', [$txKey, 1, $txId] );
+        Redis::command('ZINCRBY', [$txKey, $score, $txId] );
+    }
+    
+    /**
+     * @param int   $size
+     * @param int   $count
+     * 
+     * @return int
+     */
+    private function setSize($size = null, int $count) : int
+    {
+        if( is_null($size) && $count <= self::MAX_SIZE ) return $size = $count;
+        elseif( is_null($size) &&  $count > self::MAX_SIZE ) return $size = self::MAX_SIZE;
+    }
+    
+    /**
+     * Removes the zero score members in the Redis zset
+     * 
+     * @return void
+     */
+    public function clean()
+    {
+        Redis::command('ZREMRANGEBYSCORE', [$this->combinationKey, '-inf', 0]);
+        Redis::command('ZREMRANGEBYSCORE', [$this->transactionKey, '-inf', 0]);
+    }
+    
+    /**
+     * Removes zset keys
+     * 
+     * @return int
+     */
+    public function destroy() : int
+    {
+        return Redis::command('DEL', [$this->combinationKey, $this->transactionKey]);
     }
 }

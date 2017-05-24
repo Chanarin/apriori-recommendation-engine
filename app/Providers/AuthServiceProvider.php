@@ -39,16 +39,16 @@ class AuthServiceProvider extends ServiceProvider
         });*/
         
         $this->isOwner([
-            'redis_keys'       => ['destroy', 'update', 'show','transactions', 'store'],
+            'redis_keys' => ['destroy', 'update', 'show','transactions', 'store', 'destroy'],
         ]);
         
         $this->isUserOwner([
             'users' => ['credentials', 'update', 'show', 'destroy'],
-            'users_redis_keys' => ['store', 'index']
+            'users_redis_keys' => ['store', 'index', 'destroy']
         ]);
         
         $this->isAdmin([
-            'users' => ['destroy', 'index', 'show']
+            'users' => ['index']
         ]);
     }
     

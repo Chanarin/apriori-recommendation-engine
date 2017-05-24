@@ -23,6 +23,11 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
+/*
+|--------------------------------------------------------------------------
+| Comment the following class_aliases for testing.
+|--------------------------------------------------------------------------
+*/
 class_alias('Illuminate\Support\Facades\Config', 'Config');
 class_alias(\LucaDegasperi\OAuth2Server\Facades\Authorizer::class, 'Authorizer');
 

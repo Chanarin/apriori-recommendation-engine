@@ -89,6 +89,23 @@ class UserController extends Controller
 		return $this->success("User with {$user->id} successfully created.", 201);
     }
     
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        
+        foreach($user->redisKeys as $redisKey)
+        {
+            $redisKey->remove();
+            $redisKey->delete();
+        }
+        
+        OauthClient::find($user->client)->delete();
+        
+        $user->delete();
+        
+        return $this->success("User with {$id} successfully deleted.", 200);
+    }
+    
     private function generateCredentials() : string
     {
         return (string) bin2hex(random_bytes(20));
