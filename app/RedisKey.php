@@ -44,7 +44,12 @@ class RedisKey extends Model
         return $this->hasMany('App\Transaction');
     }
     
-    public function setKeys(string $masterKey)
+    /**
+     * @param string    $masterKey
+     * 
+     * @return RedisKey
+     */
+    public function setKeys(string $masterKey) : RedisKey
     {
         $this->master_key = $masterKey;
         $this->transactions_key = 'transactions-' . $masterKey . '-' . time();
@@ -63,6 +68,11 @@ class RedisKey extends Model
         return $this->transactions()->save($transaction);
     }
     
+    /**
+     * Removes keys from Redis
+     * 
+     * @return RedisKey
+     */
     public function remove() : RedisKey
     {
         (new Combination($this->combinations_key, $this->transactions_key))->destroy();
@@ -70,6 +80,14 @@ class RedisKey extends Model
         return $this;
     }
     
+    /**
+     * Reassign names to Redis keys
+     * 
+     * @param string    $oldCombinationKey
+     * @param string    $oldTransactionKey
+     * 
+     * @return RedisKey
+     */
     public function reassign(string $oldCombinationKey,string  $oldTransactionKey) : RedisKey
     {
         (new Combination($this->combinations_key, $this->transactions_key))->reassign($oldCombinationKey, $oldTransactionKey);
@@ -77,6 +95,11 @@ class RedisKey extends Model
         return $this;
     }
     
+    /**
+     * Deletes a RedisKey and the transactions associated with it
+     * 
+     * @return mixed
+     */
     public function delete()
     {
         $this->transactions()->delete();

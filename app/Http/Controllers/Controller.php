@@ -82,6 +82,4 @@ class Controller extends BaseController
     public function isAuthorized(Request $request){
         return false;
     }
-    
-    
 }

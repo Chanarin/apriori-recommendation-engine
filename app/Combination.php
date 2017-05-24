@@ -11,6 +11,14 @@ class Combination extends Association
      */
     const MAX_SIZE = 3;
     
+    /**
+     * Instantiate a Combinaiton object
+     * 
+     * @param string    $combinationKey
+     * @param string    $transactionKey
+     * 
+     * @return void
+     */
     public function __construct(string $combinationKey, string $transactionKey)
     {
         $this->combinationKey  = $combinationKey;
@@ -99,6 +107,13 @@ class Combination extends Association
         return $set;
     }
     
+    /**
+     * @param array     $set
+     * @param int       $size
+     * @param int       $score
+     * 
+     * @return mixed
+     */
     private static function validateInputs(array $set, $size, $score)
     {
         if( $size > count($set) || ( !is_null($size) && $size < 1 ) )

@@ -131,10 +131,28 @@ class CombinationTest extends TestCase
      */
     public function test_destroy()
     {
-        $combination =  new Combination(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
+        $combination = new Combination(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
         
         $this->assertTrue($combination->destroy() == 2);
         
         $this->assertTrue($combination->destroy() == 0);
+    }
+    
+    /**
+     * Test reassigning key names in Redis
+     *
+     * @return void
+     */
+    public function test_reassign()
+    {
+        $combination = new Combination(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
+        
+        $transaction = $this->setTransaction();
+        
+        $this->assertTrue(is_null($combination->zincrby($transaction, null, 1)));
+        
+        $this->assertTrue(is_null($combination->reassign('combinations', 'transactions')));
+        
+        $this->assertTrue($combination->destroy() == 2);
     }
 }
