@@ -95,8 +95,7 @@ class UserController extends Controller
         
         foreach($user->redisKeys as $redisKey)
         {
-            $redisKey->remove();
-            $redisKey->delete();
+            $redisKey->remove()->delete();
         }
         
         OauthClient::find($user->client)->delete();

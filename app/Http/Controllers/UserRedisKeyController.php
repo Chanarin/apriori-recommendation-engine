@@ -21,7 +21,7 @@ class UserRedisKeyController extends Controller
      * 
      * @return mixed
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, int $id)
     {
         $this->validate($request, [
             'master_key' => 'required|min:5',
@@ -42,9 +42,41 @@ class UserRedisKeyController extends Controller
     /**
      * @return mixed
      */
-    public function index($id)
+    public function index(int $id, Request $request)
     {
         return $this->success(User::find($id)->redisKeys, 200);
+    }
+    
+    public function destroy(int $id, int  $redis_key_id)
+    {
+		$redisKey = User::find($id)->redisKeys()->find($redis_key_id);
+		
+		$redisKey->remove()->delete();
+		
+		return $this->success("The Redis key with id {$redis_key_id} has been removed from user {$id}", 200);
+    }
+    
+    public function update(Request $request, int $id, int $redis_key_id)
+    {
+        $this->validate($request, [
+            'master_key' => 'required|min:5',
+        ]);
+        
+        if(RedisKey::where('user_id','=',$id)->where('master_key','=',$request->master_key)->get()->first())
+        {
+            return $this->error('Master key ' . $request->master_key . ' is already in use.', 422);
+        }
+        
+        $redisKey = User::find($id)->redisKeys()->find($redis_key_id);
+        
+        $oldCombinationKey = $redisKey->combinations_key;
+        $oldTransactionKey = $redisKey->transactions_key;
+        
+        $redisKey->setKeys($request->master_key)
+                 ->reassign($oldCombinationKey, $oldTransactionKey)
+                 ->save();
+		
+		return $this->success("The Redis key with id {$redis_key_id} has been updated.", 200);
     }
     
     /**
@@ -54,10 +86,18 @@ class UserRedisKeyController extends Controller
      */
     public function isAuthorized(Request $request)
     {
+		
+		if(isset($this->getArgs($request)['redis_key_id']))
+		{
+		    $resource = "redis_keys";
+    		$redisKey = RedisKey::find($this->getArgs($request)["redis_key_id"]);
+    		
+    		return $this->authorizeUser($request, $resource, $redisKey);
+		}
+		    
 		$resource = "users_redis_keys";
-		
-		$user = RedisKey::find($this->getArgs($request)["id"]);
-		
+		$user = User::find($this->getArgs($request)["id"]);
+		   
 		return $this->authorizeUser($request, $resource, $user);
 	}
 }

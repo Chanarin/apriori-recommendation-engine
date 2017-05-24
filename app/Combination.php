@@ -188,4 +188,23 @@ class Combination extends Association
     {
         return Redis::command('DEL', [$this->combinationKey, $this->transactionKey]);
     }
+    
+    /**
+     * Renames zset keys
+     * 
+     * @param string    $oldCombinationKey
+     * @param string    $oldTransactionKey
+     * 
+     * @return void
+     */
+    public function reassign(string $oldCombinationKey, string $oldTransactionKey)
+    {
+        $cnt = Redis::command('EXISTS', [$oldTransactionKey]) + Redis::command('EXISTS', [$oldTransactionKey]);
+        
+        if($cnt > 0)
+        {
+            Redis::command('RENAME', [$oldCombinationKey, $this->combinationKey]);
+            Redis::command('RENAME', [$oldTransactionKey, $this->transactionKey]);
+        }
+    }
 }

@@ -63,9 +63,18 @@ class RedisKey extends Model
         return $this->transactions()->save($transaction);
     }
     
-    public function remove()
+    public function remove() : RedisKey
     {
         (new Combination($this->combinations_key, $this->transactions_key))->destroy();
+        
+        return $this;
+    }
+    
+    public function reassign(string $oldCombinationKey,string  $oldTransactionKey) : RedisKey
+    {
+        (new Combination($this->combinations_key, $this->transactions_key))->reassign($oldCombinationKey, $oldTransactionKey);
+        
+        return $this;
     }
     
     public function delete()
