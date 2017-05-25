@@ -17,7 +17,7 @@
 |--------------------------------------------------------------------------
 */
 
-//$app->get('/redis_keys/{id}/apriori', 'AprioriController@reccomend');
+$app->get('/redis_keys/{id}/apriori', 'AprioriController@reccomend');
 
 /*
 |--------------------------------------------------------------------------

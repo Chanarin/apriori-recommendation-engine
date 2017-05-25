@@ -26,14 +26,7 @@ class RedisKeyTransactionController extends Controller
      */
     public function transactions($redisKey)
     {
-        $redisKey = RedisKey::find($redisKey);
-        
-        if($redisKey && $redisKey->user_id == Authorizer::getResourceOwnerId())
-        {
-            return $this->success($redisKey->transactions, 200);
-        }
-        
-        return $this->error('Client and master key are not associated.', 422);
+        return $this->success(RedisKey::find($redisKey)->transactions, 200);
     }
     
     /**
