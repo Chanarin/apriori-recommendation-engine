@@ -13,6 +13,14 @@
 
 /*
 |--------------------------------------------------------------------------
+| Apriori RESTful API endpoints
+|--------------------------------------------------------------------------
+*/
+
+//$app->get('/redis_keys/{id}/apriori', 'AprioriController@reccomend');
+
+/*
+|--------------------------------------------------------------------------
 | Transaction RESTful API endpoints
 |--------------------------------------------------------------------------
 */
@@ -21,6 +29,9 @@ $app->get('/transactions/{id}', 'TransactionController@show');
 
 $app->get('/redis_keys/{id}/transactions', 'RedisKeyTransactionController@transactions');
 $app->post('/redis_keys/{id}/transactions', 'RedisKeyTransactionController@store');
+$app->delete('/redis_keys/{id}/transactions/{transactions_id}', 'RedisKeyTransactionController@destroy');
+//$app->put('/redis_keys/{id}/transactions/{transactions_id}', 'RedisKeyTransactionController@update');
+//$app->put('/redis_keys/{id}/transactions/{transactions_id}', 'RedisKeyTransactionController@update');
 
 /*
 |--------------------------------------------------------------------------

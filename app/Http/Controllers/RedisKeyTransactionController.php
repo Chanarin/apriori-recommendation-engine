@@ -66,11 +66,34 @@ class RedisKeyTransactionController extends Controller
      */
     private function combination(RedisKey $redisKey, Transaction $transaction)
     {
-        $combinationKey = $redisKey->combinations_key;
+        (new Combination(
+            $redisKey->combinations_key, 
+            $redisKey->transactions_key
+        ))->zincrby($transaction->items, null, $transaction->id);
+    }
+    
+    /**
+     * @param int   $id
+     * @param int   $transaction_id
+     * 
+     * @return mixed
+     */
+    public function destroy(int $id, int $transaction_id)
+    {
+        $redisKey = RedisKey::find($id);
         
-        $transactionKey = $redisKey->transactions_key;
+        $transaction = $redisKey->transactions()->find($transaction_id);
         
-        (new Combination($combinationKey, $transactionKey))->zincrby($transaction->items, null, $transaction->id);
+        if(!$transaction)
+        {
+            return $this->error("The transaction with id {$transaction_id} wasn't found.", 404);
+        }
+        
+        $transaction->clean($redisKey);
+        
+        $transaction->delete();
+        
+        return $this->success("The transaction with id {$transaction_id} was successfully deleted.", 200);
     }
     
     /**

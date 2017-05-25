@@ -86,7 +86,7 @@ class UserController extends Controller
 		$user = (new User)->setUser($request, $client, $secret);
 		$user->save();
 				
-		return $this->success("User with {$user->id} successfully created.", 201);
+		return $this->success("User with id {$user->id} successfully created.", 201);
     }
     
     public function destroy($id)
@@ -102,7 +102,7 @@ class UserController extends Controller
         
         $user->delete();
         
-        return $this->success("User with {$id} successfully deleted.", 200);
+        return $this->success("User with id {$id} successfully deleted.", 200);
     }
     
     private function generateCredentials() : string

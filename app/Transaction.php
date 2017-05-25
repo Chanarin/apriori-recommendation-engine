@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Combination;
+
 class Transaction extends Model 
 {
     /**
@@ -12,18 +14,9 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'items',
+        'items', 'id',
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'id',
-    ];
-    
     /**
      * The attributes that are going to be entered as JSON in the database.
      *
@@ -49,5 +42,21 @@ class Transaction extends Model
     public function redisKey()
     {
         return $this->belongsToOne('App\RedisKey');
+    }
+    
+    /**
+     * Clean transaction combinations in Redis
+     * 
+     * @param RedisKey  $redisKey
+     * 
+     * @return void
+     */
+    public function clean(RedisKey $redisKey)
+    {
+        $combination = new Combination($redisKey->combinations_key, $redisKey->transactions_key);
+        
+        $combination->zincrby($this->items, null, $this->id, -1);
+        
+        $combination->clean();
     }
 }
