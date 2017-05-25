@@ -55,7 +55,7 @@ class RedisKeyTransactionController extends Controller
         
         $this->combination($redisKey, $transaction);
         
-        return $this->success($transaction, 200);
+        return $this->success("Transaction with id {$transaction->id} created successfully", 200);
     }
     
     /**
@@ -94,6 +94,39 @@ class RedisKeyTransactionController extends Controller
         $transaction->delete();
         
         return $this->success("The transaction with id {$transaction_id} was successfully deleted.", 200);
+    }
+    
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * @param int       $transaction_id
+     * 
+     * @return mixed
+     */
+    public function update(Request $request, int $id, int $transaction_id)
+    {
+        $this->validate($request, [
+            'items.*'    => 'required|integer'
+        ]);
+        
+        $redisKey = RedisKey::find($id);
+        
+        $transaction = $redisKey->transactions()->find($transaction_id);
+        
+        if(!$transaction)
+        {
+            return $this->error("The transaction with id {$transaction_id} wasn't found.", 404);
+        }
+        
+        $transaction->clean($redisKey);
+        
+        $transaction->items = $request->items;
+        
+        $transaction->save();
+        
+        $this->combination($redisKey, $transaction);
+        
+        return $this->success("Transaction with id {$transaction_id} was updated successfully.", 200);
     }
     
     /**
