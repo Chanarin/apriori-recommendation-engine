@@ -16,7 +16,7 @@ Provide developers an easy way to integrgate a simple, powerful, and extremely f
 
 ## Notice:
 
-I recently began this project. I haven't gotten the time to write a more complete documentation on what it is trying to do. However I think the code is somewhat readable, intuitive, and easy to understand. I encourage everyone interested to give me their opionions and to contribute. I will do my best to document this project over the next few days, and promote it around developers to see if it can get some traction.
+I recently began this project. I haven't gotten the time to write a more complete documentation on what it is trying to do. However, I think the code is somewhat readable, intuitive, and easy to understand. I encourage everyone interested to give me their opionions and to contribute. I will do my best to document this project over the next few days, and to promote it around developers to see if it can get some traction. Thanks in advance and I hope to see some pull requests soon.
 
 ## Contributing 
 
