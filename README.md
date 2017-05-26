@@ -1,4 +1,4 @@
-# Apriori Recommendation Engine RESTful API
+# ARERA - Apriori Recommendation Engine RESTful API
 
 An apriori-algorithm-based recommendation engine API build with Laravel/Lumen &amp; Redis.
 
