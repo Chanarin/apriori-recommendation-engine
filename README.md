@@ -4,7 +4,7 @@ An apriori-algorithm-based recommendation engine API build with Laravel/Lumen &a
 
 ## Purpose
 
-Provide developers an easy way to integrgate a simple, powerful, and extremely fast recommendation engine into their applications.
+Provide developers an easy way to integrate a simple, powerful, and extremely fast recommendation engine into their applications.
 
 ## Some Common Use Cases:
 
@@ -12,7 +12,7 @@ Provide developers an easy way to integrgate a simple, powerful, and extremely f
 
 **Search:** Help predict possible words to be typed depending on the combinations of words entered.  <br />
 
-**Items Location Optimization**: Optimmize items location based on their association rules. Applies for stores or distribution centers. <br />
+**Items Location Optimization**: Optimize items location based on their association rules. Applies for stores or distribution centers. <br />
 
 ## Notice:
 
