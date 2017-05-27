@@ -1,6 +1,7 @@
 
+<p align="center">![alt text](https://raw.githubusercontent.com/alejandro-carstens/apriori-recommendation-engine/master/public/images/ARERA_LOGO.png)</p>
 
-# ![alt text](https://raw.githubusercontent.com/alejandro-carstens/apriori-recommendation-engine/master/public/images/ARERA_LOGO.png) ARERA - Apriori Recommendation Engine RESTful API
+#  ARERA - Apriori Recommendation Engine RESTful API
 
 An apriori-algorithm-based recommendation engine API build with Laravel/Lumen &amp; Redis.
 
