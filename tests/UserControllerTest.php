@@ -199,6 +199,33 @@ class UserControllerTest extends TestCase
        $this->assertEquals($response->status(), 200);
     }
     
+    public function test_destroy_user_failure()
+    {
+        $user = User::get()->last();
+        
+        $accessToken = $this->call('POST', '/oauth/access_token', [
+            'username'      => $user->email,
+            'password'      => 'password',
+            'grant_type'    => 'password',
+            'client_id'     => $user->client,
+            'client_secret' => $user->secret,
+        ])->original['access_token'];
+        
+        $response = $this->call('DELETE', "/users/{$user->id}",[
+            'access_token' => '',
+        ]);
+        
+        $this->assertTrue($response->original['error'] == 'invalid_request');
+        
+        $id = $user->id + 1;
+        
+        $response = $this->call('DELETE', "/users/{$id}",[
+            'access_token' => $accessToken,
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
+    }
+    
     public function test_destroy_user()
     {
         $user = User::get()->last();
