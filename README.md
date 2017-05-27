@@ -1,5 +1,5 @@
 
-<img align="center" src="https://raw.githubusercontent.com/alejandro-carstens/apriori-recommendation-engine/master/public/images/ARERA_LOGO.png)"/>
+<img align="center" src="https://raw.githubusercontent.com/alejandro-carstens/apriori-recommendation-engine/master/public/images/ARERA_LOGO.png"/>
 
 #  ARERA - Apriori Recommendation Engine RESTful API
 
