@@ -18,7 +18,12 @@ class UserController extends Controller
         $this->middleware('authorize:' . __CLASS__ , ['except' => ['store']]);
     }
     
-    public function show($id)
+    /**
+     * @param int $id
+     * 
+     * @return mixed
+     */
+    public function show(int $id)
     {
         if($user = User::find($id))
         {
@@ -28,12 +33,21 @@ class UserController extends Controller
         return $this->error("The user with {$id} doesn't exist", 422);
     }
     
+    /**
+     * @return mixed
+     */
     public function index()
     {
         return $this->success(User::all(), 200);
     }
     
-    public function update(Request $request, $id)
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * 
+     * @return mixed
+     */
+    public function update(Request $request, int $id)
     {
         $user = User::find($id);
         
@@ -56,6 +70,11 @@ class UserController extends Controller
 		return $this->success("User with id {$id} updated successfully.", 200);
     }
     
+    /**
+     * @param int   $id
+     * 
+     * @return mixed
+     */
     public function credentials($id)
     {
         $user = User::find($id);
@@ -74,6 +93,11 @@ class UserController extends Controller
 		return $this->success("User with id {$id} credentials updated successfully.", 200);
     }
     
+    /**
+     * @param Request   $request
+     * 
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $this->validateRequest($request);
@@ -89,7 +113,12 @@ class UserController extends Controller
 		return $this->success("User with id {$user->id} successfully created.", 201);
     }
     
-    public function destroy($id)
+    /**
+     * @param int   $id
+     * 
+     * @return mixed
+     */
+    public function destroy(int $id)
     {
         $user = User::find($id);
         
@@ -105,11 +134,17 @@ class UserController extends Controller
         return $this->success("User with id {$id} successfully deleted.", 200);
     }
     
+    /**
+     * @return string
+     */
     private function generateCredentials() : string
     {
         return (string) bin2hex(random_bytes(20));
     }
     
+    /**
+     * @param Request   $request
+     */
     private function validateRequest(Request $request)
     {
 
@@ -120,6 +155,9 @@ class UserController extends Controller
 		]);
 	}
 	
+	/**
+	 * @param Request   $request
+	 */
 	public function isAuthorized(Request $request)
 	{
 		$resource = "users";
