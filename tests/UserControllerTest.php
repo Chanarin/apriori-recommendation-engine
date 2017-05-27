@@ -199,6 +199,48 @@ class UserControllerTest extends TestCase
        $this->assertEquals($response->status(), 200);
     }
     
+    public function test_update_user_failure()
+    {
+        $user = User::get()->last();
+        
+        $accessToken = $this->call('POST', '/oauth/access_token', [
+            'username'      => $user->email,
+            'password'      => 'password',
+            'grant_type'    => 'password',
+            'client_id'     => $user->client,
+            'client_secret' => $user->secret,
+        ])->original['access_token'];
+        
+        $response = $this->call('PATCH', "/users/{$user->id}",[
+            'email'        => '',
+            'access_token' => $accessToken,
+            'password'     => 'password',
+            'name'         => 'Alex Carstens',
+        ]);
+
+        $this->assertEquals($response->original["code"], 422);
+        
+        $response = $this->call('PATCH', "/users/{$user->id}",[
+            'email'        => $user->email,
+            'access_token' => '',
+            'password'     => 'password',
+            'name'         => 'Alex Carstens',
+        ]);
+        
+        $this->assertTrue($response->original['error'] == 'invalid_request');
+        
+        $id = $user->id + 1;
+        
+        $response = $this->call('PATCH', "/users/{$id}",[
+            'email'        => $user->email,
+            'access_token' => $accessToken,
+            'password'     => 'password',
+            'name'         => 'Alex Carstens',
+        ]);
+        
+        $this->assertEquals($response->original["code"], 403);
+    }
+    
     public function test_destroy_user_failure()
     {
         $user = User::get()->last();
