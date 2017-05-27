@@ -28,8 +28,8 @@ $app = new Laravel\Lumen\Application(
 | Comment the following class_aliases for testing.
 |--------------------------------------------------------------------------
 */
-class_alias('Illuminate\Support\Facades\Config', 'Config');
-class_alias(\LucaDegasperi\OAuth2Server\Facades\Authorizer::class, 'Authorizer');
+//class_alias('Illuminate\Support\Facades\Config', 'Config');
+//class_alias(\LucaDegasperi\OAuth2Server\Facades\Authorizer::class, 'Authorizer');
 
 $app->withFacades();
 

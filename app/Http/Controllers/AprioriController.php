@@ -34,7 +34,6 @@ class AprioriController extends Controller
             
             $redisKey = RedisKey::find($id);
             
-            
             $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
             
             try
