@@ -49,7 +49,14 @@ class UserRedisKeyController extends Controller
     
     public function destroy(int $id, int  $redis_key_id)
     {
-		$redisKey = User::find($id)->redisKeys()->find($redis_key_id);
+		$user = User::find($id);
+        
+        if(is_null($user))
+        {
+            return $this->error("You aren't allowed to perform the requested action", 403);
+        }
+        
+		$redisKey = $user->redisKeys()->find($redis_key_id);
 		
 		$redisKey->remove()->delete();
 		
@@ -62,12 +69,19 @@ class UserRedisKeyController extends Controller
             'master_key' => 'required|min:5',
         ]);
         
+        $user = User::find($id);
+        
+        if(is_null($user))
+        {
+            return $this->error("You aren't allowed to perform the requested action", 403);
+        }
+        
         if(RedisKey::where('user_id','=',$id)->where('master_key','=',$request->master_key)->get()->first())
         {
             return $this->error('Master key ' . $request->master_key . ' is already in use.', 422);
         }
         
-        $redisKey = User::find($id)->redisKeys()->find($redis_key_id);
+        $redisKey = $user->redisKeys()->find($redis_key_id);
         
         $oldCombinationKey = $redisKey->combinations_key;
         $oldTransactionKey = $redisKey->transactions_key;

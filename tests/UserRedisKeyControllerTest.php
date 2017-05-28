@@ -78,6 +78,158 @@ class UserRedisKeyControllerTest extends TestCase
         $this->destroyCredentials();
     }
     
+    public function test_index_redis_keys()
+    {
+        $this->setCredentials();
+        
+        $id = $this->user->id;
+        
+        $this->call('POST', "/users/{$id}/redis_keys", [
+            'access_token' => $this->accessToken,
+            'master_key'   => 'Master_Key',
+        ]);
+        
+        $response = $this->call('GET', "users/{$id}/redis_keys?access_token={$this->accessToken}");
+ 
+        $this->assertEquals($response->status(), 200);
+        
+        $response = $this->call('GET', "users/{$id}1/redis_keys?access_token={$this->accessToken}");
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('GET', "users/{$id}/redis_keys?access_token={$this->accessToken}1");
+        
+        $this->assertTrue($response->original["error"] == "access_denied");
+        
+        $this->destroyCredentials();
+    }
+    
+    public function test_show_redis_keys()
+    {
+        $this->setCredentials();
+        
+        $id = $this->user->id;
+        
+        $this->call('POST', "/users/{$id}/redis_keys", [
+            'access_token' => $this->accessToken,
+            'master_key'   => 'Master_Key',
+        ]);
+        
+        $redisKey = RedisKey::get()->last();
+        
+        $response = $this->call('GET', "/redis_keys/{$redisKey->id}?access_token={$this->accessToken}");
+        
+        $this->assertEquals($response->status(), 200);
+        
+        $response = $this->call('GET', "/redis_keys/{$redisKey->id}1?access_token={$this->accessToken}");
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('GET', "/redis_keys/{$redisKey->id}?access_token={$this->accessToken}1");
+        
+        $this->assertTrue($response->original["error"] == "access_denied");
+        
+        $this->destroyCredentials();
+    }
+    
+    public function test_update_redis_keys()
+    {
+        $this->setCredentials();
+        
+        $id = $this->user->id;
+        
+        $this->call('POST', "/users/{$id}/redis_keys", [
+            'access_token' => $this->accessToken,
+            'master_key'   => 'Master_Key',
+        ]);
+        
+        $redisKey = RedisKey::get()->last();
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken,
+            "master_key"   => "Another_Master_key",
+        ]);
+        
+        $this->assertEquals($response->status(), 200);
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}1/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken,
+            "master_key"   => "Another_Master_key",
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}1",[
+            "access_token" => $this->accessToken,
+            "master_key"   => "Another_Master_key",
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}",[
+            "access_token" => '1',
+            "master_key"   => "Another_Master_key",
+        ]);
+        
+        $this->assertTrue($response->original["error"] == "access_denied");
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken,
+            "master_key"   => "Another_Master_Key",
+        ]);
+        
+        $this->assertEquals($response->status(), 422);
+        
+        $response = $this->call('PATCH', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken,
+            "master_key"   => "",
+        ]);
+        
+        $this->assertEquals($response->status(), 422);
+        
+        $this->destroyCredentials();
+    }
+    
+    public function test_destroy_redis_key()
+    {
+        $this->setCredentials();
+        
+        $id = $this->user->id;
+        
+        $this->call('POST', "/users/{$id}/redis_keys", [
+            'access_token' => $this->accessToken,
+            'master_key'   => 'Master_Key',
+        ]);
+        
+        $redisKey = RedisKey::get()->last();
+        
+        $response = $this->call('DELETE', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 200);
+        
+        $response = $this->call('DELETE', "/users/{$redisKey->user_id}1/redis_keys/{$redisKey->id}",[
+            "access_token" => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('DELETE', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}1",[
+            "access_token" => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
+        
+        $response = $this->call('DELETE', "/users/{$redisKey->user_id}/redis_keys/{$redisKey->id}1",[
+            "access_token" => '1'
+        ]);
+        
+        $this->assertTrue($response->original["error"] == "access_denied");
+        
+        $this->destroyCredentials();
+    }
+    
     private function destroyCredentials()
     {
         $id = $this->user->id;
