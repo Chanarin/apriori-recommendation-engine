@@ -57,10 +57,10 @@ class AprioriTest extends TestCase
      */
     private function setElements()
     {
-        $e1 = rand(1,100);
-        $e2 = rand(1,100);
-        $e3 = rand(1,100);
-        $e4 = rand(1,100);
+        $e1 = 1;
+        $e2 = 2;
+        $e3 = 3;
+        $e4 = 4;
         
         (new Combination(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY))->zincrby([$e1,$e2,$e3,$e4]);
         

@@ -31,7 +31,7 @@ class Transaction extends Model
      */
     public function __construct(array $items = [])
     {
-        if(count($items)) $this->items = $items;
+        if(count($items)) $this->items = array_unique($items);
     }
     
     /**

@@ -79,7 +79,7 @@ class Apriori extends Association
     {
         if(is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey, $set])))
         {
-            throw new \InvalidArgumentException('Ups!, the key or set you passed was not found.');
+            throw new \InvalidArgumentException('Ups!, the key and items you passed are not associated.');
         }
         
         return $frequency;
@@ -264,6 +264,8 @@ class Apriori extends Association
             }
             
         }
+        
+        usort($rules, function($a, $b) { return count($a['key']) - count($b['key']); });
         
         return $rules;
     }
