@@ -79,7 +79,6 @@ class RedisKeyTransactionControllerControllerTest extends TestCase
         $response = $this->call('POST', "/redis_keys/{$id}/transactions", [
             'access_token' => $this->accessToken,
             'items'        => [1,2,3,4],
-            
         ]);
         
         $this->assertEquals($response->status(), 200);
@@ -104,6 +103,48 @@ class RedisKeyTransactionControllerControllerTest extends TestCase
         ]);
         
         $this->assertTrue($response->original['error'] == 'invalid_request');
+        
+        $this->destroyCredentials();
+    }
+    
+    public function test_destroy_transaction()
+    {
+        $this->setCredentials();
+        
+        $id = $this->redisKey->id;
+        
+        $this->call('POST', "/redis_keys/{$id}/transactions", [
+            'access_token' => $this->accessToken,
+            'items'        => [1,2,3,4],
+        ]);
+        
+        $transaction = Transaction::get()->last();
+        
+        $id = $this->redisKey->id;
+        
+        $response = $this->call('DELETE', "/redis_keys/{$id}/transactions/{$transaction->id}", [
+            'access_token' => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 200);
+        
+        $response = $this->call('DELETE', "/redis_keys/{$id}/transactions/{$transaction->id}", [
+            'access_token' => ''
+        ]);
+        
+        $this->assertTrue($response->original['error'] == 'invalid_request');
+        
+        $response = $this->call('DELETE', "/redis_keys/{$id}/transactions/{$transaction->id}1", [
+            'access_token' => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 404);
+        
+        $response = $this->call('DELETE', "/redis_keys/{$id}1/transactions/{$transaction->id}", [
+            'access_token' => $this->accessToken
+        ]);
+        
+        $this->assertEquals($response->status(), 403);
         
         $this->destroyCredentials();
     }
