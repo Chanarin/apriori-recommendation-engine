@@ -104,34 +104,6 @@ class UserRedisKeyControllerTest extends TestCase
         $this->destroyCredentials();
     }
     
-    public function test_show_redis_keys()
-    {
-        $this->setCredentials();
-        
-        $id = $this->user->id;
-        
-        $this->call('POST', "/users/{$id}/redis_keys", [
-            'access_token' => $this->accessToken,
-            'master_key'   => 'Master_Key',
-        ]);
-        
-        $redisKey = RedisKey::get()->last();
-        
-        $response = $this->call('GET', "/redis_keys/{$redisKey->id}?access_token={$this->accessToken}");
-        
-        $this->assertEquals($response->status(), 200);
-        
-        $response = $this->call('GET', "/redis_keys/{$redisKey->id}1?access_token={$this->accessToken}");
-        
-        $this->assertEquals($response->status(), 403);
-        
-        $response = $this->call('GET', "/redis_keys/{$redisKey->id}?access_token={$this->accessToken}1");
-        
-        $this->assertTrue($response->original["error"] == "access_denied");
-        
-        $this->destroyCredentials();
-    }
-    
     public function test_update_redis_keys()
     {
         $this->setCredentials();
