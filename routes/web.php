@@ -68,14 +68,6 @@ $app->delete('/users/{id}','UserController@destroy');
 |--------------------------------------------------------------------------
 */
 
-$app->post('/oauth/access_token', function() use($app){
-    return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
-});
-
-
-$app->group(['middleware' => 'throttle:1,1'], function () use ($app) {
-    $app->get('/', function () use ($app) {
-        
-        return App\User::first();
-    });
+$app->group(['middleware' => 'throttle:10'], function () use ($app) {
+    $app->post('/oauth/access_token', 'AuthController@issueAccessToken');
 });

@@ -28,6 +28,7 @@ $app = new Laravel\Lumen\Application(
 | Comment the following class_aliases for testing.
 |--------------------------------------------------------------------------
 */
+
 //class_alias('Illuminate\Support\Facades\Config', 'Config');
 //class_alias(\LucaDegasperi\OAuth2Server\Facades\Authorizer::class, 'Authorizer');
 
@@ -38,6 +39,7 @@ $app->withEloquent();
 $app->configure('database');
 
 $app->configure('cache');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -59,6 +61,12 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton('cookie', function () use ($app) {
+    return $app->loadComponent('session', 'Illuminate\Cookie\CookieServiceProvider', 'cookie');
+});
+
+$app->bind('Illuminate\Contracts\Cookie\QueueingFactory', 'cookie');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -72,7 +80,7 @@ $app->singleton(
 
 $app->middleware([
 //  App\Http\Middleware\ExampleMiddleware::class
-    \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class
+    \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 ]);
 
 $app->routeMiddleware([
