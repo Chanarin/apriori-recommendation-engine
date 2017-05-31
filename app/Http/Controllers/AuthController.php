@@ -4,37 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
 use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
-    /**
-     * @param stdClass  $response
-     * 
-     * @return void
-     */
-    private function queueCookie(\stdClass $response)
-    {
-        if(property_exists($response, 'refresh_token'))
-        {
-            $refreshToken = $response->refresh_token;
-            
-            $cookie = app()->make('cookie');
-            $crypt  = app()->make('encrypter');
-
-            $encryptedToken = $crypt->encrypt($refreshToken);
-            
-            $cookie->queue('refreshToken',
-                $crypt->encrypt($encryptedToken),
-                36000, 
-                null,
-                null,
-                false,
-                true
-            );
-        }
-    }
-    
     /**
      * @param Request   $request
      * 
@@ -53,8 +27,11 @@ class AuthController extends Controller
         
         $response = $this->proxy($grantType, $args);
         
-        $this->queueCookie($response);
-        
+        return $this->response($response);
+    }
+    
+    private function response(\stdClass $response)
+    {
         if(property_exists($response, 'error'))
         {
             return $this->success($response, 400);
@@ -92,13 +69,18 @@ class AuthController extends Controller
     /**
      * @return mixed
      */
-    public function attemptRefresh()
+    public function attemptRefresh(Request $request)
     {
-        $crypt = app()->make('encrypter');
-        $request = app()->make('request');
-
-        return $this->proxy('refresh_token', [
-            'refresh_token' => $crypt->decrypt($request->cookie('refreshToken'))
-        ]);
+        $grantType = $request->get('grant_type');
+        
+        $args = [
+            'refresh_token' => $request->get('refresh_token'),
+            'client_id'     => $request->get('client_id'),
+            'client_secret' => $request->get('client_secret')
+        ];
+        
+        $response = $this->proxy($grantType, $args);
+        
+        return $this->response($response);
     }
 }

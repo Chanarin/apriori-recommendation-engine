@@ -61,11 +61,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-$app->singleton('cookie', function () use ($app) {
-    return $app->loadComponent('session', 'Illuminate\Cookie\CookieServiceProvider', 'cookie');
-});
+// $app->singleton('cookie', function () use ($app) {
+//     return $app->loadComponent('session', 'Illuminate\Cookie\CookieServiceProvider', 'cookie');
+// });
 
-$app->bind('Illuminate\Contracts\Cookie\QueueingFactory', 'cookie');
+// $app->bind('Illuminate\Contracts\Cookie\QueueingFactory', 'cookie');
 
 /*
 |--------------------------------------------------------------------------
