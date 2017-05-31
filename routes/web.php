@@ -69,5 +69,11 @@ $app->delete('/users/{id}','UserController@destroy');
 */
 
 $app->group(['middleware' => 'throttle:10'], function () use ($app) {
-    $app->post('/oauth/access_token', 'AuthController@issueAccessToken');
+    $app->post('/oauth/refresh_token', 'AuthController@attemptRefresh');
+    
+    $app->post('/oauth/login', 'AuthController@auth');
+    
+    $app->post('/oauth/access_token', function() use($app) {
+        return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
+    });
 });

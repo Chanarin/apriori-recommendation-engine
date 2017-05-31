@@ -47,6 +47,12 @@ class UserRedisKeyController extends Controller
         return $this->success(User::find($id)->redisKeys, 200);
     }
     
+    /**
+     * @param int   $id
+     * @param int   $redis_key_id
+     * 
+     * @return mixed
+     */
     public function destroy(int $id, int  $redis_key_id)
     {
 		$user = User::find($id);
@@ -63,6 +69,13 @@ class UserRedisKeyController extends Controller
 		return $this->success("The Redis key with id {$redis_key_id} has been removed from user {$id}", 200);
     }
     
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * @param int       $redis_key_id
+     * 
+     * @return mixed
+     */
     public function update(Request $request, int $id, int $redis_key_id)
     {
         $this->validate($request, [

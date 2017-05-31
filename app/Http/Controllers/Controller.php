@@ -12,16 +12,34 @@ use App\User;
 
 class Controller extends BaseController
 {
-    public function success($data, $code)
+    /**
+     * @param mixed $data
+     * @param int   $code
+     * 
+     * @return mixed
+     */
+    public function success($data, int $code)
     {
         return response()->json(['data' => $data], $code);
     }
     
-    public function error($message, $code)
+    /**
+     * @param mixed $message
+     * @param int   $code
+     * 
+     * @return mixed
+     */
+    public function error($message, int $code)
     {
         return response()->json(['message' => $message, 'code' => $code], $code);
     }
     
+    /**
+     * @param Request   $request
+     * @param array     $errors
+     * 
+     * @return mixed
+     */
     protected function buildFailedValidationResponse(Request $request, array $errors)
     {
         return $this->error($errors, 422);
