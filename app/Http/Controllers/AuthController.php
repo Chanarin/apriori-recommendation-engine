@@ -30,11 +30,16 @@ class AuthController extends Controller
         return $this->response($response);
     }
     
+    /**
+     * @param stdClass  $response
+     * 
+     * @return mixed
+     */
     private function response(\stdClass $response)
     {
         if(property_exists($response, 'error'))
         {
-            return $this->success($response, 400);
+            return $this->error($response->error, 400);
         }
         
         return $this->success($response, 200);
@@ -50,7 +55,7 @@ class AuthController extends Controller
     {
         $args = array_merge(['grant_type' => $grantType], $args);
         
-        $client = new Client(['base_uri' => app()->make('url')->to('/')]);
+        $client = new Client(['base_uri' => env('API_BASE_URI')]);
         
         try
         {
