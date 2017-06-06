@@ -13,7 +13,7 @@
 
 *    [Objective](https://github.com/alejandro-carstens/apriori-recommendation-engine/#objective)
 *    [Intentions](https://github.com/alejandro-carstens/apriori-recommendation-engine/#intentions)
-*    [A-Transaction-in-the-Scope-of-the-API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a-transaction in-the-scope-of-the-api)
+*    [A-Transaction-in-the-Scope-of-the-API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a-transactionin-the-scope-of-the-api)
 
 
 # Objective:
