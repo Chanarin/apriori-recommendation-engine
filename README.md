@@ -48,7 +48,7 @@
 
 ## Ways to Measure Association Used By the API
 
-*    This API makes use of 3 ways to measure association: [support](https://github.com/alejandro-carstens/apriori-recommendation-engine/wiki/Association-Rules#support), [confidence](https://github.com/alejandro-carstens/apriori-recommendation-engine/wiki/Association-Rules#confidence), and [lift](https://github.com/alejandro-carstens/apriori-recommendation-engine/wiki/Association-Rules#lift)
+*    This API makes use of 3 ways to measure association: [support](https://github.com/alejandro-carstens/apriori-recommendation-engine/#support), [confidence](https://github.com/alejandro-carstens/apriori-recommendation-engine/#confidence), and [lift](https://github.com/alejandro-carstens/apriori-recommendation-engine/wiki/#lift)
 
 ### Support
 
@@ -100,10 +100,10 @@
 
 # To Do List
 
-*     More unit testing
-*     Add the option to queue combinations generation when storing a transaction
-*     Set the lumen environment for AWS Elastic Beanstalk Deployment
-*     Deploy a beta version of the API and try it out
+*   More unit testing
+*   Add the option to queue combinations generation when storing a transaction
+*   Set the lumen environment for AWS Elastic Beanstalk Deployment
+*   Deploy a beta version of the API and try it out
 
 # Notice:
 
