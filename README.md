@@ -17,7 +17,9 @@
 *    [Association Rules](https://github.com/alejandro-carstens/apriori-recommendation-engine/#association-rules)
 *    [Quick Algorithm Overview](https://github.com/alejandro-carstens/apriori-recommendation-engine/#quick-algorithm-overview)
 *    [To Do List](https://github.com/alejandro-carstens/apriori-recommendation-engine/#to-do-list)
-
+*    [Notice](https://github.com/alejandro-carstens/apriori-recommendation-engine/#notice)
+*    [Contributing](https://github.com/alejandro-carstens/apriori-recommendation-engine/#contributing)
+*    [Liscense](https://github.com/alejandro-carstens/apriori-recommendation-engine/#liscense)
 
 # Objective:
 
