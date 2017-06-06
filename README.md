@@ -9,6 +9,15 @@
 *    In simple words it is an apriori-algorithm-based recommendation engine API build with Laravel/Lumen & Redis
 *    It implements an apriori-like algorithm in order to obtain association rules to make predictions or recommendations. Please note that this API is not an implementation of the apriori algorithm, it was just inspired by it
 
+# Index
+
+*    [Objective](https://github.com/alejandro-carstens/apriori-recommendation-engine/#objective)
+*    [Intentions](https://github.com/alejandro-carstens/apriori-recommendation-engine/#intentions)
+*    [A Transaction in the Scope of The API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a transaction in the scope of the api)
+*    [Association Rules](https://github.com/alejandro-carstens/apriori-recommendation-engine/#association rules)
+*    [Quick Algorithm Overview](https://github.com/alejandro-carstens/apriori-recommendation-engine/#quick algorithm overview)
+*    [To Do List](https://github.com/alejandro-carstens/apriori-recommendation-engine/#to do list)
+
 # Objective:
 
 *    The goal of this project is to create the most user friendly and simplest recommendation engine API while remaining highly effective, reliable, fast, and scalable
@@ -48,7 +57,7 @@
 
 ## Ways to Measure Association Used By the API
 
-*    This API makes use of 3 ways to measure association: [support](https://github.com/alejandro-carstens/apriori-recommendation-engine/#support), [confidence](https://github.com/alejandro-carstens/apriori-recommendation-engine/#confidence), and [lift](https://github.com/alejandro-carstens/apriori-recommendation-engine/wiki/#lift)
+*    This API makes use of 3 ways to measure association: [support](https://github.com/alejandro-carstens/apriori-recommendation-engine/#support), [confidence](https://github.com/alejandro-carstens/apriori-recommendation-engine/#confidence), and [lift](https://github.com/alejandro-carstens/apriori-recommendation-engine/#lift)
 
 ### Support
 
