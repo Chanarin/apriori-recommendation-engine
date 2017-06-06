@@ -13,10 +13,8 @@
 
 *    [Objective](https://github.com/alejandro-carstens/apriori-recommendation-engine/#objective)
 *    [Intentions](https://github.com/alejandro-carstens/apriori-recommendation-engine/#intentions)
-*    [A Transaction in the Scope of The API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a transaction in the scope of the api)
-*    [Association Rules](https://github.com/alejandro-carstens/apriori-recommendation-engine/#association rules)
-*    [Quick Algorithm Overview](https://github.com/alejandro-carstens/apriori-recommendation-engine/#quick algorithm overview)
-*    [To Do List](https://github.com/alejandro-carstens/apriori-recommendation-engine/#to do list)
+*    [A-Transaction-in-the-Scope-of-the-API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a-transaction in-the-scope-of-the-api)
+
 
 # Objective:
 
