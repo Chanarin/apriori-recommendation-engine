@@ -9,6 +9,7 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use App\RedisKey;
 use App\Transaction;
 use App\Combination;
+use App\Jobs\CombinationJob;
 
 class RedisKeyTransactionController extends Controller
 {
@@ -47,6 +48,30 @@ class RedisKeyTransactionController extends Controller
         $redisKey->addTransaction($transaction);
         
         $this->combination($redisKey, $transaction);
+        
+        return $this->success("Transaction with id {$transaction->id} created successfully", 200);
+    }
+    
+    /**
+     * @param Request   $request
+     * 
+     * @return mixed
+     */
+    public function storeAsync(Request $request, $id)
+    {
+        $this->validate($request, [
+            'items.*'    => 'required|integer'
+        ]);
+        
+        $transaction = new Transaction($request->items);
+        
+        $redisKey = RedisKey::find($id);
+        
+        $redisKey->addTransaction($transaction);
+        
+        $job = new CombinationJob($redisKey, $transaction);
+        
+        $this->dispatch($job);
         
         return $this->success("Transaction with id {$transaction->id} created successfully", 200);
     }
