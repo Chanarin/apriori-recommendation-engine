@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'client', //'secret', 'password'
+        'name', 'email', 'client', 'secret',
     ];
 
     /**
@@ -29,7 +29,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at', 'password', 'secret' 
+        'created_at', 'updated_at', 'password', 'is_admin'  
     ];
     
     /**
@@ -94,6 +94,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		{
 		    $this->secret = $secret;
 		    $this->client = $client;
+		}
+		
+		if(count(User::first()) == 0)
+		{
+		    $this->is_admin = true;
 		}
 		
 		return $this;

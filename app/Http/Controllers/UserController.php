@@ -110,7 +110,7 @@ class UserController extends Controller
 		$user = (new User)->setUser($request, $client, $secret);
 		$user->save();
 				
-		return $this->success("User with id {$user->id} successfully created.", 201);
+		return $this->success($user, 201);
     }
     
     /**
