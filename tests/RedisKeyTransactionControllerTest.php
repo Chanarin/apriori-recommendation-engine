@@ -158,6 +158,22 @@ class RedisKeyTransactionControllerTest extends TestCase
         $this->destroyCredentials();
     }
     
+    public function test_store_async_transaction()
+    {
+        $this->setCredentials();
+        
+        $id = $this->redisKey->id;
+        
+        $response = $this->call('POST', "/redis_keys/{$id}/transactions_async", [
+            'access_token' => $this->accessToken,
+            'items'        => [1,2,3,4],
+        ]);
+        
+        $this->assertEquals($response->status(), 200);
+        
+        $this->destroyCredentials();
+    }
+    
     public function test_destroy_transaction()
     {
         $this->setCredentials();

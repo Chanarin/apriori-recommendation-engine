@@ -9,6 +9,16 @@ use App\Combination;
 class CombinationJob extends Job
 {
     /**
+     * @var Transaction
+     */
+    private $transaction;
+    
+    /**
+     * @var RedisKey
+     */
+    private $redisKey;
+    
+    /**
      * Create a new job instance.
      *
      * @return void
