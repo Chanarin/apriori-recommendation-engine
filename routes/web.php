@@ -11,6 +11,12 @@
 |
 */
 
+$app->get('/', function(){
+   
+   return count(App\User::all());
+    
+});
+
 /*
 |--------------------------------------------------------------------------
 | Apriori RESTful API endpoints
