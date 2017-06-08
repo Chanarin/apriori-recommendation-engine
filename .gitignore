@@ -6,6 +6,7 @@ Homestead.yaml
 .ebextensions/*
 !.ebextensions/*.cfg.yml
 !.ebextensions/*.global.yml
+/.ebextensions
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
