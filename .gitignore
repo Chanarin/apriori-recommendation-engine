@@ -3,12 +3,8 @@
 Homestead.json
 Homestead.yaml
 .env
-.ebextensions/*
-!.ebextensions/*.cfg.yml
-!.ebextensions/*.global.yml
-.ebextensions
-.ebextensions/01-environment.config
-.ebextensions/02-deploy.config
+.ebextensions/
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
