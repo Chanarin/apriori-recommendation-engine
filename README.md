@@ -1,8 +1,3 @@
-
-<p align="center">
-<img style="width:300px; height:300px;"src="https://raw.githubusercontent.com/alejandro-carstens/apriori-recommendation-engine/master/public/images/ARERA_LOGO.png"/>
-</p>
-
 # What is ARERA?
 
 *    <b>ARERA</b> stands for <b>A</b>priori <b>R</b>ecommendation <b>E</b>ngine <b>R</b>ESTful <b>A</b>PI
