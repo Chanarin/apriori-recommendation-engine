@@ -3,10 +3,8 @@
 Homestead.json
 Homestead.yaml
 .env
-<<<<<<< HEAD
-=======
-.ebextensions/
->>>>>>> 2f689cc5e78ddac9c2cdacfd5e6d23b55c449662
+
+*.ebextensions
 
 
 # Elastic Beanstalk Files
