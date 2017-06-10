@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use Gate;
@@ -12,6 +13,11 @@ use App\User;
 
 class Controller extends BaseController
 {
+    /**
+     * @var int constant LIMIT
+     */
+    const LIMIT = 100;
+    
     /**
      * @param mixed $data
      * @param int   $code
@@ -83,7 +89,8 @@ class Controller extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    protected function getArgs(Request $request){
+    protected function getArgs(Request $request)
+    {
         return $request->route()[2];
     }
         
@@ -97,7 +104,37 @@ class Controller extends BaseController
      * 
      * @return bool
      */
-    public function isAuthorized(Request $request){
+    public function isAuthorized(Request $request)
+    {
         return false;
+    }
+    
+    /**
+     * Paginates results
+     * 
+     * @param LengthAwarePaginator  $data
+     * 
+     * @return array
+     */
+    protected function respondWithPagination(LengthAwarePaginator $data, string $accessToken) : array
+    {
+        $next = null;
+        $previous = null;
+        
+        if(!is_null($data->nextPageUrl())) $next = str_replace('?', '?access_token=' . $accessToken . '&', $data->nextPageUrl());
+        
+        if(!is_null($data->previousPageUrl())) $previous = str_replace('?', '?access_token=' . $accessToken . '&', $data->previousPageUrl());
+        
+        return [
+            'results' => collect($data->all()),
+            'paginator' => [
+                'total_count'       => $data->total(),
+                'total_pages'       => ceil($data->total() / $data->perPage()),
+                'current_page'      => $data->currentPage(),
+                'limit'             => $data->perPage(),
+                'next_page_url'     => $next,
+                'previous_page_url' => $previous
+            ]
+        ];
     }
 }

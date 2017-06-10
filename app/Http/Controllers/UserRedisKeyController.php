@@ -40,11 +40,15 @@ class UserRedisKeyController extends Controller
     }
     
     /**
+     * @param int       $id
+     * @param Request   $request
      * @return mixed
      */
     public function index(int $id, Request $request)
     {
-        return $this->success(User::find($id)->redisKeys, 200);
+        $redisKeys = User::find($id)->redisKeys()->paginate(self::LIMIT);
+        
+        return $this->success($this->respondWithPagination($redisKeys, $request->get('access_token')), 200);
     }
     
     /**

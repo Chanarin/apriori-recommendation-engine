@@ -34,11 +34,13 @@ class UserController extends Controller
     }
     
     /**
+     * @param Request   $request
+     * 
      * @return mixed
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->success(User::all(), 200);
+        return $this->success($this->respondWithPagination(User::paginate(self::LIMIT), $request->get('access_token')), 200);
     }
     
     /**

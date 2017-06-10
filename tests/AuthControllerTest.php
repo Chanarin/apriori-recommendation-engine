@@ -32,7 +32,7 @@ class AuthControllerTest extends TestCase
             'client_id'     => $this->user->client,
             'client_secret' => $this->user->secret,
         ]);
-        
+       
         $accessToken = json_decode($response->content())->data->access_token;
         
         $refreshToken = json_decode($response->content())->data->refresh_token;

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-use GuzzleHttp\Client;
-
 class AuthController extends Controller
 {
     /**
@@ -54,21 +52,10 @@ class AuthController extends Controller
     private function proxy(string $grantType, array $args)
     {
         $args = array_merge(['grant_type' => $grantType], $args);
+          
+        $response = app()->handle(Request::create('/oauth/access_token', 'POST', $args));
         
-        $client = new Client(['base_uri' => env('API_BASE_URI')]);
-        
-        try
-        {
-            $guzzleResponse = $client->post('/oauth/access_token', [
-                'form_params' => $args
-            ]);
-        }
-        catch(\GuzzleHttp\Exception\BadResponseException $e) 
-        {
-            $guzzleResponse = $e->getResponse();
-        }
-        
-        return json_decode($guzzleResponse->getBody());
+        return json_decode($response->content());
     }
     
     /**

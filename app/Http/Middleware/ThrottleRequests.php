@@ -66,12 +66,23 @@ class ThrottleRequests
             );
         }
         
+        if(!is_null($request->get('client_id')))
+        {
+            return sha1(
+                $request->method() .
+                '|' . $request->server('SERVER_NAME') .
+                '|' . $request->path() .
+                '|' . $request->client_id
+            );
+        }
+        
         return sha1(
             $request->method() .
             '|' . $request->server('SERVER_NAME') .
             '|' . $request->path() .
             '|' . $request->ip()
         );
+        
     }
     
     /**
@@ -127,6 +138,7 @@ class ThrottleRequests
         if (! is_null($retryAfter)) {
             return 0;
         }
+        
         return $this->limiter->retriesLeft($key, $maxAttempts);
     }
 }

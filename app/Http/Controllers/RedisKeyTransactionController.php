@@ -22,12 +22,15 @@ class RedisKeyTransactionController extends Controller
     
     /**
      * @param Request   $request
+     * @param int       $redisKey
      * 
      * @return mixed
      */
-    public function transactions($redisKey)
+    public function transactions(Request $request, $redisKey)
     {
-        return $this->success(RedisKey::find($redisKey)->transactions, 200);
+        $transactions = RedisKey::find($redisKey)->transactions()->paginate(self::LIMIT);
+        
+        return $this->success($this->respondWithPagination($transactions, $request->get('access_token')), 200);
     }
     
     /**

@@ -12,6 +12,11 @@ class Apriori extends Association
     const COUNT = 100000;
     
     /**
+     * @var int constant PREDICTIONS_LIMIT
+     */
+    const PREDICTIONS_LIMIT = 50;
+    
+    /**
      * Minimum relative probability of frequent transactions.
      *
      * @var float
@@ -240,6 +245,8 @@ class Apriori extends Association
         
         $rules = [];
         
+        $counter = 0;
+        
         foreach(array_reverse($samples) as $key => $value)
         {
             if( $this->confidence <= ( $confidence = $value / $support ) )
@@ -263,6 +270,9 @@ class Apriori extends Association
                 ];
             }
             
+            $counter++;
+            
+            if($counter == self::PREDICTIONS_LIMIT) break;
         }
         
         usort($rules, function($a, $b) { return count($a['key']) - count($b['key']); });
