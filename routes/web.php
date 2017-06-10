@@ -11,6 +11,10 @@
 |
 */
 
+$app->get('/', function(){
+   return "ARERA"; 
+});
+
 $app->group(['middleware' => 'throttle:250'], function () use ($app) {
     
     /*
