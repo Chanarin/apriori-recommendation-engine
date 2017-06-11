@@ -38,7 +38,11 @@ class AprioriController extends Controller
             
             try
             {
-                $rules = $apriori->predictions(natsort($request->items), true);
+                $items = $request->items;
+                
+                natsort($items);
+                
+                $rules = $apriori->predictions($items, true);
             }
             catch(\InvalidArgumentException $ex)
             {
