@@ -119,7 +119,7 @@ class UserController extends Controller
 		$user->save();
 				
 		return $this->success([
-            'message' => "User with id {$user->id} credentials updated successfully.",
+            'message' => "User with id {$user->id} was created successfully.",
             'data'    => $user
         ], 201);
     }

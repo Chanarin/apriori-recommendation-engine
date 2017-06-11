@@ -186,6 +186,8 @@ class Apriori extends Association
     {
         $samples = [];
         
+        natsort($elements);
+        
         foreach( $this->zscan($elements, $count, $cursor) as $sample => $value )
         {
             if( $filter && $this->support($sample) >= $this->support ) $samples[$sample] = $this->support($sample);
