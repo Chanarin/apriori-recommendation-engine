@@ -9,7 +9,7 @@ class Combination extends Association
     /**
      * @var int constant MAX_SIZE 
      */
-    const MAX_SIZE = 3;
+    const MAX_SIZE = 4;
     
     /**
      * Instantiate a Combinaiton object
@@ -88,7 +88,7 @@ class Combination extends Association
     {
         $elements = array_map('strval', $elements);
         
-        sort($elements,1);
+        natsort($elements);
         
         $set = [];
         
@@ -108,13 +108,13 @@ class Combination extends Association
     }
     
     /**
-     * @param array     $set
-     * @param int       $size
-     * @param int       $score
+     * @param array         $set
+     * @param int|null      $size
+     * @param int           $score
      * 
      * @return mixed
      */
-    private static function validateInputs(array $set, $size, $score)
+    private static function validateInputs(array $set, $size, int $score)
     {
         if( $size > count($set) || ( !is_null($size) && $size < 1 ) )
         {

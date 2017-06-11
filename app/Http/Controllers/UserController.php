@@ -69,7 +69,10 @@ class UserController extends Controller
 
 		$user->setUser($request)->save();
 		
-		return $this->success("User with id {$id} updated successfully.", 200);
+		return $this->success([
+            'message' => "User with id {$user->id} updated successfully.",
+            'data'    => $user
+        ], 200);
     }
     
     /**
@@ -92,7 +95,10 @@ class UserController extends Controller
 		
 		$user->setUser(null, $client, $secret)->save();
 		
-		return $this->success("User with id {$id} credentials updated successfully.", 200);
+		return $this->success([
+            'message' => "User with id {$user->id} credentials updated successfully.",
+            'data'    => $user
+        ], 200);
     }
     
     /**
@@ -112,7 +118,10 @@ class UserController extends Controller
 		$user = (new User)->setUser($request, $client, $secret);
 		$user->save();
 				
-		return $this->success($user, 201);
+		return $this->success([
+            'message' => "User with id {$user->id} credentials updated successfully.",
+            'data'    => $user
+        ], 201);
     }
     
     /**
@@ -149,7 +158,6 @@ class UserController extends Controller
      */
     private function validateRequest(Request $request)
     {
-
 		$this->validate($request, [
 			'email'    => 'required|email|unique:users', 
 			'password' => 'required|min:6',

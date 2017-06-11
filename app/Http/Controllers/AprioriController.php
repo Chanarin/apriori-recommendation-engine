@@ -29,7 +29,7 @@ class AprioriController extends Controller
         if(isset($request->query()['items']))
         {
             $this->validate($request,[
-                'items.*' => 'required|integer'
+                'items.*' => 'required'
             ]);
             
             $redisKey = RedisKey::find($id);

@@ -33,10 +33,15 @@ class UserRedisKeyController extends Controller
         {
             return $this->error('Master key ' . $request->master_key . ' is already in use.', 422);
         }
-       
-        $user->addRedisKey((new RedisKey)->setKeys($request->master_key));
         
-        return $this->success('Key created successfully.', 200);
+        $redisKey = new RedisKey;
+        
+        $user->addRedisKey($redisKey->setKeys($request->master_key));
+        
+        return $this->success([
+            'message' => "Key with id {$redisKey->id} created successfully.",
+            'data'    => $redisKey
+        ], 200); 
     }
     
     /**
@@ -107,7 +112,10 @@ class UserRedisKeyController extends Controller
                  ->reassign($oldCombinationKey, $oldTransactionKey)
                  ->save();
 		
-		return $this->success("The Redis key with id {$redis_key_id} has been updated.", 200);
+		return $this->success([
+            'message' => "Key with id {$redisKey->id} has been updated.",
+            'data'    => $redisKey
+        ], 200); 
     }
     
     /**
@@ -127,6 +135,7 @@ class UserRedisKeyController extends Controller
 		}
 		    
 		$resource = "users_redis_keys";
+		
 		$user = User::find($this->getArgs($request)["id"]);
 		   
 		return $this->authorizeUser($request, $resource, $user);

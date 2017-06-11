@@ -41,10 +41,10 @@ class RedisKeyTransactionController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
-            'items.*'    => 'required|integer'
+            'items.*' => 'required'
         ]);
         
-        $transaction = new Transaction($request->items);
+        $transaction = new Transaction(array_unique($request->items));
         
         $redisKey = RedisKey::find($id);
         
@@ -52,7 +52,10 @@ class RedisKeyTransactionController extends Controller
         
         $this->combination($redisKey, $transaction);
         
-        return $this->success("Transaction with id {$transaction->id} created successfully", 200);
+        return $this->success([
+            'message' => "Transaction with id {$transaction->id} created successfully.",
+            'data'    => $transaction
+        ], 200);
     }
     
     /**
@@ -76,7 +79,10 @@ class RedisKeyTransactionController extends Controller
         
         $this->dispatch($job);
         
-        return $this->success("Transaction with id {$transaction->id} created successfully", 200);
+        return $this->success([
+            'message' => "Transaction with id {$transaction->id} created successfully.",
+            'data'    => $transaction
+        ], 200);
     }
     
     /**
@@ -147,7 +153,10 @@ class RedisKeyTransactionController extends Controller
         
         $this->combination($redisKey, $transaction);
         
-        return $this->success("Transaction with id {$transaction_id} was updated successfully.", 200);
+        return $this->success([
+            'message' => "Transaction with id {$transaction_id} was updated successfully.",
+            'data'    => $transaction
+        ], 200);
     }
     
     /**
