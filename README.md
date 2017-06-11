@@ -11,6 +11,12 @@
 *    [A Transaction in the Scope of the API](https://github.com/alejandro-carstens/apriori-recommendation-engine/#a-transactionin-the-scope-of-the-api)
 *    [Association Rules](https://github.com/alejandro-carstens/apriori-recommendation-engine/#association-rules)
 *    [Quick Algorithm Overview](https://github.com/alejandro-carstens/apriori-recommendation-engine/#quick-algorithm-overview)
+*    [API Endpoints](https://github.com/alejandro-carstens/apriori-recommendation-engine/#api-endpoints)
+     *    [Users](https://github.com/alejandro-carstens/apriori-recommendation-engine/#users)
+     *    [Credentials](https://github.com/alejandro-carstens/apriori-recommendation-engine/#credentials)
+     *    [Redis Keys](https://github.com/alejandro-carstens/apriori-recommendation-engine/#redis-keys)
+     *    [Transactions](https://github.com/alejandro-carstens/apriori-recommendation-engine/#transactions)
+     *    [Apriori](https://github.com/alejandro-carstens/apriori-recommendation-engine/#apriori)
 *    [To Do List](https://github.com/alejandro-carstens/apriori-recommendation-engine/#to-do-list)
 *    [Notice](https://github.com/alejandro-carstens/apriori-recommendation-engine/#notice)
 *    [Contributing](https://github.com/alejandro-carstens/apriori-recommendation-engine/#contributing)
@@ -104,6 +110,380 @@
 1.    The user sends a GET request passing the item or itemset for which the association rules must be obtained
 2.    Using the ZSCAN Redis command, we obtain the combinations for each of the items passed with their associated frequency. We then filter out the non associated combinations to then calculate the support for each of the remaining combinations
 3.    The lift and confidence rules are generated and the recommendation results are then returned with an ordered defined by their confidence score
+
+# API Endpoints
+
+## Users
+
+### POST /users
+
+<b>Action:</b> Create user <br>
+<b>Parameters:</b> name, email, password, password_confirmation <br>
+<b>Scope: </b> Admin <br>
+<b>Response:</b>
+```javascript
+{
+  "data": {
+    "name": "Alex",
+    "email": "carstens@gmail.com",
+    "secret": "2fc6270535e0b3f8ee180d7466ba9415e054850f",
+    "client": "72f93f10532be890d2d16f189395fa35718aa9d4",
+    "id": 5
+  }
+}
+```
+### GET /users/{user_id}?access_token=ACCESS_TOKEN
+<b>Action:</b> Retrieve user details <br>
+<b>Scope:</b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+  "data": {
+    "name": "Alex",
+    "email": "carstens@gmail.com",
+    "secret": "2fc6270535e0b3f8ee180d7466ba9415e054850f",
+    "client": "72f93f10532be890d2d16f189395fa35718aa9d4",
+    "id": 5
+  }
+}
+```
+
+### PUT or PATCH /users/{user_id}
+
+<b>Action:</b> Update user <br>
+<b>Parameters:</b> name, email, password, password_confirmation <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "User with id 11 updated successfully.",
+        "data": {
+            "id": 11,
+            "name": "Alex",
+            "email": "chingon.alex@gmail.com",
+            "client": "37acea3e599492738e79e2b575480de1b7866db4",
+            "secret": "2f3d4cfb78f5ffab0de84473f8a319c7bc379059"
+        }
+    }
+}
+```
+
+### DELETE /users/{user_id}
+<b>Parameters:</b> access_token <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+  "data": "User with id 5 successfully deleted."
+}
+```
+
+## Credentials
+
+### PATCH or PUT /users/{user_id}/credentials
+<b>Parameters:</b> access_token <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "User with id 11 credentials updated successfully.",
+        "data": {
+            "id": 11,
+            "name": "Alex",
+            "email": "chingon.carstennis@gmail.com",
+            "client": "37acea3e599492738e79e2b575480de1b7866db4",
+            "secret": "2f3d4cfb78f5ffab0de84473f8a319c7bc379059"
+        }
+    }
+}
+```
+
+## Redis Keys
+
+### POST /users/{user_id}/redis_keys
+<b>Parameters:</b> access_token, master_key <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "Key with id 9 created successfully.",
+        "data": {
+            "master_key": "cookie jar",
+            "transactions_key": "transactions-cookie jar-1497219222",
+            "combinations_key": "combinations-cookie jar-1497219222",
+            "updated_at": "2017-06-11 22:13:42",
+            "created_at": "2017-06-11 22:13:42",
+            "id": 9
+        }
+    }
+}
+```
+
+### GET /users/{user_id}/redis_keys?access_token=ACCESS_TOKEN
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+  "data": {
+    "results": [
+      {
+        "id": 2,
+        "master_key": "alex_key",
+        "transactions_key": "transactions-alex_key-1497073608",
+        "combinations_key": "combinations-alex_key-1497073608",
+        "created_at": "2017-06-10 05:46:48",
+        "updated_at": "2017-06-10 05:46:48"
+      }
+    ],
+    "paginator": {
+      "total_count": 1,
+      "total_pages": 1,
+      "current_page": 1,
+      "limit": 100,
+      "next_page_url": null,
+      "previous_page_url": null
+    }
+  }
+}
+```
+### GET /redis_keys/{redis_key_id}?access_token=ACCESS_TOKEN
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+  "data": {
+        "id": 4,
+        "master_key": "guera",
+        "transactions_key": "transactions-guera-1497205317",
+        "combinations_key": "combinations-guera-1497205317",
+        "created_at": "2017-06-11 18:21:57",
+        "updated_at": "2017-06-11 18:21:57"
+   }
+}
+```
+
+### PATCH or PUT /users/{user_id}/redis_keys/{redis_key_id}
+<b>Parameters:</b> access_token, master_key <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "Key with id 6 has been updated.",
+        "data": {
+            "id": 6,
+            "master_key": "lupua",
+            "transactions_key": "transactions-lupua-1497219375",
+            "combinations_key": "combinations-lupua-1497219375",
+            "created_at": "2017-06-11 21:02:35",
+            "updated_at": "2017-06-11 22:16:15"
+        }
+    }
+}
+```
+
+### DELETE /users/{user_id}/redis_keys/{redis_key_id}
+<b>Parameters:</b> access_token <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": "The Redis key with id 6 has been removed from user 11"
+}
+```
+## Transactions
+
+### POST /redis_keys/{redis_keys_id}/transactions
+<b>Parameters:</b> access_token, items[] <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "Transaction with id 63 created successfully.",
+        "data": {
+            "items": [
+                "1",
+                "1111",
+                "11"
+            ],
+            "redis_key_id": 8,
+            "updated_at": "2017-06-11 22:00:49",
+            "created_at": "2017-06-11 22:00:49",
+            "id": 63
+        }
+    }
+}
+```
+
+### POST /redis_keys/{redis_keys_id}/transactions_async
+<b>Parameters:</b> access_token, items[] <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "Transaction with id 63 created successfully.",
+        "data": {
+            "items": [
+                "1",
+                "1111",
+                "11"
+            ],
+            "redis_key_id": 8,
+            "updated_at": "2017-06-11 22:00:49",
+            "created_at": "2017-06-11 22:00:49",
+            "id": 63
+        }
+    }
+}
+```
+
+### GET /redis_keys/{redis_keys_id}/transactions?access_token=ACCESS_TOKEN
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+
+```javascript
+{
+    "data": {
+        "results": [
+            {
+                "id": 9,
+                "redis_key_id": 4,
+                "items": [
+                    "1",
+                    "2",
+                    "7",
+                    "8",
+                    "14"
+                ],
+                "created_at": "2017-06-11 18:43:59",
+                "updated_at": "2017-06-11 18:43:59"
+            },
+            {
+                "id": 10,
+                "redis_key_id": 4,
+                "items": [
+                    "11",
+                    "1",
+                    "7",
+                    "18",
+                    "24"
+                ],
+                "created_at": "2017-06-11 18:45:05",
+                "updated_at": "2017-06-11 18:45:05"
+            }
+        ],
+        "paginator": {
+            "total_count": 2,
+            "total_pages": 1,
+            "current_page": 1,
+            "limit": 100,
+            "next_page_url": null,
+            "previous_page_url": null
+        }
+    }
+}
+```
+### GET /transactions/{transaction_id}?access_token=ACCESS_TOKEN
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+
+```javascript
+{
+    "data": {
+        "id": 11,
+        "redis_key_id": 4,
+        "items": [
+            "11",
+            "1",
+            "7",
+            "18",
+            "24"
+        ],
+        "created_at": "2017-06-11 18:55:52",
+        "updated_at": "2017-06-11 18:55:52"
+    }
+}
+```
+### PATCH or PUT /redis_keys/{redis_key_id}/transactions/{transaction_id}
+<b>Parameters:</b> access_token, items[] <br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": {
+        "message": "Transaction with id 63 was updated successfully.",
+        "data": {
+            "id": 63,
+            "redis_key_id": 8,
+            "items": [
+                "22",
+                "2"
+            ],
+            "created_at": "2017-06-11 22:00:49",
+            "updated_at": "2017-06-11 22:19:39"
+        }
+    }
+}
+```
+
+### DELETE /redis_keys/{redis_key_id}/transactions/{transaction_id}
+<b>Parameters:</b> access_token<br>
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": "The transaction with id 10 was successfully deleted."
+}
+```
+
+## Apriori
+
+### GET /redis_keys/{redis_key_id}/apriori=?access_token=ACCESS_TOKEN&items[]={item_1}&items[]={item_2}
+<b>Scope: </b> Resource owner <br>
+<b>Response:</b>
+```javascript
+{
+    "data": [
+        {
+            "lift": 1,
+            "confidence": 0.66666666666667,
+            "support": 1,
+            "key": [
+                "11"
+            ]
+        },
+        {
+            "lift": 1,
+            "confidence": 0.66666666666667,
+            "support": 1,
+            "key": [
+                "1"
+            ]
+        },
+        {
+            "lift": 1,
+            "confidence": 0.33333333333333,
+            "support": 1,
+            "key": [
+                "71"
+            ]
+        },
+        {
+            "lift": 1,
+            "confidence": 0.33333333333333,
+            "support": 1,
+            "key": [
+                "12"
+            ]
+        }
+    ]
+}
+```
 
 # To Do List
 
