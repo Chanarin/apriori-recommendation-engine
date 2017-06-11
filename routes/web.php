@@ -12,7 +12,7 @@
 */
 
 $app->get('/', function(){
-   return "ARERA"; 
+   return view('index'); 
 });
 
 $app->group(['middleware' => 'throttle:250'], function () use ($app) {
