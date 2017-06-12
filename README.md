@@ -492,10 +492,12 @@
 
 # To Do List
 
-*   More unit testing
-*   Add the option to queue combinations generation when storing a transaction
-*   Set the lumen environment for AWS Elastic Beanstalk Deployment
-*   Deploy a beta version of the API and try it out
+*   More unit testing - in progress
+*   Set the lumen environment for AWS Elastic Beanstalk Deployment - done but needs some tune up
+*   Add password_confirmation fields to user creation and updating
+*   Add more apriori methods
+*   Promote the API beta version for testing and to invite collaboration
+*   Deploy a beta version of the API and try it out - done you can hit the API at this base URL [http://chingon.us-west-2.elasticbeanstalk.com/](http://chingon.us-west-2.elasticbeanstalk.com/) 
 
 # Notice:
 
