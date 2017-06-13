@@ -24,7 +24,7 @@ class AprioriController extends Controller
      * 
      * @return mixed
      */
-    public function reccomend(Request $request, $id)
+    public function recommend(Request $request, $id)
     {
         if(isset($request->query()['items']))
         {
@@ -50,6 +50,33 @@ class AprioriController extends Controller
             }
             
             return $this->success($rules, 200);
+        }
+        
+        return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
+    }
+    
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * 
+     * @return mixed    
+     */
+    public function support(Request $request, int $id) 
+    {
+        if(isset($request->query()['items']))
+        {
+            $this->validate($request,[
+                'items.*' => 'required'
+            ]);
+            
+            $redisKey = RedisKey::find($id);
+            
+            $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
+            
+            return $this->success([
+                'support' => $apriori->getSupport($request->items)
+            ], 200);
+            
         }
         
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);

@@ -22,7 +22,9 @@ $app->group(['middleware' => 'throttle:250'], function () use ($app) {
     | Apriori RESTful API endpoints
     |--------------------------------------------------------------------------
     */
-    $app->get('/redis_keys/{id}/apriori', 'AprioriController@reccomend');
+    $app->get('/redis_keys/{id}/recommend', 'AprioriController@recommend');
+    $app->get('/redis_keys/{id}/support', 'AprioriController@support');
+    
     
     /*
     |--------------------------------------------------------------------------

@@ -72,6 +72,13 @@ class Apriori extends Association
         return $this->frequency($set) / Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
     }
     
+    public function getSupport(array $elements)
+    {
+        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN); 
+        
+        return $support = $this->support($string);
+    }
+    
     /**
      * Counts occurrences of $set as subset in data pool.
      *
