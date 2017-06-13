@@ -53,24 +53,24 @@ class UserController extends Controller
     {
         $user = User::find($id);
         
-		if(!$user) return $this->error("The user with {$id} doesn't exist", 404);
+	if(!$user) return $this->error("The user with {$id} doesn't exist", 404);
 		
-		if($request->get('email') !== $user->email)
-		{
-		    $this->validateRequest($request);
-		}
-		else
-		{
-		    $this->validate($request, [
-		        'password'              => 'required|min:6|confirmed',
-		        'password_confirmation' => 'required',
-		        'name'                  => 'required|max:180',
-		    ]);
-		}
+	if($request->get('email') !== $user->email)
+	{
+	    $this->validateRequest($request);
+	}
+	else
+	{
+	    $this->validate($request, [
+	        'password'              => 'required|min:6|confirmed',
+	        'password_confirmation' => 'required',
+	        'name'                  => 'required|max:180',
+	    ]);
+	}
 
-		$user->setUser($request)->save();
+	$user->setUser($request)->save();
 		
-		return $this->success([
+	return $this->success([
             'message' => "User with id {$user->id} updated successfully.",
             'data'    => $user
         ], 200);
@@ -85,18 +85,18 @@ class UserController extends Controller
     {
         $user = User::find($id);
         
-		if(!$user) return $this->error("The user with id {$id} doesn't exist", 404);
+	if(!$user) return $this->error("The user with id {$id} doesn't exist", 404);
         
         OauthClient::find($user->client)->delete();
 		
-		$secret = $this->generateCredentials();
+	$secret = $this->generateCredentials();
         $client = $this->generateCredentials();
         
-		(new OauthClient)->setOauthClient($client, $secret, $user->name)->save();
+	(new OauthClient)->setOauthClient($client, $secret, $user->name)->save();
 		
-		$user->setUser(null, $client, $secret)->save();
+	$user->setUser(null, $client, $secret)->save();
 		
-		return $this->success([
+	return $this->success([
             'message' => "User with id {$user->id} credentials updated successfully.",
             'data'    => $user
         ], 200);
@@ -114,12 +114,12 @@ class UserController extends Controller
         $secret = $this->generateCredentials();
         $client = $this->generateCredentials();
 		
-		(new OauthClient)->setOauthClient($client, $secret, $request->get('name'))->save();
+	(new OauthClient)->setOauthClient($client, $secret, $request->get('name'))->save();
 		
-		$user = (new User)->setUser($request, $client, $secret);
-		$user->save();
+	$user = (new User)->setUser($request, $client, $secret);
+	$user->save();
 				
-		return $this->success([
+	return $this->success([
             'message' => "User with id {$user->id} was created successfully.",
             'data'    => $user
         ], 201);
@@ -159,23 +159,23 @@ class UserController extends Controller
      */
     private function validateRequest(Request $request)
     {
-		$this->validate($request, [
-			'email'                 => 'required|email|unique:users', 
-			'password'              => 'required|min:6|confirmed',
-		    'password_confirmation' => 'required',
-		    'name'                  => 'required|max:180',
-		]);
-	}
+	$this->validate($request, [
+	    'email'                 => 'required|email|unique:users', 
+	    'password'              => 'required|min:6|confirmed',
+	    'password_confirmation' => 'required',
+	    'name'                  => 'required|max:180',
+	]);
+     }
 	
-	/**
-	 * @param Request   $request
-	 */
-	public function isAuthorized(Request $request)
-	{
-		$resource = "users";
+     /**
+      * @param Request   $request
+      */
+     public function isAuthorized(Request $request)
+     {
+         $resource = "users";
 		
-		$user = User::find($this->getArgs($request)["id"]);
+	 $user = User::find($this->getArgs($request)["id"]);
 		
-		return $this->authorizeUser($request, $resource, $user);
-	}
+	 return $this->authorizeUser($request, $resource, $user);
+     }
 }
