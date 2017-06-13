@@ -7,7 +7,7 @@ php:
   - 7.0
 
 before_script:
- - mv travis.env
+ - mv .env.travis
  - mysql -e 'create database mysql;'
  - composer self-update
  - composer install --dev --prefer-source --no-interaction
