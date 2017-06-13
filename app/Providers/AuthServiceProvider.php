@@ -33,16 +33,39 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
         
         $this->isOwner([
-            'redis_keys' => ['destroy', 'update', 'show','transactions', 'store', 'destroy', 'recommend', 'support', 'storeAsync'],
+            'redis_keys' => [
+                'destroy', 
+                'update', 
+                'show',
+                'transactions', 
+                'store', 
+                'destroy', 
+                'recommend', 
+                'support', 
+                'frequency', 
+                'total', 
+                'storeAsync'
+            ],
         ]);
         
         $this->isUserOwner([
-            'users' => ['credentials', 'update', 'show', 'destroy'],
-            'users_redis_keys' => ['store', 'index', 'destroy']
+            'users' => [
+                'credentials', 
+                'update', 
+                'show', 
+                'destroy'
+            ],
+            'users_redis_keys' => [
+                'store', 
+                'index', 
+                'destroy'
+            ],
         ]);
         
         $this->isAdmin([
-            'users' => ['index']
+            'users' => [
+                'index',
+            ],
         ]);
     }
     

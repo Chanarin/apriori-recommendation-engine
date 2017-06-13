@@ -28,13 +28,7 @@ class AprioriController extends Controller
     {
         if(isset($request->query()['items']))
         {
-            $this->validate($request,[
-                'items.*' => 'required'
-            ]);
-            
-            $redisKey = RedisKey::find($id);
-            
-            $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
+            $apriori = $this->setApriori($request, $id);
             
             try
             {
@@ -65,21 +59,70 @@ class AprioriController extends Controller
     {
         if(isset($request->query()['items']))
         {
-            $this->validate($request,[
-                'items.*' => 'required'
-            ]);
-            
-            $redisKey = RedisKey::find($id);
-            
-            $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
+            $apriori = $this->setApriori($request, $id);
             
             return $this->success([
                 'support' => $apriori->getSupport($request->items)
             ], 200);
-            
         }
         
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
+    }
+    
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * 
+     * @return mixed    
+     */
+    public function frequency(Request $request, int $id)
+    {
+        if(isset($request->query()['items']))
+        {
+            $apriori = $this->setApriori($request, $id);
+            
+            return $this->success([
+                'frequency' => $apriori->getFrequency($request->items)
+            ], 200);
+        }
+        
+        return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
+    }
+    
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * 
+     * @return mixed    
+     */
+    public function total(int $id)
+    {
+        $redisKey = RedisKey::find($id);
+            
+        $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
+            
+        return $this->success([
+            'transaction count' => $apriori->getTransactionCount()
+        ], 200);
+        
+        return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
+    }
+    
+    /**
+     * @param Request   $request
+     * @param int       $id
+     * 
+     * @return Apriori   
+     */
+    private function setApriori(Request $request, int $id) : Apriori
+    {
+        $this->validate($request,[
+            'items.*' => 'required',
+        ]);
+            
+        $redisKey = RedisKey::find($id);
+            
+        return new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
     }
     
     /**

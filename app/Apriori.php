@@ -72,11 +72,27 @@ class Apriori extends Association
         return $this->frequency($set) / Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
     }
     
-    public function getSupport(array $elements)
+    /**
+     * @param mixed     $min
+     * @param mixed     $max
+     *
+     * @return int
+     */
+    public function getTransactionCount($min = '-inf', $max = 'inf') : int
+    {
+        return Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
+    }
+    
+    /**
+     * @param array     $elements
+     * 
+     * @return float
+     */
+    public function getSupport(array $elements) : float
     {
         $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN); 
         
-        return $support = $this->support($string);
+        return $this->support($string);
     }
     
     /**
@@ -95,6 +111,18 @@ class Apriori extends Association
         }
         
         return $frequency;
+    }
+    
+    /**
+     * @param array     $elements
+     * 
+     * @return int
+     */
+    public function getFrequency(array $elements) : int
+    {
+        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+        
+        return $this->frequency($string);
     }
     
     /**
