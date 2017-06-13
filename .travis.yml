@@ -6,13 +6,14 @@ sudo: required
 php:
   - 7.0
 
-install:
-  # updates composer on travis
-  - travis_retry composer self-update
-  # clear composer cache, might speed up finding new tags
-  - travis_retry composer clear-cache
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
 
 services:
-  - redis-server 
+  - redis-server
+  - mysql
 
 script: vendor/bin/phpunit
