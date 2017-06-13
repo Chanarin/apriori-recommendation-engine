@@ -14,8 +14,9 @@ class AuthControllerTest extends TestCase
     {
         $this->call('POST', '/users', [
             'email'    => 'acarste@okstate.edu',
-            'password' => 'password',
-            'name'     => 'Alex',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
         
         $this->user = User::get()->last();

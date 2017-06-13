@@ -116,7 +116,7 @@ class Apriori extends Association
      */
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
-        sort($elements, 1);
+        natsort($elements);
         
         $smaples = null;
         
@@ -159,7 +159,7 @@ class Apriori extends Association
     {
         $set = array_map('strval', $elements);
         
-        sort($set, 1);
+        natsort($set);
         
         $value = '';
         

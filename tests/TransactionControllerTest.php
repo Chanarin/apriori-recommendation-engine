@@ -21,9 +21,10 @@ class TransactionControllerTest extends TestCase
     private function setCredentials()
     {
         $this->call('POST', '/users', [
-            'email'    => 'acarste@okstate.edu',
-            'password' => 'password',
-            'name'     => 'Alex',
+            'email'                 => 'acarste@okstate.edu',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
         
         $this->user = User::get()->last();

@@ -11,9 +11,10 @@ class UserControllerTest extends TestCase
     public function test_store_user()
     {
         $response = $this->call('POST', '/users', [
-            'email'    => 'acarste@okstate.edu',
-            'password' => 'password',
-            'name'     => 'Alex',
+            'email'                 => 'acarste@okstate.edu',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex',
         ]);
         
         $this->assertEquals(201, $response->status());
@@ -190,10 +191,11 @@ class UserControllerTest extends TestCase
         ])->original['access_token'];
         
         $response = $this->call('PATCH', "/users/{$user->id}",[
-            'email'        => $user->email,
-            'access_token' => $accessToken,
-            'password'     => 'password',
-            'name'         => 'Alex Carstens',
+            'email'                 => $user->email,
+            'access_token'          => $accessToken,
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
         
        $this->assertEquals($response->status(), 200);
@@ -212,19 +214,21 @@ class UserControllerTest extends TestCase
         ])->original['access_token'];
         
         $response = $this->call('PATCH', "/users/{$user->id}",[
-            'email'        => '',
-            'access_token' => $accessToken,
-            'password'     => 'password',
-            'name'         => 'Alex Carstens',
+            'email'                 => '',
+            'access_token'          => $accessToken,
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
 
         $this->assertEquals($response->original["code"], 422);
         
         $response = $this->call('PATCH', "/users/{$user->id}",[
-            'email'        => $user->email,
-            'access_token' => '',
-            'password'     => 'password',
-            'name'         => 'Alex Carstens',
+            'email'                 => $user->email,
+            'access_token'          => '',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
         
         $this->assertTrue($response->original['error'] == 'invalid_request');
@@ -232,10 +236,11 @@ class UserControllerTest extends TestCase
         $id = $user->id + 1;
         
         $response = $this->call('PATCH', "/users/{$id}",[
-            'email'        => $user->email,
-            'access_token' => $accessToken,
-            'password'     => 'password',
-            'name'         => 'Alex Carstens',
+            'email'                 => $user->email,
+            'access_token'          => $accessToken,
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'name'                  => 'Alex Carstens',
         ]);
         
         $this->assertEquals($response->original["code"], 403);

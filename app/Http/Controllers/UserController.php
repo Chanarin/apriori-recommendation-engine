@@ -62,8 +62,9 @@ class UserController extends Controller
 		else
 		{
 		    $this->validate($request, [
-		        'password' => 'required|min:6',
-		        'name'     => 'required|max:180',
+		        'password'              => 'required|min:6|confirmed',
+		        'password_confirmation' => 'required',
+		        'name'                  => 'required|max:180',
 		    ]);
 		}
 
@@ -159,9 +160,10 @@ class UserController extends Controller
     private function validateRequest(Request $request)
     {
 		$this->validate($request, [
-			'email'    => 'required|email|unique:users', 
-			'password' => 'required|min:6',
-			'name'     => 'required|max:180',
+			'email'                 => 'required|email|unique:users', 
+			'password'              => 'required|min:6|confirmed',
+		    'password_confirmation' => 'required',
+		    'name'                  => 'required|max:180',
 		]);
 	}
 	
