@@ -8,4 +8,7 @@ wget http://dev.mysql.com/get/mysql-apt-config_0.2.1-1ubuntu12.04_all.deb
 sudo dpkg --install mysql-apt-config_0.2.1-1ubuntu12.04_all.deb
 sudo apt-get update -q
 sudo apt-get install -q --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" mysql-server
-mysql -u root -p
+sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+sudo kill -9 `sudo cat /var/lib/mysql/mysqld_safe.pid`
+sudo kill -9 `sudo cat /var/run/mysqld/mysqld.pid`
+sudo service mysql restart
