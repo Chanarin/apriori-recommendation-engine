@@ -498,7 +498,7 @@
 *   Add Scrutinizer 
 *   Add StyleCI
 *   Promote the API beta version for testing and collaboration
-*   Deploy a beta version of the API and try it out  
+*   Deploy a beta version of the API and try it out - you can hit the API at [http://arera-test.us-west-2.elasticbeanstalk.com/](http://arera-test.us-west-2.elasticbeanstalk.com)
 
 # Notice:
 
