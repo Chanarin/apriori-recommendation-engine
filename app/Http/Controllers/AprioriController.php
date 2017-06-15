@@ -57,13 +57,20 @@ class AprioriController extends Controller
      */
     public function support(Request $request, int $id) 
     {
-        if(isset($request->query()['items']))
+        try
         {
-            $apriori = $this->setApriori($request, $id);
-            
-            return $this->success([
-                'support' => $apriori->getSupport($request->items)
-            ], 200);
+            if(isset($request->query()['items']))
+            {
+                $apriori = $this->setApriori($request, $id);
+                
+                return $this->success([
+                    'support' => $apriori->getSupport($request->items)
+                ], 200);
+            }
+        }
+        catch(\InvalidArgumentException $ex)
+        {
+            return $this->error($ex->getMessage(), 422);
         }
         
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
@@ -77,13 +84,20 @@ class AprioriController extends Controller
      */
     public function frequency(Request $request, int $id)
     {
-        if(isset($request->query()['items']))
+        try
         {
-            $apriori = $this->setApriori($request, $id);
-            
-            return $this->success([
-                'frequency' => $apriori->getFrequency($request->items)
-            ], 200);
+            if(isset($request->query()['items']))
+            {
+                $apriori = $this->setApriori($request, $id);
+                
+                return $this->success([
+                    'frequency' => $apriori->getFrequency($request->items)
+                ], 200);
+            }
+        }
+        catch(\InvalidArgumentException $ex)
+        {
+            return $this->error($ex->getMessage(), 422);
         }
         
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
