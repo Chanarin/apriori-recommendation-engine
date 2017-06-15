@@ -1,3 +1,6 @@
+
+<img src="https://travis-ci.org/alejandro-carstens/apriori-recommendation-engine.svg?branch=master" />
+
 <p  align="center"> 
 <img src="https://github.com/alejandro-carstens/apriori-recommendation-engine/blob/master/public/images/logo.png" />
 <br>
