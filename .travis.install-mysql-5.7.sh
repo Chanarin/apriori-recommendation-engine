@@ -10,3 +10,4 @@ sudo apt-get update -q
 sudo apt-get install -q --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" mysql-server
 sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
 sudo service mysql restart
+mysql --version
