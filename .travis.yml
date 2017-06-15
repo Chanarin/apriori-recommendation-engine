@@ -9,6 +9,8 @@ php:
 before_script:
  - cp .env.travis .env
  - bash .travis.install-mysql-5.7.sh
+ - mysql -e 'create database c9;'
+ - mysql -e "create user 'root'@'localhost' identified by 'root'; grant all privileges on root . * to 'root'@'localhost';" -uroot
  - composer self-update
  - composer install --dev --prefer-source --no-interaction
  - php artisan migrate:install --env=testing --no-interaction -vvv
