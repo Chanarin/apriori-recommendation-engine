@@ -1,6 +1,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyn/multi-tenant/2.x/license.md)
 [![Build Status](https://travis-ci.org/alejandro-carstens/apriori-recommendation-engine.svg?branch=master)](https://travis-ci.org/alejandro-carstens/apriori-recommendation-engine)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alejandro-carstens/apriori-recommendation-engine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alejandro-carstens/apriori-recommendation-engine/?branch=master)
+[![StyleCI](https://styleci.io/repos/91846922/shield?branch=master)](https://styleci.io/repos/91846922)
 
 
 <p  align="center"> 
