@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if [[ "$MYSQL_VERSION" == "5.7" ]]; then
   echo "Installing MySQL 5.7..."
   echo mysql-apt-config mysql-apt-config/select-server select mysql-5.7 | sudo debconf-set-selections
