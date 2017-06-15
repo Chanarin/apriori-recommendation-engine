@@ -1,6 +1,6 @@
 
 <img src="https://travis-ci.org/alejandro-carstens/apriori-recommendation-engine.svg?branch=master" />
-<img src="https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hyn/multi-tenant/2.x/license.md" />
+<img src="https://raw.githubusercontent.com/hyn/multi-tenant/2.x/license.md" />
 
 <p  align="center"> 
 <img src="https://github.com/alejandro-carstens/apriori-recommendation-engine/blob/master/public/images/logo.png" />
