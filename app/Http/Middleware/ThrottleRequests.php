@@ -19,8 +19,6 @@ class ThrottleRequests
      * Create a new request throttler.
      *
      * @param \Illuminate\Cache\RateLimiter $limiter
-     *
-     * @return void
      */
     public function __construct(RateLimiter $limiter)
     {

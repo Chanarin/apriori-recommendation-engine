@@ -17,13 +17,13 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param int $id
      *
      * @return mixed
      */
-    public function show($transaction)
+    public function show($id)
     {
-        $transaction = Transaction::find($transaction);
+        $transaction = Transaction::find($id);
 
         if ($transaction && RedisKey::find($transaction->redis_key_id)->user_id == Authorizer::getResourceOwnerId()) {
             return $this->success($transaction, 200);

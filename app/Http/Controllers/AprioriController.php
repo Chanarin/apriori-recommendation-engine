@@ -92,13 +92,17 @@ class AprioriController extends Controller
     public function total(int $id)
     {
         $redisKey = RedisKey::find($id);
-
-        $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
-
-        return $this->success([
-            'transaction count' => $apriori->getTransactionCount(),
-        ], 200);
-
+    
+        if(!is_null($redisKey)){
+    
+            $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
+    
+            return $this->success([
+                'transaction count' => $apriori->getTransactionCount(),
+            ], 200);
+            
+        }
+        
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
 

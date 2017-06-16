@@ -122,15 +122,21 @@ class UserRedisKeyController extends Controller
     public function isAuthorized(Request $request)
     {
         if (isset($this->getArgs($request)['redis_key_id'])) {
+            
             $resource = 'redis_keys';
-            $redisKey = RedisKey::find($this->getArgs($request)['redis_key_id']);
+            
+            $id = $this->getArgs($request)['redis_key_id'];
+            
+            $redisKey = RedisKey::find($id);
 
             return $this->authorizeUser($request, $resource, $redisKey);
         }
 
         $resource = 'users_redis_keys';
-
-        $user = User::find($this->getArgs($request)['id']);
+        
+        $id = $this->getArgs($request)['id'];
+        
+        $user = User::find($id);
 
         return $this->authorizeUser($request, $resource, $user);
     }
