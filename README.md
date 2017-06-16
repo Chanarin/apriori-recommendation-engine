@@ -3,12 +3,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alejandro-carstens/apriori-recommendation-engine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/alejandro-carstens/apriori-recommendation-engine/?branch=master)
 [![StyleCI](https://styleci.io/repos/91846922/shield?branch=master)](https://styleci.io/repos/91846922)
 
-
-<p  align="center"> 
-<img src="https://github.com/alejandro-carstens/apriori-recommendation-engine/blob/master/public/images/logo.png" />
-<br>
-</p>
-
 # What is ARERA?
 
 *    <b>ARERA</b> stands for <b>A</b>priori <b>R</b>ecommendation <b>E</b>ngine <b>R</b>ESTful <b>A</b>PI
