@@ -98,7 +98,6 @@ class Apriori extends Association
     /**
      * Counts occurrences of $set as subset in data pool.
      *
-     * @param string    $key
      * @param string    $set
      *
      * @return int
@@ -143,7 +142,6 @@ class Apriori extends Association
      * Implements the Redis ZSCAN command on the combinations subset
      * 
      * @param array     $elements
-     * @param string    $key
      * @param int       $count
      * @param int       $cursor
      * 
@@ -153,9 +151,11 @@ class Apriori extends Association
     {
         natsort($elements);
         
-        $smaples = null;
+        $limit = count($elements);
         
-        for($i = 0; $i < count($elements); $i++)
+        $samples = null;
+        
+        for($i = 0; $i < $limit; $i++)
         {
             $temp = Redis::command(
                 'ZSCAN', [
@@ -186,7 +186,8 @@ class Apriori extends Association
      * Sets the combination string to look for
      * 
      * @param array     $elements
-     * @param string    $recurring
+     * @param string    $start
+     * @param string    $end
      * 
      * @return string
      */ 
