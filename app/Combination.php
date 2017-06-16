@@ -174,8 +174,11 @@ class Combination extends Association
      */
     private function setSize($size, int $count) : int
     {
-        if( is_null($size) && $count <= self::MAX_SIZE ) return $size = $count;
-        elseif( is_null($size) &&  $count > self::MAX_SIZE ) return $size = self::MAX_SIZE;
+        if (is_null($size) && $count <= self::MAX_SIZE) {
+            return $size = $count;
+        } elseif (is_null($size) && $count > self::MAX_SIZE) {
+            return $size = self::MAX_SIZE;
+        }
         if (is_null($size) && $count <= self::MAX_SIZE) {
             return $size = $count;
         } elseif (is_null($size) && $count > self::MAX_SIZE) {
