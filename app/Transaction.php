@@ -4,9 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Combination;
-
-class Transaction extends Model 
+class Transaction extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -25,38 +23,40 @@ class Transaction extends Model
     protected $casts = [
         'items' => 'array',
     ];
-    
+
     /**
-     * Instantiate a Transaction
+     * Instantiate a Transaction.
      */
     public function __construct(array $items = [])
     {
-        if(count($items)) $this->items = array_unique($items);
+        if (count($items)) {
+            $this->items = array_unique($items);
+        }
     }
-    
+
     /**
-     * Belongs-to-one Key relationship
-     * 
+     * Belongs-to-one Key relationship.
+     *
      * @return mixed
      */
     public function redisKey()
     {
         return $this->belongsToOne('App\RedisKey');
     }
-    
+
     /**
-     * Clean transaction combinations in Redis
-     * 
-     * @param RedisKey  $redisKey
-     * 
+     * Clean transaction combinations in Redis.
+     *
+     * @param RedisKey $redisKey
+     *
      * @return void
      */
     public function clean(RedisKey $redisKey)
     {
         $combination = new Combination($redisKey->combinations_key, $redisKey->transactions_key);
-        
+
         $combination->zincrby($this->items, null, $this->id, -1);
-        
+
         $combination->clean();
     }
 }

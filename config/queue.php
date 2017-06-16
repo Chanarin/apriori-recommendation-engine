@@ -35,31 +35,31 @@ return [
         ],
 
         'database' => [
-            'driver' => 'database',
-            'table' => 'jobs',
-            'queue' => 'default',
+            'driver'      => 'database',
+            'table'       => 'jobs',
+            'queue'       => 'default',
             'retry_after' => 60,
         ],
 
         'beanstalkd' => [
-            'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
+            'driver'      => 'beanstalkd',
+            'host'        => 'localhost',
+            'queue'       => 'default',
             'retry_after' => 60,
         ],
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('AWS_PUBLIC_KEY'),
+            'key'    => env('AWS_PUBLIC_KEY'),
             'secret' => env('AWS_SECRET_KEY'),
-            'queue' => env('AWS_QUEUE_NAME'),
+            'queue'  => env('AWS_QUEUE_NAME'),
             'region' => env('AWS_REGION'),
         ],
 
         'redis' => [
-            'driver' => 'redis',
-            'connection' => 'default',
-            'queue' => 'default',
+            'driver'      => 'redis',
+            'connection'  => 'default',
+            'queue'       => 'default',
             'retry_after' => 60,
         ],
 
@@ -78,7 +78,7 @@ return [
 
     'failed' => [
         'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => env('QUEUE_FAILED_TABLE', 'failed_jobs'),
+        'table'    => env('QUEUE_FAILED_TABLE', 'failed_jobs'),
     ],
 
 ];

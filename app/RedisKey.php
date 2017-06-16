@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RedisKey extends Model 
+class RedisKey extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class RedisKey extends Model
      * @var array
      */
     protected $fillable = [
-        'id','master_key', 'transactions_key', 'combinations_key',
+        'id', 'master_key', 'transactions_key', 'combinations_key',
     ];
 
     /**
@@ -23,87 +23,87 @@ class RedisKey extends Model
     protected $hidden = [
         'user_id',
     ];
-    
+
     /**
-     * Belongs-to-one User relationship
-     * 
+     * Belongs-to-one User relationship.
+     *
      * @return mixed
      */
     public function user()
     {
         return $this->belongsToOne('App\User');
     }
-    
+
     /**
-     * Has-many transactions relationship
-     * 
+     * Has-many transactions relationship.
+     *
      * @return mixed
      */
     public function transactions()
     {
         return $this->hasMany('App\Transaction');
     }
-    
+
     /**
-     * @param string    $masterKey
-     * 
+     * @param string $masterKey
+     *
      * @return RedisKey
      */
     public function setKeys(string $masterKey) : RedisKey
     {
         $this->master_key = $masterKey;
-        $this->transactions_key = 'transactions-' . $masterKey . '-' . time();
-        $this->combinations_key = 'combinations-' . $masterKey . '-' . time();
-        
+        $this->transactions_key = 'transactions-'.$masterKey.'-'.time();
+        $this->combinations_key = 'combinations-'.$masterKey.'-'.time();
+
         return $this;
     }
-    
+
     /**
-     * Add a transaction to a redis key
-     * 
-     * @return boolean
+     * Add a transaction to a redis key.
+     *
+     * @return bool
      */
     public function addTransaction(Transaction $transaction)
     {
         return $this->transactions()->save($transaction);
     }
-    
+
     /**
-     * Removes keys from Redis
-     * 
+     * Removes keys from Redis.
+     *
      * @return RedisKey
      */
     public function remove() : RedisKey
     {
         (new Combination($this->combinations_key, $this->transactions_key))->destroy();
-        
+
         return $this;
     }
-    
+
     /**
-     * Reassign names to Redis keys
-     * 
-     * @param string    $oldCombinationKey
-     * @param string    $oldTransactionKey
-     * 
+     * Reassign names to Redis keys.
+     *
+     * @param string $oldCombinationKey
+     * @param string $oldTransactionKey
+     *
      * @return RedisKey
      */
-    public function reassign(string $oldCombinationKey,string  $oldTransactionKey) : RedisKey
+    public function reassign(string $oldCombinationKey, string  $oldTransactionKey) : RedisKey
     {
         (new Combination($this->combinations_key, $this->transactions_key))->reassign($oldCombinationKey, $oldTransactionKey);
-        
+
         return $this;
     }
-    
+
     /**
-     * Deletes a RedisKey and the transactions associated with it
-     * 
+     * Deletes a RedisKey and the transactions associated with it.
+     *
      * @return mixed
      */
     public function delete()
     {
         $this->transactions()->delete();
-        
+
         return parent::delete();
     }
 }

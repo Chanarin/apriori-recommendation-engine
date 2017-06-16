@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OauthClient extends Model 
+class OauthClient extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -23,20 +23,20 @@ class OauthClient extends Model
     protected $hidden = [
         'secret',
     ];
-    
+
     /**
-     * @param string    $id
-     * @param string    $secret
-     * @param string    $name
-     * 
+     * @param string $id
+     * @param string $secret
+     * @param string $name
+     *
      * @return OauthClient
-     */ 
+     */
     public function setOauthClient(string $id, string $secret, string $name) : OauthClient
     {
-		$this->id = $id;
-		$this->secret = $secret;
-		$this->name = $name;
-		
-		return $this;
+        $this->id = $id;
+        $this->secret = $secret;
+        $this->name = $name;
+
+        return $this;
     }
 }
