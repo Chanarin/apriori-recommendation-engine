@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use App\User;
-
 use Illuminate\Support\Facades\Gate;
-
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,114 +29,117 @@ class AuthServiceProvider extends ServiceProvider
         // application. The callback which receives the incoming request instance
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
-        
+
         $this->isOwner([
             'redis_keys' => [
-                'destroy', 
-                'update', 
+                'destroy',
+                'update',
                 'show',
-                'transactions', 
-                'store', 
-                'destroy', 
-                'recommend', 
-                'support', 
-                'frequency', 
-                'total', 
-                'storeAsync'
+                'transactions',
+                'store',
+                'destroy',
+                'recommend',
+                'support',
+                'frequency',
+                'total',
+                'storeAsync',
             ],
         ]);
-        
+
         $this->isUserOwner([
             'users' => [
-                'credentials', 
-                'update', 
-                'show', 
-                'destroy'
+                'credentials',
+                'update',
+                'show',
+                'destroy',
             ],
             'users_redis_keys' => [
-                'store', 
-                'index', 
-                'destroy'
+                'store',
+                'index',
+                'destroy',
             ],
         ]);
-        
+
         $this->isAdmin([
             'users' => [
                 'index',
             ],
         ]);
     }
-    
+
     /**
      * Define abilities that checks if the current user is the owner of the requested resource.
      * In case of admin user, it will return true.
      *
-     * @param  array  $arguments
-     * @return boolean
+     * @param array $arguments
+     *
+     * @return bool
      */
     private function isOwner(array $arguments = [])
     {
-        foreach ($arguments as $resource => $actions) 
-        {
-            foreach ($actions as $action) 
-            {
+        foreach ($arguments as $resource => $actions) {
+            foreach ($actions as $action) {
                 Gate::define($this->ability($action, $resource), function ($user, $arg) {
-                    if(is_null($arg)) return false;
+                    if (is_null($arg)) {
+                        return false;
+                    }
+
                     return $arg->user_id === $user->id || $user->is_admin;
-                });            
+                });
             }
         }
     }
-    
+
     /**
      * Define abilities that checks if the current user is the owned by the client.
      *
-     * @param  array  $arguments
-     * @return boolean
+     * @param array $arguments
+     *
+     * @return bool
      */
     private function isUserOwner(array $arguments = [])
     {
-        foreach ($arguments as $resource => $actions) 
-        {
-            foreach ($actions as $action) 
-            {
+        foreach ($arguments as $resource => $actions) {
+            foreach ($actions as $action) {
                 Gate::define($this->ability($action, $resource), function ($user, $arg) {
-                    if(is_null($arg)) return false;
+                    if (is_null($arg)) {
+                        return false;
+                    }
+
                     return $arg->id === $user->id || $user->is_admin;
-                });            
+                });
             }
         }
     }
-    
+
     /**
      * Define abilities that checks if the current user is admin.
      *
-     * @param  array  $arguments
-     * @return boolean
+     * @param array $arguments
+     *
+     * @return bool
      */
     private function isAdmin(array $arguments = [])
     {
-        foreach ($arguments as $resource => $actions) 
-        {
-            foreach ($actions as $action) 
-            {
+        foreach ($arguments as $resource => $actions) {
+            foreach ($actions as $action) {
                 Gate::define($this->ability($action, $resource), function ($user) {
                     return $user->is_admin;
                 });
             }
         }
     }
-    
+
     /**
      * Define ability string.
-     * 
-     * @param  string  $action
-     * @param  string  $resource
-     * 
+     *
+     * @param string $action
+     * @param string $resource
+     *
      * @return string
      */
     private function ability($action, $resource)
     {
-        return '{' . $action . '}-{' . $resource . '}';
+        return '{'.$action.'}-{'.$resource.'}';
     }
 }

@@ -7,37 +7,37 @@ use Illuminate\Support\Facades\Redis as Redis;
 class Apriori extends Association
 {
     /**
-     * @var int constant COUNT 
+     * @var int constant COUNT
      */
     const COUNT = 100000;
-    
+
     /**
      * @var int constant PREDICTIONS_LIMIT
      */
     const PREDICTIONS_LIMIT = 50;
-    
+
     /**
      * Minimum relative probability of frequent transactions.
      *
      * @var float
      */
     private $confidence;
-    
+
     /**
      * Minimum relative frequency of transactions.
      *
      * @var float
      */
     private $support;
-    
+
     /**
-     * Ratio of the observed support to that expected if subset X and 
-     * subset Y were independent
-     * 
+     * Ratio of the observed support to that expected if subset X and
+     * subset Y were independent.
+     *
      * @var float
      */
     private $lift;
-    
+
     /**
      * Apriori constructor.
      *
@@ -46,24 +46,23 @@ class Apriori extends Association
      */
     public function __construct(string $combinationKey, string $transactionKey, float $support = 0.0, float $confidence = 0.0)
     {
-        if($support < 0 || $confidence < 0)
-        {
+        if ($support < 0 || $confidence < 0) {
             throw new \InvalidArgumentException('The support and confidence most be greater than 0.');
         }
-        
+
         $this->combinationKey = $combinationKey;
         $this->transactionKey = $transactionKey;
         $this->support = $support;
         $this->confidence = $confidence;
     }
-    
+
     /**
-     * Calculates support for item set $sample. Support is the relative amount 
+     * Calculates support for item set $sample. Support is the relative amount
      * of sets containing $sample in the data pool.
      *
-     * @param string    $set
-     * @param mixed     $min
-     * @param mixed     $max
+     * @param string $set
+     * @param mixed  $min
+     * @param mixed  $max
      *
      * @return float
      */
@@ -71,10 +70,10 @@ class Apriori extends Association
     {
         return $this->frequency($set) / Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
     }
-    
+
     /**
-     * @param mixed     $min
-     * @param mixed     $max
+     * @param mixed $min
+     * @param mixed $max
      *
      * @return int
      */
@@ -82,48 +81,52 @@ class Apriori extends Association
     {
         return Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
     }
-    
+
     /**
-     * @param array     $elements
-     * 
+     * @param array $elements
+     *
      * @return float
      */
     public function getSupport(array $elements) : float
     {
-        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN); 
-        
+        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+
         return $this->support($string);
     }
-    
+
     /**
      * Counts occurrences of $set as subset in data pool.
      *
+<<<<<<< HEAD
      * @param string    $set
+=======
+     * @param string $key
+     * @param string $set
+>>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      *
      * @return int
      */
     private function frequency(string $set) : int
     {
-        if(is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey, $set])))
-        {
+        if (is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey, $set]))) {
             throw new \InvalidArgumentException('Ups!, the key and items you passed are not associated.');
         }
-        
+
         return $frequency;
     }
-    
+
     /**
-     * @param array     $elements
-     * 
+     * @param array $elements
+     *
      * @return int
      */
     public function getFrequency(array $elements) : int
     {
         $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
-        
+
         return $this->frequency($string);
     }
-    
+
     /**
      * Returns frequent item sets only.
      *
@@ -137,19 +140,30 @@ class Apriori extends Association
             return $this->support($entry) >= $this->support;
         });
     }
-    
+
     /**
+<<<<<<< HEAD
      * Implements the Redis ZSCAN command on the combinations subset
      * 
      * @param array     $elements
      * @param int       $count
      * @param int       $cursor
      * 
+=======
+     * Implements the Redis ZSCAN command on the combinations subset.
+     *
+     * @param array  $elements
+     * @param string $key
+     * @param int    $count
+     * @param int    $cursor
+     *
+>>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      * @return array
      */
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
         natsort($elements);
+<<<<<<< HEAD
         
         $limit = count($elements);
         
@@ -157,182 +171,197 @@ class Apriori extends Association
         
         for($i = 0; $i < $limit; $i++)
         {
+=======
+
+        $smaples = null;
+
+        for ($i = 0; $i < count($elements); $i++) {
+>>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
             $temp = Redis::command(
                 'ZSCAN', [
-                    $this->combinationKey, 
-                    $cursor, 
-                    'match', '*' . self::START_SEPARATION_PATTERN . $elements[$i] . self::END_SEPARATION_PATTERN . '*', 
-                    'count', $count
+                    $this->combinationKey,
+                    $cursor,
+                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+                    'count', $count,
                 ]
             )[1];
-            
-            if($i == 0) 
-            {
+
+            if ($i == 0) {
                 $samples = $temp;
                 continue;
             }
-            
+
             $samples = array_intersect_key($samples, $temp);
         }
-        
+
         $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
-        
+
         unset($samples[$value]);
-        
+
         return $samples;
     }
-    
+
     /**
+<<<<<<< HEAD
      * Sets the combination string to look for
      * 
      * @param array     $elements
      * @param string    $start
      * @param string    $end
      * 
+=======
+     * Sets the combination string to look for.
+     *
+     * @param array  $elements
+     * @param string $recurring
+     *
+>>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      * @return string
-     */ 
+     */
     private static function setString(array $elements, $start = '', $end = '') : string
     {
         $set = array_map('strval', $elements);
-        
+
         natsort($set);
-        
+
         $value = '';
-        
-        foreach($set as $element) 
-        {
-            $value = $value . $start . $element . $end;
+
+        foreach ($set as $element) {
+            $value = $value.$start.$element.$end;
         }
-        
+
         return $value;
     }
-    
+
     /**
-     * Gets the samples associated with a given item or subset with their 
-     * associated support
-     * 
-     * @param array     $elements
-     * @param int       $count
-     * @param int       $cursor
-     * @param boolean   $filter
-     * 
+     * Gets the samples associated with a given item or subset with their
+     * associated support.
+     *
+     * @param array $elements
+     * @param int   $count
+     * @param int   $cursor
+     * @param bool  $filter
+     *
      * @return array
      */
     public function samples(array $elements, int $count = self::COUNT, int $cursor = 0, bool $filter = true) : array
     {
         $samples = [];
-        
+
         natsort($elements);
-        
-        foreach( $this->zscan($elements, $count, $cursor) as $sample => $value )
-        {
-            if( $filter && $this->support($sample) >= $this->support ) $samples[$sample] = $this->support($sample);
-            elseif( !$filter) $samples[$sample] = $this->support($sample);
+
+        foreach ($this->zscan($elements, $count, $cursor) as $sample => $value) {
+            if ($filter && $this->support($sample) >= $this->support) {
+                $samples[$sample] = $this->support($sample);
+            } elseif (!$filter) {
+                $samples[$sample] = $this->support($sample);
+            }
         }
-        
+
         return $samples;
     }
-    
+
     /**
-     * Sets the prediction elements
-     * 
-     * @param string    $key
-     * @param string    $combination
-     * 
+     * Sets the prediction elements.
+     *
+     * @param string $key
+     * @param string $combination
+     *
      * @return array
      */
     private function setKey(string $key, string $combination) : array
     {
         $key = $this->trimPatterns($key);
-        
+
         $combination = $this->trimPatterns($combination);
-        
+
         return array_values(array_diff(explode(',', $key), explode(',', $combination)));
     }
-    
+
     /**
-     * Trims the start and ending patterns of a combination string
-     * 
+     * Trims the start and ending patterns of a combination string.
+     *
      * @param string $combination
-     * 
+     *
      * @return string
      */
     private function trimPatterns(string $combination) : string
     {
         return rtrim(
             str_replace(
-                self::START_SEPARATION_PATTERN,'',str_replace(self::END_SEPARATION_PATTERN, ',', $combination)
+                self::START_SEPARATION_PATTERN, '', str_replace(self::END_SEPARATION_PATTERN, ',', $combination)
             ), ','
         );
     }
-    
+
     /**
-     * Gets the possible assoication rules for a given element or subset
-     * 
-     * @param array     $samples
-     * @param array     $elements
-     * @param boolean   $lift
-     * 
+     * Gets the possible assoication rules for a given element or subset.
+     *
+     * @param array $samples
+     * @param array $elements
+     * @param bool  $lift
+     *
      * @return array
-     */ 
+     */
     public function rules(array $samples, array $elements, bool $lift = false) : array
     {
-        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN); 
-        
+        $string = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+
         $support = $this->support($string);
-        
+
         $rules = [];
-        
+
         $counter = 0;
-        
-        foreach(array_reverse($samples) as $key => $value)
-        {
-            if( $this->confidence <= ( $confidence = $value / $support ) )
-            {
-                if( $lift && $this->lift <= ( $lift = $value / ( $support * $this->support(str_replace($string, '', $key)) ) ) )
-                {
+
+        foreach (array_reverse($samples) as $key => $value) {
+            if ($this->confidence <= ($confidence = $value / $support)) {
+                if ($lift && $this->lift <= ($lift = $value / ($support * $this->support(str_replace($string, '', $key))))) {
                     $rules[] = [
                         'lift'       => $lift,
                         'confidence' => $confidence,
                         'support'    => $support,
                         'key'        => $this->setKey($key, $string),
                     ];
-                    
+
                     continue;
                 }
-                
+
                 $rules[] = [
                     'confidence' => $confidence,
                     'support'    => $support,
                     'key'        => $this->setKey($key, $string),
                 ];
             }
-            
+
             $counter++;
-            
-            if($counter == self::PREDICTIONS_LIMIT) break;
+
+            if ($counter == self::PREDICTIONS_LIMIT) {
+                break;
+            }
         }
-        
-        usort($rules, function($a, $b) { return count($a['key']) - count($b['key']); });
-        
+
+        usort($rules, function ($a, $b) {
+            return count($a['key']) - count($b['key']);
+        });
+
         return $rules;
     }
-    
+
     /**
-     * Predicts the possible items to be bought along with the combination entered
-     * 
-     * @param array     $elements
-     * @param boolean   $lift
-     * @param int       $cursor
-     * @param int       $count
-     * @param boolean   $filter
-     * 
+     * Predicts the possible items to be bought along with the combination entered.
+     *
+     * @param array $elements
+     * @param bool  $lift
+     * @param int   $cursor
+     * @param int   $count
+     * @param bool  $filter
+     *
      * @return array
      */
     public function predictions(array $elements, bool $lift = false, int $count = self::COUNT, int $cursor = 0, bool $filter = true) : array
     {
         $samples = $this->samples($elements, $count, $cursor, $filter);
-        
+
         return $this->rules($samples, $elements, $lift);
     }
 }

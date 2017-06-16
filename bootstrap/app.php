@@ -86,11 +86,11 @@ $app->middleware([
 $app->routeMiddleware([
 //  'auth' => App\Http\Middleware\Authenticate::class,
     'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
-    'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
+    'oauth'                      => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
 //  'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
     'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
-    'throttle' => App\Http\Middleware\ThrottleRequests::class,
-    'authorize' => App\Http\Middleware\Authorize::class,
+    'throttle'   => App\Http\Middleware\ThrottleRequests::class,
+    'authorize'  => App\Http\Middleware\Authorize::class,
 ]);
 
 /*
