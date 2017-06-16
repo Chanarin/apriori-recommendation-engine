@@ -16,8 +16,6 @@ class Combination extends Association
      *
      * @param string $combinationKey
      * @param string $transactionKey
-     *
-     * @return void
      */
     public function __construct(string $combinationKey, string $transactionKey)
     {
@@ -133,7 +131,6 @@ class Combination extends Association
      * @param array  $set
      * @param int    $size
      * @param mixed  $txId
-     * @param string $key
      * @param int    $score
      *
      * @return void
@@ -175,14 +172,9 @@ class Combination extends Association
     private function setSize($size, int $count) : int
     {
         if (is_null($size) && $count <= self::MAX_SIZE) {
-            return $size = $count;
+            return $count;
         } elseif (is_null($size) && $count > self::MAX_SIZE) {
-            return $size = self::MAX_SIZE;
-        }
-        if (is_null($size) && $count <= self::MAX_SIZE) {
-            return $size = $count;
-        } elseif (is_null($size) && $count > self::MAX_SIZE) {
-            return $size = self::MAX_SIZE;
+            return self::MAX_SIZE;
         }
     }
 

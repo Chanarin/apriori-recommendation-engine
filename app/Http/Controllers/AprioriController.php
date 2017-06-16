@@ -61,8 +61,6 @@ class AprioriController extends Controller
         } catch (\InvalidArgumentException $ex) {
             return $this->error($ex->getMessage(), 422);
         }
-
-        return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
 
     /**
@@ -84,12 +82,9 @@ class AprioriController extends Controller
         } catch (\InvalidArgumentException $ex) {
             return $this->error($ex->getMessage(), 422);
         }
-
-        return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
 
     /**
-     * @param Request $request
      * @param int     $id
      *
      * @return mixed

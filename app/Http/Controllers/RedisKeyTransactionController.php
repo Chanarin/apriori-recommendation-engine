@@ -32,6 +32,7 @@ class RedisKeyTransactionController extends Controller
 
     /**
      * @param Request $request
+     * @param int     $id
      *
      * @return mixed
      */
@@ -57,6 +58,7 @@ class RedisKeyTransactionController extends Controller
 
     /**
      * @param Request $request
+     * @param int     $id
      *
      * @return mixed
      */

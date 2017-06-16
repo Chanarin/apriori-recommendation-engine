@@ -153,7 +153,7 @@ class Apriori extends Association
 
         $samples = null;
 
-        for ($i = 0; $i < count($elements); $i++) {
+        for ($i = 0; $i < $limit; $i++) {
             
             $temp = Redis::command(
                 'ZSCAN', [
