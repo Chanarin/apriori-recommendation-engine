@@ -139,9 +139,9 @@ class Apriori extends Association
     /**
      * Implements the Redis ZSCAN command on the combinations subset.
      *
-     * @param array  $elements
-     * @param int    $count
-     * @param int    $cursor
+     * @param array $elements
+     * @param int   $count
+     * @param int   $cursor
      *
      * @return array
      */
@@ -154,7 +154,6 @@ class Apriori extends Association
         $samples = null;
 
         for ($i = 0; $i < $limit; $i++) {
-            
             $temp = Redis::command(
                 'ZSCAN', [
                     $this->combinationKey,
@@ -170,7 +169,7 @@ class Apriori extends Association
 
             $samples = array_intersect_key($samples, $temp);
         }
-    
+
         $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);

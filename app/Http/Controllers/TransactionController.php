@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\RedisKey;
 use App\Transaction;
 use App\User;
-use Illuminate\Http\Request;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class TransactionController extends Controller
