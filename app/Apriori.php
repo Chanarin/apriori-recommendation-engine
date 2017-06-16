@@ -97,12 +97,9 @@ class Apriori extends Association
     /**
      * Counts occurrences of $set as subset in data pool.
      *
-<<<<<<< HEAD
      * @param string    $set
-=======
      * @param string $key
      * @param string $set
->>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      *
      * @return int
      */
@@ -142,14 +139,6 @@ class Apriori extends Association
     }
 
     /**
-<<<<<<< HEAD
-     * Implements the Redis ZSCAN command on the combinations subset
-     * 
-     * @param array     $elements
-     * @param int       $count
-     * @param int       $cursor
-     * 
-=======
      * Implements the Redis ZSCAN command on the combinations subset.
      *
      * @param array  $elements
@@ -157,43 +146,38 @@ class Apriori extends Association
      * @param int    $count
      * @param int    $cursor
      *
->>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      * @return array
      */
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
         natsort($elements);
-<<<<<<< HEAD
         
         $limit = count($elements);
         
         $samples = null;
         
-        for($i = 0; $i < $limit; $i++)
-        {
-=======
+        for($i = 0; $i < $limit; $i++){
 
-        $smaples = null;
+            $smaples = null;
 
-        for ($i = 0; $i < count($elements); $i++) {
->>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
-            $temp = Redis::command(
-                'ZSCAN', [
-                    $this->combinationKey,
-                    $cursor,
-                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
-                    'count', $count,
-                ]
-            )[1];
+            for ($i = 0; $i < count($elements); $i++) {
+                $temp = Redis::command(
+                    'ZSCAN', [
+                        $this->combinationKey,
+                        $cursor,
+                        'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+                        'count', $count,
+                    ])[1];
 
-            if ($i == 0) {
-                $samples = $temp;
-                continue;
+                if ($i == 0) {
+                    $samples = $temp;
+                    continue;
+                }
+
+                $samples = array_intersect_key($samples, $temp);
             }
-
-            $samples = array_intersect_key($samples, $temp);
         }
-
+        
         $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);
@@ -202,20 +186,12 @@ class Apriori extends Association
     }
 
     /**
-<<<<<<< HEAD
      * Sets the combination string to look for
      * 
      * @param array     $elements
      * @param string    $start
      * @param string    $end
      * 
-=======
-     * Sets the combination string to look for.
-     *
-     * @param array  $elements
-     * @param string $recurring
-     *
->>>>>>> 0a9f37d8f71eae1c9181da7f717e86f93c34730d
      * @return string
      */
     private static function setString(array $elements, $start = '', $end = '') : string
