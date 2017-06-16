@@ -28,24 +28,24 @@ return [
     */
 
     'grant_types' => [
-        
+
 //      'client_credentials' => [
 //          'class' => '\League\OAuth2\Server\Grant\ClientCredentialsGrant',
 //          'access_token_ttl' => 3600
 //      ]
-        
+
         'password' => [
-            'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
-            'callback' => '\App\User@verify',
-            'access_token_ttl' => 3600
-        ],
-        
-            'refresh_token' => [
-            'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+            'class'            => '\League\OAuth2\Server\Grant\PasswordGrant',
+            'callback'         => '\App\User@verify',
             'access_token_ttl' => 3600,
-            'refresh_token_ttl' => 36000
-        ]
-        
+        ],
+
+            'refresh_token' => [
+            'class'             => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+            'access_token_ttl'  => 3600,
+            'refresh_token_ttl' => 36000,
+        ],
+
     ],
 
     /*

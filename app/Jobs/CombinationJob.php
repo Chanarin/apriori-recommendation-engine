@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Combination;
 use App\RedisKey;
 use App\Transaction;
-use App\Combination;
 
 class CombinationJob extends Job
 {
@@ -12,12 +12,12 @@ class CombinationJob extends Job
      * @var Transaction
      */
     private $transaction;
-    
+
     /**
      * @var RedisKey
      */
     private $redisKey;
-    
+
     /**
      * Create a new job instance.
      *
@@ -26,7 +26,7 @@ class CombinationJob extends Job
     public function __construct(RedisKey $redisKey, Transaction $transaction)
     {
         $this->transaction = $transaction;
-        $this->redisKey    = $redisKey;
+        $this->redisKey = $redisKey;
     }
 
     /**
@@ -37,7 +37,7 @@ class CombinationJob extends Job
     public function handle()
     {
         (new Combination(
-            $this->redisKey->combinations_key, 
+            $this->redisKey->combinations_key,
             $this->redisKey->transactions_key
         ))->zincrby($this->transaction->items, null, $this->transaction->id);
     }

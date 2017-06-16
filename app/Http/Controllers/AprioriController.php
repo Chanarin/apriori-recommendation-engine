@@ -1,13 +1,10 @@
-<?php   
+<?php
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-
-use App\RedisKey;
 use App\Apriori;
+use App\RedisKey;
+use Illuminate\Http\Request;
 
 class AprioriController extends Controller
 {
@@ -15,141 +12,129 @@ class AprioriController extends Controller
     {
         $this->middleware('oauth');
         $this->middleware('oauth-user');
-        $this->middleware('authorize:' . __CLASS__);
+        $this->middleware('authorize:'.__CLASS__);
     }
-    
+
     /**
-     * @param Request   $request
-     * @param int       $id
-     * 
+     * @param Request $request
+     * @param int     $id
+     *
      * @return mixed
      */
     public function recommend(Request $request, $id)
     {
-        if(isset($request->query()['items']))
-        {
+        if (isset($request->query()['items'])) {
             $apriori = $this->setApriori($request, $id);
-            
-            try
-            {
+
+            try {
                 $items = $request->items;
-                
+
                 natsort($items);
-                
+
                 $rules = $apriori->predictions($items, true);
-            }
-            catch(\InvalidArgumentException $ex)
-            {
+            } catch (\InvalidArgumentException $ex) {
                 return $this->error($ex->getMessage(), 422);
             }
-            
+
             return $this->success($rules, 200);
         }
-        
+
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
-    
+
     /**
-     * @param Request   $request
-     * @param int       $id
-     * 
-     * @return mixed    
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return mixed
      */
-    public function support(Request $request, int $id) 
+    public function support(Request $request, int $id)
     {
-        try
-        {
-            if(isset($request->query()['items']))
-            {
+        try {
+            if (isset($request->query()['items'])) {
                 $apriori = $this->setApriori($request, $id);
-                
+
                 return $this->success([
-                    'support' => $apriori->getSupport($request->items)
+                    'support' => $apriori->getSupport($request->items),
                 ], 200);
             }
-        }
-        catch(\InvalidArgumentException $ex)
-        {
+        } catch (\InvalidArgumentException $ex) {
             return $this->error($ex->getMessage(), 422);
         }
-        
+
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
-    
+
     /**
-     * @param Request   $request
-     * @param int       $id
-     * 
-     * @return mixed    
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return mixed
      */
     public function frequency(Request $request, int $id)
     {
-        try
-        {
-            if(isset($request->query()['items']))
-            {
+        try {
+            if (isset($request->query()['items'])) {
                 $apriori = $this->setApriori($request, $id);
-                
+
                 return $this->success([
-                    'frequency' => $apriori->getFrequency($request->items)
+                    'frequency' => $apriori->getFrequency($request->items),
                 ], 200);
             }
-        }
-        catch(\InvalidArgumentException $ex)
-        {
+        } catch (\InvalidArgumentException $ex) {
             return $this->error($ex->getMessage(), 422);
         }
-        
+
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
-    
+
     /**
-     * @param Request   $request
-     * @param int       $id
-     * 
-     * @return mixed    
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return mixed
      */
     public function total(int $id)
     {
         $redisKey = RedisKey::find($id);
-            
+
         $apriori = new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
-            
+
         return $this->success([
-            'transaction count' => $apriori->getTransactionCount()
+            'transaction count' => $apriori->getTransactionCount(),
         ], 200);
-        
+
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
-    
+
     /**
-     * @param Request   $request
-     * @param int       $id
-     * 
-     * @return Apriori   
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Apriori
      */
     private function setApriori(Request $request, int $id) : Apriori
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'items.*' => 'required',
         ]);
-            
+
         $redisKey = RedisKey::find($id);
-            
+
         return new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
     }
-    
+
     /**
-     * @param Request   $request
-     * 
+     * @param Request $request
+     *
      * @return mixed
      */
     public function isAuthorized(Request $request)
     {
-		$resource = "redis_keys";
-		
-		$redis_key = RedisKey::find($this->getArgs($request)["id"]);
-		
-		return $this->authorizeUser($request, $resource, $redis_key);
-	}
+        $resource = 'redis_keys';
+
+        $redis_key = RedisKey::find($this->getArgs($request)['id']);
+
+        return $this->authorizeUser($request, $resource, $redis_key);
+    }
 }

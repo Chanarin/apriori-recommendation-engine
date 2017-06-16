@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
 use App\OauthClient;
+use Illuminate\Database\Seeder;
 
 class OauthClientsTableSeeder extends Seeder
 {
@@ -10,7 +9,7 @@ class OauthClientsTableSeeder extends Seeder
      * @var int
      */
     const ITERATIONS = 10;
-    
+
     /**
      * Run the database seeds.
      *
@@ -19,18 +18,16 @@ class OauthClientsTableSeeder extends Seeder
     public function run()
     {
         $this->resetTables();
-        
-        for($i = 0; $i < self::ITERATIONS; $i++)
-        {
+
+        for ($i = 0; $i < self::ITERATIONS; $i++) {
             OauthClient::create([
-                'id'     => 'id' . $i,
-                'secret' => 'secret' . $i,
-                'name'   => 'name' . $i
+                'id'     => 'id'.$i,
+                'secret' => 'secret'.$i,
+                'name'   => 'name'.$i,
             ]);
         }
     }
-    
-    
+
     private function resetTables()
     {
         \Schema::disableForeignKeyConstraints();
