@@ -97,7 +97,7 @@ class Apriori extends Association
     /**
      * Counts occurrences of $set as subset in data pool.
      *
-     * @param string    $set
+     * @param string $set
      * @param string $key
      * @param string $set
      *
@@ -151,13 +151,12 @@ class Apriori extends Association
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
         natsort($elements);
-        
-        $limit = count($elements);
-        
-        $samples = null;
-        
-        for($i = 0; $i < $limit; $i++){
 
+        $limit = count($elements);
+
+        $samples = null;
+
+        for ($i = 0; $i < $limit; $i++) {
             $smaples = null;
 
             for ($i = 0; $i < count($elements); $i++) {
@@ -177,7 +176,7 @@ class Apriori extends Association
                 $samples = array_intersect_key($samples, $temp);
             }
         }
-        
+
         $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);
@@ -186,12 +185,12 @@ class Apriori extends Association
     }
 
     /**
-     * Sets the combination string to look for
-     * 
-     * @param array     $elements
-     * @param string    $start
-     * @param string    $end
-     * 
+     * Sets the combination string to look for.
+     *
+     * @param array  $elements
+     * @param string $start
+     * @param string $end
+     *
      * @return string
      */
     private static function setString(array $elements, $start = '', $end = '') : string
