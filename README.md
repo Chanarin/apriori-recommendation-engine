@@ -12,8 +12,8 @@
 # What is ARERA?
 
 *    <b>ARERA</b> stands for <b>A</b>priori <b>R</b>ecommendation <b>E</b>ngine <b>R</b>ESTful <b>A</b>PI
-*    In simple words it is an apriori-algorithm-based recommendation engine API build with Laravel/Lumen & Redis
-*    It implements an apriori-like algorithm in order to obtain association rules to make predictions or recommendations. Please note that this API is not an implementation of the apriori algorithm, it was just inspired by it
+*    In simple words it is an apriori-algorithm-based recommendation engine API build with Lumen the Laravel micro framework
+*    It implements an apriori-like algorithm in order to obtain association rules to make recommendations. Please note that this API is not an implementation of the apriori algorithm itself, it was just inspired by it
 
 # Index
 
@@ -42,7 +42,8 @@
 *    The API must be developed in an elegant, maintainable, and scalable way, following SOLID coding principles as much as possible
 *    The API must be fully tested
 *    The API must be free, open source, and subjected to the MIT License
-*    The API is to be hosted on Amazon Web Services (AWS) leveraging the power of Elasticache, Elastic Beanstalk & RDS
+*    The API should be developed to be easily hosted on Amazon Web Services (AWS) leveraging the power of Elasticache, Elastic Beanstalk, RDS, and SQS
+*   This API is intended to work as a microservice to help larger applications
 
 # A Transaction in the Scope of The API
 
@@ -499,20 +500,17 @@
 # To Do List
 
 *   More unit testing - in progress
-*   Set the lumen environment for AWS Elastic Beanstalk Deployment - done but needs some tune up
-*   Add Travis
-*   Add Scrutinizer 
-*   Add StyleCI
+*   Set the lumen environment for AWS Elastic Beanstalk Deployment - done but needs tune up
 *   Promote the API beta version for testing and collaboration
 *   Deploy a beta version of the API and try it out - you can hit the API at [http://arera-test.us-west-2.elasticbeanstalk.com/](http://arera-test.us-west-2.elasticbeanstalk.com)
 
 # Notice:
 
-I recently began this project. I haven't gotten the time to write a more complete documentation on what it is trying to do. However, I think the code is somewhat readable, intuitive, and easy to understand. I encourage everyone interested to give me their opionions and to contribute. I will do my best to document this project over the next few days, and to promote it around developers to see if it can get some traction. Thanks in advance and I hope to see some pull requests soon.
+I recently began this project and I haven't gotten the time to write a more complete, clear, & thorough documentation on what it is trying to do. However, I think the code is somewhat readable, intuitive, and easy to understand. I encourage everyone interested to give me their opionions and to contribute. I will do my best to document this project over the next few days, and to promote it around developers to see if it can get some traction. Thanks in advance and I hope to see some pull requests soon.
 
 # Contributing 
 
-Find an area you can help with and do it. Open source is about collaboration and open participation. Try to make your code look like what already exists or better and submit a pull request. Also, in general if you have any ideas on how to make the code better or on improving its scope and functionality please contact me.
+Find an area you can help with and do it. Open source is about collaboration and open participation. Try to make your code look like what already exists or hopefully better and submit a pull request. Also, if you have any ideas on how to make the code better or on improving its scope and functionality please contact me at acarste@okstate.edu I will do my best to respond in a timely manner.
 
 # Lisence
 
