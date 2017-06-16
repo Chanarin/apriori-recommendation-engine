@@ -128,10 +128,10 @@ class Combination extends Association
     /**
      * Add each imploded subset to redis using the ZINCRBY command.
      *
-     * @param array  $set
-     * @param int    $size
-     * @param mixed  $txId
-     * @param int    $score
+     * @param array $set
+     * @param int   $size
+     * @param mixed $txId
+     * @param int   $score
      *
      * @return void
      */

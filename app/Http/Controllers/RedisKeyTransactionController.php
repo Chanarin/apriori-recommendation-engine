@@ -164,9 +164,9 @@ class RedisKeyTransactionController extends Controller
     public function isAuthorized(Request $request)
     {
         $resource = 'redis_keys';
-        
+
         $id = $this->getArgs($request)['id'];
-        
+
         $redis_key = RedisKey::find($id);
 
         return $this->authorizeUser($request, $resource, $redis_key);
