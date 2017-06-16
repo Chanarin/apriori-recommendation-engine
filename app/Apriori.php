@@ -98,8 +98,6 @@ class Apriori extends Association
      * Counts occurrences of $set as subset in data pool.
      *
      * @param string $set
-     * @param string $key
-     * @param string $set
      *
      * @return int
      */
@@ -142,7 +140,6 @@ class Apriori extends Association
      * Implements the Redis ZSCAN command on the combinations subset.
      *
      * @param array  $elements
-     * @param string $key
      * @param int    $count
      * @param int    $cursor
      *
@@ -156,27 +153,24 @@ class Apriori extends Association
 
         $samples = null;
 
-        for ($i = 0; $i < $limit; $i++) {
-            $smaples = null;
+        for ($i = 0; $i < count($elements); $i++) {
+            
+            $temp = Redis::command(
+                'ZSCAN', [
+                    $this->combinationKey,
+                    $cursor,
+                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+                    'count', $count,
+                ])[1];
 
-            for ($i = 0; $i < count($elements); $i++) {
-                $temp = Redis::command(
-                    'ZSCAN', [
-                        $this->combinationKey,
-                        $cursor,
-                        'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
-                        'count', $count,
-                    ])[1];
-
-                if ($i == 0) {
-                    $samples = $temp;
-                    continue;
-                }
-
-                $samples = array_intersect_key($samples, $temp);
+            if ($i == 0) {
+                $samples = $temp;
+                continue;
             }
-        }
 
+            $samples = array_intersect_key($samples, $temp);
+        }
+    
         $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);
