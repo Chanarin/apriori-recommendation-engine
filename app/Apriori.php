@@ -9,12 +9,12 @@ class Apriori extends Association
     /**
      * @var int constant COUNT
      */
-    const COUNT = 100000;
+    const COUNT = 10000;
 
     /**
      * @var int constant PREDICTIONS_LIMIT
      */
-    const PREDICTIONS_LIMIT = 50;
+    const PREDICTIONS_LIMIT = 25;
 
     /**
      * Minimum relative probability of frequent transactions.
