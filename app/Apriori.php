@@ -148,29 +148,39 @@ class Apriori extends Association
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
         natsort($elements);
-
-        $limit = count($elements);
-
-        $samples = null;
-
-        for ($i = 0; $i < $limit; $i++) {
-            $temp = Redis::command(
+        
+        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+        
+        $samples = Redis::command(
                 'ZSCAN', [
                     $this->combinationKey,
                     $cursor,
-                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+                    'match', '*'.$value.'*',
                     'count', $count,
                 ])[1];
+        
+        // $limit = count($elements);
 
-            if ($i == 0) {
-                $samples = $temp;
-                continue;
-            }
+        // $samples = null;
 
-            $samples = array_intersect_key($samples, $temp);
-        }
+        // for ($i = 0; $i < $limit; $i++) {
+        //     $temp = Redis::command(
+        //         'ZSCAN', [
+        //             $this->combinationKey,
+        //             $cursor,
+        //             'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+        //             'count', $count,
+        //         ])[1];
 
-        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+        //     if ($i == 0) {
+        //         $samples = $temp;
+        //         continue;
+        //     }
+
+        //     $samples = array_intersect_key($samples, $temp);
+        // }
+
+        // $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);
 
@@ -280,9 +290,13 @@ class Apriori extends Association
         $rules = [];
 
         $counter = 0;
-
-        foreach (array_reverse($samples) as $key => $value) {
+        
+        $samples = array_reverse($samples);
+        
+        foreach ($samples as $key => $value) {
+            
             if ($this->confidence <= ($confidence = $value / $support)) {
+                
                 if ($lift && $this->lift <= ($lift = $value / ($support * $this->support(str_replace($string, '', $key))))) {
                     $rules[] = [
                         'lift'       => $lift,
@@ -302,12 +316,12 @@ class Apriori extends Association
             }
 
             $counter++;
-
+            
             if ($counter == self::PREDICTIONS_LIMIT) {
                 break;
             }
         }
-
+        
         usort($rules, function ($a, $b) {
             return count($a['key']) - count($b['key']);
         });
