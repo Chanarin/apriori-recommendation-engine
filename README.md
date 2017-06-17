@@ -107,7 +107,7 @@
 ## Storing Transactions and Combinations
 
 1.    The user sends a POST request to store a transaction
-2.    The transaction’s combinations are generated respecting a combination max-size constraint so that we do not run out of memory and remain efficient (#of combinations=2^𝑛−1+𝑛)
+2.    The transaction’s combinations are generated respecting a combination max-size constraint so that we do not run out of memory and remain efficient (#of combinations=2^𝑛−1)
 3.    Store the combinations in Redis and increment their associated frequency (score) via the ZINCRBY Redis Command
 4.    Store the transaction in Redis and in a Relational Database
 
