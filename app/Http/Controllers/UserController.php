@@ -6,6 +6,8 @@ use App\OauthClient;
 use App\User;
 use Illuminate\Http\Request;
 
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 class UserController extends Controller
 {
     public function __construct()
@@ -164,12 +166,20 @@ class UserController extends Controller
 
      /**
       * @param Request   $request
+      * 
+      * @return mixed
       */
      public function isAuthorized(Request $request)
      {
          $resource = 'users';
-
-         $user = User::find($this->getArgs($request)['id']);
+         
+         $id = Authorizer::getResourceOwnerId();
+         
+         if (isset($this->getArgs($request)['id'])) {
+             $id = $this->getArgs($request)['id'];
+         }
+         
+         $user = User::find($id);
 
          return $this->authorizeUser($request, $resource, $user);
      }
