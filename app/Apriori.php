@@ -281,7 +281,7 @@ class Apriori extends Association
 
         $counter = 0;
 
-        $samples = array_reverse($samples);
+        $samples =  array_slice(array_reverse($samples), 0, self::PREDICTIONS_LIMIT);
 
         foreach ($samples as $key => $value) {
             if ($this->confidence <= ($confidence = $value / $support)) {
@@ -301,13 +301,6 @@ class Apriori extends Association
                     'support'    => $support,
                     'key'        => $this->setKey($key, $string),
                 ];
-            }
-
-            $counter++;
-
-            if ($counter == self::PREDICTIONS_LIMIT) {
-                echo 'Alex';
-                break;
             }
         }
 

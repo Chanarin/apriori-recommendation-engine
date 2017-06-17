@@ -112,7 +112,7 @@ class ModelsTableSeeder extends Seeder
         $transaction = [];
 
         for ($i = 0; $i < rand(1, 10); $i++) {
-            $transaction[] = rand(1, 1000);
+            $transaction[] = rand(1, 50);
         }
 
         return $transaction;
