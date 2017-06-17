@@ -281,7 +281,7 @@ class Apriori extends Association
 
         $counter = 0;
 
-        $samples =  array_slice(array_reverse($samples), 0, self::PREDICTIONS_LIMIT);
+        $samples = array_slice(array_reverse($samples), 0, self::PREDICTIONS_LIMIT);
 
         foreach ($samples as $key => $value) {
             if ($this->confidence <= ($confidence = $value / $support)) {
