@@ -9,7 +9,12 @@ class Combination extends Association
     /**
      * @var int constant MAX_SIZE
      */
-    const MAX_SIZE = 4;
+    const MAX_SIZE = 5;
+    
+    /**
+     * @var int constant MIN_SIZE
+     */
+    const MIN_SIZE = 2;
 
     /**
      * Instantiate a Combinaiton object.
@@ -174,7 +179,7 @@ class Combination extends Association
         if (is_null($size) && $count <= self::MAX_SIZE) {
             return $count;
         } elseif (is_null($size) && $count > self::MAX_SIZE) {
-            return self::MAX_SIZE;
+            return self::MIN_SIZE;
         }
     }
 
