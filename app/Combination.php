@@ -10,7 +10,7 @@ class Combination extends Association
      * @var int constant MAX_SIZE
      */
     const MAX_SIZE = 5;
-    
+
     /**
      * @var int constant MIN_SIZE
      */
