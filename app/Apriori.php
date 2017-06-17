@@ -148,7 +148,7 @@ class Apriori extends Association
     private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
     {
         natsort($elements);
-        
+
         $limit = count($elements);
 
         $samples = null;
@@ -280,13 +280,11 @@ class Apriori extends Association
         $rules = [];
 
         $counter = 0;
-        
+
         $samples = array_reverse($samples);
-        
+
         foreach ($samples as $key => $value) {
-            
             if ($this->confidence <= ($confidence = $value / $support)) {
-                
                 if ($lift && $this->lift <= ($lift = $value / ($support * $this->support(str_replace($string, '', $key))))) {
                     $rules[] = [
                         'lift'       => $lift,
@@ -306,13 +304,13 @@ class Apriori extends Association
             }
 
             $counter++;
-            
+
             if ($counter == self::PREDICTIONS_LIMIT) {
-                echo "Alex";
+                echo 'Alex';
                 break;
             }
         }
-        
+
         usort($rules, function ($a, $b) {
             return count($a['key']) - count($b['key']);
         });
