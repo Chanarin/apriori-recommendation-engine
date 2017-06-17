@@ -149,38 +149,28 @@ class Apriori extends Association
     {
         natsort($elements);
         
-        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
-        
-        $samples = Redis::command(
+        $limit = count($elements);
+
+        $samples = null;
+
+        for ($i = 0; $i < $limit; $i++) {
+            $temp = Redis::command(
                 'ZSCAN', [
                     $this->combinationKey,
                     $cursor,
-                    'match', '*'.$value.'*',
+                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
                     'count', $count,
                 ])[1];
-        
-        // $limit = count($elements);
 
-        // $samples = null;
+            if ($i == 0) {
+                $samples = $temp;
+                continue;
+            }
 
-        // for ($i = 0; $i < $limit; $i++) {
-        //     $temp = Redis::command(
-        //         'ZSCAN', [
-        //             $this->combinationKey,
-        //             $cursor,
-        //             'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
-        //             'count', $count,
-        //         ])[1];
+            $samples = array_intersect_key($samples, $temp);
+        }
 
-        //     if ($i == 0) {
-        //         $samples = $temp;
-        //         continue;
-        //     }
-
-        //     $samples = array_intersect_key($samples, $temp);
-        // }
-
-        // $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
 
         unset($samples[$value]);
 
@@ -318,6 +308,7 @@ class Apriori extends Association
             $counter++;
             
             if ($counter == self::PREDICTIONS_LIMIT) {
+                echo "Alex";
                 break;
             }
         }
