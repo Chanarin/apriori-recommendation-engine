@@ -9,7 +9,7 @@ class Apriori extends Association
     /**
      * @var int constant COUNT
      */
-    const COUNT = 1000;
+    const COUNT = 50000;
 
     /**
      * @var int constant PREDICTIONS_LIMIT
