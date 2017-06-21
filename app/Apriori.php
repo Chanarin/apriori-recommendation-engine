@@ -103,9 +103,9 @@ class Apriori extends Association
      */
     private function frequency(string $set) : int
     {
-        $limit = substr_count($set, self::END_SEPARATION_PATTERN . self::START_SEPARATION_PATTERN) + 1;
-        
-        if (is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey . $limit, $set]))) {
+        $limit = substr_count($set, self::END_SEPARATION_PATTERN.self::START_SEPARATION_PATTERN) + 1;
+
+        if (is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey.$limit, $set]))) {
             throw new \InvalidArgumentException('Ups!, the key and items you passed are not associated.');
         }
 
@@ -289,7 +289,7 @@ class Apriori extends Association
 
         return $this->rules($samples, $elements, $lift);
     }
-    
+
     /**
      * Implements the Redis ZSCAN command on the combinations subset.
      *
@@ -304,9 +304,9 @@ class Apriori extends Association
         natsort($elements);
 
         $limit = count($elements);
-        
-        $combinationKey = $this->combinationKey . ($limit + 1);
-        
+
+        $combinationKey = $this->combinationKey.($limit + 1);
+
         $samples = null;
 
         for ($i = 0; $i < $limit; $i++) {
