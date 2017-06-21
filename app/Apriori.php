@@ -9,7 +9,7 @@ class Apriori extends Association
     /**
      * @var int constant COUNT
      */
-    const COUNT = 10000000;
+    const COUNT = 1000000;
 
     /**
      * @var int constant PREDICTIONS_LIMIT
@@ -264,10 +264,6 @@ class Apriori extends Association
                 ];
             }
         }
-
-        usort($rules, function ($a, $b) {
-            return count($a['key']) - count($b['key']);
-        });
 
         return $rules;
     }
