@@ -103,7 +103,9 @@ class Apriori extends Association
      */
     private function frequency(string $set) : int
     {
-        if (is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey, $set]))) {
+        $limit = substr_count($set, self::END_SEPARATION_PATTERN . self::START_SEPARATION_PATTERN) + 1;
+        
+        if (is_null($frequency = Redis::command('ZSCORE', [$this->combinationKey . $limit, $set]))) {
             throw new \InvalidArgumentException('Ups!, the key and items you passed are not associated.');
         }
 
@@ -134,47 +136,6 @@ class Apriori extends Association
         return array_filter($samples, function ($entry) {
             return $this->support($entry) >= $this->support;
         });
-    }
-
-    /**
-     * Implements the Redis ZSCAN command on the combinations subset.
-     *
-     * @param array $elements
-     * @param int   $count
-     * @param int   $cursor
-     *
-     * @return array
-     */
-    private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
-    {
-        natsort($elements);
-
-        $limit = count($elements);
-
-        $samples = null;
-
-        for ($i = 0; $i < $limit; $i++) {
-            $temp = Redis::command(
-                'ZSCAN', [
-                    $this->combinationKey,
-                    $cursor,
-                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
-                    'count', $count,
-                ])[1];
-
-            if ($i == 0) {
-                $samples = $temp;
-                continue;
-            }
-
-            $samples = array_intersect_key($samples, $temp);
-        }
-
-        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
-
-        unset($samples[$value]);
-
-        return $samples;
     }
 
     /**
@@ -327,5 +288,48 @@ class Apriori extends Association
         $samples = $this->samples($elements, $count, $cursor, $filter);
 
         return $this->rules($samples, $elements, $lift);
+    }
+    
+    /**
+     * Implements the Redis ZSCAN command on the combinations subset.
+     *
+     * @param array $elements
+     * @param int   $count
+     * @param int   $cursor
+     *
+     * @return array
+     */
+    private function zscan(array $elements, int $count = self::COUNT, int $cursor = 0) : array
+    {
+        natsort($elements);
+
+        $limit = count($elements);
+        
+        $combinationKey = $this->combinationKey . ($limit + 1);
+        
+        $samples = null;
+
+        for ($i = 0; $i < $limit; $i++) {
+            $temp = Redis::command(
+                'ZSCAN', [
+                    $combinationKey,
+                    $cursor,
+                    'match', '*'.self::START_SEPARATION_PATTERN.$elements[$i].self::END_SEPARATION_PATTERN.'*',
+                    'count', $count,
+                ])[1];
+
+            if ($i == 0) {
+                $samples = $temp;
+                continue;
+            }
+
+            $samples = array_intersect_key($samples, $temp);
+        }
+
+        $value = self::setString($elements, self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+
+        unset($samples[$value]);
+
+        return $samples;
     }
 }

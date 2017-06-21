@@ -130,7 +130,7 @@ class CombinationTest extends TestCase
     {
         $combination = new Combination(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
 
-        $this->assertTrue($combination->destroy() == 2);
+        $this->assertTrue($combination->destroy() == 1);
 
         $this->assertTrue($combination->destroy() == 0);
     }
@@ -150,6 +150,6 @@ class CombinationTest extends TestCase
 
         $this->assertTrue(is_null($combination->reassign('combinations', 'transactions')));
 
-        $this->assertTrue($combination->destroy() == 2);
+        $this->assertTrue($combination->destroy() == 1);
     }
 }

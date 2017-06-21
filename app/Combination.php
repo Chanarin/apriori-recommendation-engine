@@ -129,45 +129,7 @@ class Combination extends Association
             throw new \InvalidArgumentException('Ups! The score must be an integer other than 0.');
         }
     }
-
-    /**
-     * Add each imploded subset to redis using the ZINCRBY command.
-     *
-     * @param array $set
-     * @param int   $size
-     * @param mixed $txId
-     * @param int   $score
-     *
-     * @return void
-     */
-    public function zincrby(array $set, $size = null, $txId = null, $score = 1)
-    {
-        self::validateInputs($set, $size, $score);
-
-        $key = $this->combinationKey;
-        $txKey = $this->transactionKey;
-
-        $count = count($set);
-
-        $size = $this->setSize($size, $count);
-
-        $set = self::prepare($set);
-
-        $subsets = self::subsets($set, $size);
-
-        foreach ($subsets as $subset) {
-            foreach ($subset as $value) {
-                Redis::command('ZINCRBY', [$key, (int) $score, implode('', $value)]);
-            }
-        }
-
-        if (is_null($txId)) {
-            $txId = time();
-        }
-
-        Redis::command('ZINCRBY', [$txKey, $score, $txId]);
-    }
-
+    
     /**
      * @param int $size
      * @param int $count
@@ -192,6 +154,13 @@ class Combination extends Association
     {
         Redis::command('ZREMRANGEBYSCORE', [$this->combinationKey, '-inf', 0]);
         Redis::command('ZREMRANGEBYSCORE', [$this->transactionKey, '-inf', 0]);
+        
+        for($i = 0; $i <= self::MAX_SIZE; $i++) {
+            $cnt = Redis::command('EXISTS', [$this->combinationKey]) + Redis::command('EXISTS', [$this->combinationKey]);
+        
+            if ($cnt > 0) Redis::command('ZREMRANGEBYSCORE', [$this->combinationKey . $i, '-inf', 0]);
+        }
+        
     }
 
     /**
@@ -201,7 +170,12 @@ class Combination extends Association
      */
     public function destroy() : int
     {
-        return Redis::command('DEL', [$this->combinationKey, $this->transactionKey]);
+        for($i = 0; $i <= self::MAX_SIZE; $i++) {
+            $cnt = Redis::command('EXISTS', [$this->combinationKey . $i]);
+            if ($cnt > 0) Redis::command('DEL', [$this->combinationKey . $i]);
+        }
+        
+        return Redis::command('DEL', [$this->transactionKey]);
     }
 
     /**
@@ -214,11 +188,56 @@ class Combination extends Association
      */
     public function reassign(string $oldCombinationKey, string $oldTransactionKey)
     {
-        $cnt = Redis::command('EXISTS', [$oldTransactionKey]) + Redis::command('EXISTS', [$oldTransactionKey]);
+        $cnt = Redis::command('EXISTS', [$oldTransactionKey]);
 
         if ($cnt > 0) {
-            Redis::command('RENAME', [$oldCombinationKey, $this->combinationKey]);
             Redis::command('RENAME', [$oldTransactionKey, $this->transactionKey]);
         }
+        
+        for($i = 0; $i <= self::MAX_SIZE; $i++) {
+            $cnt = Redis::command('EXISTS', [$oldCombinationKey . $i]);
+
+            if ($cnt > 0) {
+                Redis::command('RENAME', [$oldCombinationKey . $i, $this->combinationKey . $i]);
+            }
+        }
+    }
+    
+    /**
+     * Add each imploded subset to redis using the ZINCRBY command.
+     *
+     * @param array $set
+     * @param int   $size
+     * @param mixed $txId
+     * @param int   $score
+     *
+     * @return void
+     */
+    public function zincrby(array $set, $size = null, $txId = null, $score = 1)
+    {
+        self::validateInputs($set, $size, $score);
+
+        $key = $this->combinationKey;
+        $txKey = $this->transactionKey;
+
+        $count = count($set);
+        
+        $size = $this->setSize($size, $count);
+
+        $set = self::prepare($set);
+
+        $subsets = self::subsets($set, $size);
+        
+        foreach ($subsets as $i => $subset) {
+            foreach ($subset as $value) {
+                Redis::command('ZINCRBY', [$key . $i, (int) $score, implode('', $value)]);
+            }
+        }
+
+        if (is_null($txId)) {
+             $txId = time();
+        }
+
+        Redis::command('ZINCRBY', [$txKey, $score, $txId]);
     }
 }
