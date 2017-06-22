@@ -12,7 +12,7 @@ class AprioriController extends Controller
      * @var int constant DEFAULT_COUNT
      */
     const DEFAULT_COUNT = 10;
-    
+
     public function __construct()
     {
         $this->middleware('oauth');
@@ -88,7 +88,7 @@ class AprioriController extends Controller
             return $this->error($ex->getMessage(), 422);
         }
     }
-    
+
     /**
      * @param Request $request
      * @param int     $id
@@ -98,17 +98,20 @@ class AprioriController extends Controller
     public function rawZscan(Request $request, int $id)
     {
         if (isset($request->query()['items']) && count($request->items) == 1) {
-            
             $apriori = $this->setApriori($request, $id);
-            
+
             $cursor = 0;
-            
+
             $count = self::DEFAULT_COUNT;
-            
-            if(isset($request->query()['cursor'])) $cursor = $request->cursor;
-            
-            if(isset($request->query()['count'])) $count = $request->count;
-            
+
+            if (isset($request->query()['cursor'])) {
+                $cursor = $request->cursor;
+            }
+
+            if (isset($request->query()['count'])) {
+                $count = $request->count;
+            }
+
             try {
                 $item = $request->items[0];
                 $rules = $apriori->rawZscan($item, $cursor, $count);
@@ -121,7 +124,7 @@ class AprioriController extends Controller
 
         return $this->error("Ups! We couldn't retrieve any results, please check the 'items' parameter.", 422);
     }
-    
+
     /**
      * @param int $id
      *
@@ -141,7 +144,7 @@ class AprioriController extends Controller
 
         return $this->error("Ups! We couldn't retrieve any reccomendations, please check the 'items' parameter.", 422);
     }
-    
+
     /**
      * @param int $id
      *
