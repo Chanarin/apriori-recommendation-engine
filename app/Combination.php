@@ -156,11 +156,7 @@ class Combination extends Association
         Redis::command('ZREMRANGEBYSCORE', [$this->transactionKey, '-inf', 0]);
 
         for ($i = 0; $i <= self::MAX_SIZE; $i++) {
-            $cnt = Redis::command('EXISTS', [$this->combinationKey]) + Redis::command('EXISTS', [$this->combinationKey]);
-
-            if ($cnt > 0) {
-                Redis::command('ZREMRANGEBYSCORE', [$this->combinationKey.$i, '-inf', 0]);
-            }
+            Redis::command('ZREMRANGEBYSCORE', [$this->combinationKey.$i, '-inf', 0]);
         }
     }
 
@@ -172,10 +168,7 @@ class Combination extends Association
     public function destroy() : int
     {
         for ($i = 0; $i <= self::MAX_SIZE; $i++) {
-            $cnt = Redis::command('EXISTS', [$this->combinationKey.$i]);
-            if ($cnt > 0) {
-                Redis::command('DEL', [$this->combinationKey.$i]);
-            }
+            Redis::command('DEL', [$this->combinationKey.$i]);
         }
 
         return Redis::command('DEL', [$this->transactionKey]);
@@ -191,18 +184,10 @@ class Combination extends Association
      */
     public function reassign(string $oldCombinationKey, string $oldTransactionKey)
     {
-        $cnt = Redis::command('EXISTS', [$oldTransactionKey]);
-
-        if ($cnt > 0) {
-            Redis::command('RENAME', [$oldTransactionKey, $this->transactionKey]);
-        }
+        Redis::command('RENAME', [$oldTransactionKey, $this->transactionKey]);
 
         for ($i = 0; $i <= self::MAX_SIZE; $i++) {
-            $cnt = Redis::command('EXISTS', [$oldCombinationKey.$i]);
-
-            if ($cnt > 0) {
-                Redis::command('RENAME', [$oldCombinationKey.$i, $this->combinationKey.$i]);
-            }
+            Redis::command('RENAME', [$oldCombinationKey.$i, $this->combinationKey.$i]);
         }
     }
 
