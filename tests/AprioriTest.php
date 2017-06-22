@@ -160,37 +160,37 @@ class AprioriTest extends TestCase
 
         $apriori->rules($samples, $elements, false);
     }
-    
+
     /**
-     * Get the combinations count
-     * 
+     * Get the combinations count.
+     *
      * @return void
      */
     public function test_get_combinations_count()
     {
         $elements = $this->setElements();
-        
+
         $apriori = new Apriori(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
-        
+
         $result = $apriori->getCombinationsCount();
-        
+
         $this->assertTrue($result > 0);
-        
-        $this->assertInternalType("int", $result);
+
+        $this->assertInternalType('int', $result);
     }
-    
+
     public function test_raw_zscan()
     {
         $elements = $this->setElements();
-        
+
         $apriori = new Apriori(self::COMBINATIONS_KEY, self::TRANSACTIONS_KEY);
-        
+
         $result = $apriori->rawZscan($elements[0]);
-        
+
         $this->assertTrue(is_array($result));
         $this->assertTrue(count($result) == 2);
     }
-    
+
     /**
      * Test the apriori predictions generation.
      *
