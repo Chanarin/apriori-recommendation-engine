@@ -43,6 +43,8 @@ class AuthServiceProvider extends ServiceProvider
                 'frequency',
                 'total',
                 'storeAsync',
+                'rawZscan',
+                'combinationCount',
             ],
         ]);
 

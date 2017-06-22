@@ -7,11 +7,6 @@ use Illuminate\Support\Facades\Redis as Redis;
 class Combination extends Association
 {
     /**
-     * @var int constant MAX_SIZE
-     */
-    const MAX_SIZE = 5;
-
-    /**
      * @var int constant MIN_SIZE
      */
     const MIN_SIZE = 2;

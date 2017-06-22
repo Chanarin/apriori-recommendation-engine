@@ -26,6 +26,8 @@ $app->group(['middleware' => 'throttle:250'], function () use ($app) {
     $app->get('/redis_keys/{id}/support', 'AprioriController@support');
     $app->get('/redis_keys/{id}/frequency', 'AprioriController@frequency');
     $app->get('/redis_keys/{id}/total', 'AprioriController@total');
+    $app->get('/redis_keys/{id}/raw_scan', 'AprioriController@rawZscan');
+    $app->get('/redis_keys/{id}/combination_count', 'AprioriController@combinationCount');
 
     /*
     |--------------------------------------------------------------------------

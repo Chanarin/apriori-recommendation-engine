@@ -23,4 +23,9 @@ abstract class Association
      * @var string
      */
     public $combinationKey = null;
+    
+    /**
+     * @var int constant MAX_SIZE
+     */
+    const MAX_SIZE = 5;
 }

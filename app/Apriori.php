@@ -81,7 +81,57 @@ class Apriori extends Association
     {
         return Redis::command('ZCOUNT', [$this->transactionKey, $min, $max]);
     }
-
+    
+    /**
+     * @param mixed $min
+     * @param mixed $max
+     *
+     * @return int
+     */
+    public function getCombinationsCount($min = '-inf', $max = 'inf') : int
+    {
+        for($i = 0; $i < self::MAX_SIZE; $i++) {
+            $cnt[] = Redis::command('ZCOUNT', [$this->combinationKey.$i, $min, $max]);
+        }
+        
+        return array_sum($cnt);
+    }
+    
+    /**
+     * Implements the Redis ZSCAN command on the combinations subset.
+     *
+     * @param string $elements
+     * @param int    $count
+     * @param int    $cursor
+     *
+     * @return array
+     */
+    public function rawZscan($element, int $cursor = 0, int $count = 10) : array
+    {
+        $element = (string) $element;
+        
+        $results = Redis::command(
+            'ZSCAN', [
+                $this->combinationKey.'2',
+                $cursor,
+                'match', '*'.self::START_SEPARATION_PATTERN.$element.self::END_SEPARATION_PATTERN.'*',
+                'count', $count,
+            ]
+        );
+        
+        $string = self::setString([$element], self::START_SEPARATION_PATTERN, self::END_SEPARATION_PATTERN);
+        
+        $res = [];
+        
+        foreach($results[1] as $key => $value) {
+            $res[$this->setKey($key, $string)[0]] = $value;
+        }
+        
+        $results[1] = $res;
+        
+        return $results;
+    }
+    
     /**
      * @param array $elements
      *
