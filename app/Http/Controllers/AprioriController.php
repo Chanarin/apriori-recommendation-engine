@@ -11,7 +11,7 @@ class AprioriController extends Controller
     /**
      * @var int constant DEFAULT_COUNT
      */
-    const DEFAULT_COUNT = 10;
+    const DEFAULT_COUNT = 1000000;
 
     public function __construct()
     {
