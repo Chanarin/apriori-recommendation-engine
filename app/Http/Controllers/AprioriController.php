@@ -113,11 +113,11 @@ class AprioriController extends Controller
             }
 
             try {
+                
                 $item = $request->items[0];
 
                 $rules = $apriori->rawZscan($item, $cursor, $count);
-
-                natsort($rules[1]);
+                
             } catch (\InvalidArgumentException $ex) {
                 return $this->error($ex->getMessage(), 422);
             }
