@@ -98,7 +98,6 @@ class AprioriController extends Controller
     public function rawZscan(Request $request, int $id)
     {
         if (isset($request->query()['items']) && count($request->items) == 1) {
-            
             $apriori = $this->setApriori($request, $id);
 
             $cursor = 0;
@@ -114,13 +113,11 @@ class AprioriController extends Controller
             }
 
             try {
-                
                 $item = $request->items[0];
-                
+
                 $rules = $apriori->rawZscan($item, $cursor, $count);
-                
+
                 natsort($rules[1]);
-                
             } catch (\InvalidArgumentException $ex) {
                 return $this->error($ex->getMessage(), 422);
             }
