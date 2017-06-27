@@ -124,9 +124,9 @@ class Apriori extends Association
         foreach ($results[1] as $key => $value) {
             $res[$this->setKey($key, $string)[0]] = $value;
         }
-        
+
         arsort($res);
-        
+
         $results[1] = $res;
 
         return $results;
