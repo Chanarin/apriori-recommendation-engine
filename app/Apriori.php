@@ -106,10 +106,8 @@ class Apriori extends Association
      *
      * @return array
      */
-    public function rawZscan($element, int $cursor = 0, int $count = 10) : array
+    public function rawZscan(string $element, int $cursor = 0, int $count = 10) : array
     {
-        $element = (string) $element;
-
         $results = Redis::command(
             'ZSCAN', [
                 $this->combinationKey.'2',
