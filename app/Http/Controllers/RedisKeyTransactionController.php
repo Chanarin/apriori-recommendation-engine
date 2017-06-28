@@ -74,9 +74,7 @@ class RedisKeyTransactionController extends Controller
 
         $redisKey->addTransaction($transaction);
 
-        $job = new CombinationJob($redisKey, $transaction);
-
-        $this->dispatch($job);
+        $this->dispatch(new CombinationJob($redisKey, $transaction));
 
         return $this->success([
             'message' => "Transaction with id {$transaction->id} created successfully.",

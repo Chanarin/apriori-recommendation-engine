@@ -15,13 +15,13 @@ class RedisKeyController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param int $id
      *
      * @return mixed
      */
-    public function show($redisKey)
+    public function show(int $id)
     {
-        return $this->success(RedisKey::find($redisKey), 200);
+        return $this->success(RedisKey::find($id), 200);
     }
 
     /**

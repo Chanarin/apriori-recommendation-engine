@@ -36,7 +36,9 @@ class Transaction extends Model
 
     /**
      * Belongs-to-one Key relationship.
-     *
+     * 
+     * @method belongsToOne(App\RedisKey)
+     * 
      * @return mixed
      */
     public function redisKey()
