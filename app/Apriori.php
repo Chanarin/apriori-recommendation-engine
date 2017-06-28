@@ -91,7 +91,7 @@ class Apriori extends Association
     public function getCombinationsCount($min = '-inf', $max = 'inf') : int
     {
         $cnt = [];
-        
+
         for ($i = 0; $i < self::MAX_SIZE; $i++) {
             $cnt[] = Redis::command('ZCOUNT', [$this->combinationKey.$i, $min, $max]);
         }

@@ -19,7 +19,7 @@ class AprioriController extends Controller
         $this->middleware('oauth-user');
         $this->middleware('authorize:'.__CLASS__);
     }
-    
+
     /**
      * @param Request $request
      * @param int     $id
