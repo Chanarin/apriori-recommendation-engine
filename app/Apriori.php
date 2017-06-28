@@ -236,7 +236,9 @@ class Apriori extends Association
                 $samples[$sample] = $this->support($sample);
             }
         }
-
+        
+        arsort($samples);
+        
         return $samples;
     }
 
