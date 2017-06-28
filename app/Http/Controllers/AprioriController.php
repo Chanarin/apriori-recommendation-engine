@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class AprioriController extends Controller
 {
+    use IsAuthorizedTrait;
+    
     /**
      * @var int constant DEFAULT_COUNT
      */
@@ -28,7 +30,7 @@ class AprioriController extends Controller
      */
     public function recommend(Request $request, $id)
     {
-        if (isset($request->query()['items'])) {
+        if ($this->hasItems($request)) {
             $apriori = $this->setApriori($request, $id);
 
             try {
@@ -56,7 +58,7 @@ class AprioriController extends Controller
     public function support(Request $request, int $id)
     {
         try {
-            if (isset($request->query()['items'])) {
+            if ($this->hasItems($request)) {
                 $apriori = $this->setApriori($request, $id);
 
                 return $this->success([
@@ -67,7 +69,12 @@ class AprioriController extends Controller
             return $this->error($ex->getMessage(), 422);
         }
     }
-
+    
+    private function hasItems(Request $request)
+    {
+        return isset($request->query()['items']);
+    }
+    
     /**
      * @param Request $request
      * @param int     $id
@@ -77,7 +84,7 @@ class AprioriController extends Controller
     public function frequency(Request $request, int $id)
     {
         try {
-            if (isset($request->query()['items'])) {
+            if ($this->hasItems($request)) {
                 $apriori = $this->setApriori($request, $id);
 
                 return $this->success([
@@ -97,7 +104,7 @@ class AprioriController extends Controller
      */
     public function rawZscan(Request $request, int $id)
     {
-        if (isset($request->query()['items']) && count($request->items) == 1) {
+        if ($this->hasItems($request) && count($request->items) == 1) {
             $apriori = $this->setApriori($request, $id);
 
             $cursor = 0;
@@ -181,19 +188,5 @@ class AprioriController extends Controller
         $redisKey = RedisKey::find($id);
 
         return new Apriori($redisKey->combinations_key, $redisKey->transactions_key);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public function isAuthorized(Request $request)
-    {
-        $resource = 'redis_keys';
-
-        $redis_key = RedisKey::find($this->getArgs($request)['id']);
-
-        return $this->authorizeUser($request, $resource, $redis_key);
     }
 }

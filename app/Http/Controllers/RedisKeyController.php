@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class RedisKeyController extends Controller
 {
+    use IsAuthorizedTrait;
+    
     public function __construct()
     {
         $this->middleware('oauth');
@@ -22,19 +24,5 @@ class RedisKeyController extends Controller
     public function show(int $id)
     {
         return $this->success(RedisKey::find($id), 200);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public function isAuthorized(Request $request)
-    {
-        $resource = 'redis_keys';
-
-        $redisKey = RedisKey::find($this->getArgs($request)['id']);
-
-        return $this->authorizeUser($request, $resource, $redisKey);
     }
 }
