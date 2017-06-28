@@ -37,6 +37,7 @@ class AprioriController extends Controller
                 natsort($items);
 
                 $rules = $apriori->predictions($items, true);
+                
             } catch (\InvalidArgumentException $ex) {
                 return $this->error($ex->getMessage(), 422);
             }
@@ -104,23 +105,17 @@ class AprioriController extends Controller
 
             $count = self::DEFAULT_COUNT;
 
-            if (isset($request->query()['cursor'])) {
-                $cursor = $request->cursor;
-            }
+            if (isset($request->query()['cursor'])) $cursor = $request->cursor;
 
-            if (isset($request->query()['count'])) {
-                $count = $request->count;
-            }
+            if (isset($request->query()['count'])) $count = $request->count;
 
             try {
-                $item = $request->items[0];
-
-                $rules = $apriori->rawZscan($item, $cursor, $count);
+                $rules = $apriori->rawZscan($request->items[0], $cursor, $count);
             } catch (\InvalidArgumentException $ex) {
                 return $this->error($ex->getMessage(), 422);
             }
-
-            return $this->success($rules, 200);
+            
+            if(count($rules[1]) > 0) return $this->success($rules, 200);
         }
 
         return $this->error("Ups! We couldn't retrieve any results, please check the 'items' parameter.", 422);

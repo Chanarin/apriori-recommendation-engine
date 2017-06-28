@@ -300,9 +300,9 @@ class Apriori extends Association
             if ($this->confidence <= ($confidence = $value / $support)) {
                 if ($lift && $this->lift <= ($lift = $value / ($support * $this->support(str_replace($string, '', $key))))) {
                     $rules[] = [
-                        'lift'       => $lift,
                         'confidence' => $confidence,
                         'support'    => $support,
+                        'lift'       => $lift,
                         'key'        => $this->setKey($key, $string),
                     ];
 
