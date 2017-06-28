@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\RedisKey;
 use Illuminate\Http\Request;
 
-trait IsAuthorizedTrait{
-    
+trait IsAuthorizedTrait
+{
     /**
      * @param Request $request
      *

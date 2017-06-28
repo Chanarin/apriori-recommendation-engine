@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AprioriController extends Controller
 {
     use IsAuthorizedTrait;
-    
+
     /**
      * @var int constant DEFAULT_COUNT
      */
@@ -69,12 +69,12 @@ class AprioriController extends Controller
             return $this->error($ex->getMessage(), 422);
         }
     }
-    
+
     private function hasItems(Request $request)
     {
         return isset($request->query()['items']);
     }
-    
+
     /**
      * @param Request $request
      * @param int     $id
