@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\RedisKey;
-use Illuminate\Http\Request;
 
 class RedisKeyController extends Controller
 {
     use IsAuthorizedTrait;
-    
+
     public function __construct()
     {
         $this->middleware('oauth');
