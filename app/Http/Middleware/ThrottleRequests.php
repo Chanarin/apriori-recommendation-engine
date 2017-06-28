@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Cache\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 class ThrottleRequests
 {
@@ -57,34 +58,32 @@ class ThrottleRequests
      *
      * @return string
      */
-    protected function resolveRequestSignature($request)
+    protected function resolveRequestSignature(Request $request)
     {
+        $parts = $this->parts($request);
+        
         if (!is_null($request->get('access_token'))) {
             return sha1(
-                $request->method().
-                '|'.$request->server('SERVER_NAME').
-                '|'.$request->path().
-                '|'.$request->access_token
+                $parts.'|'.$request->access_token
             );
         }
 
         if (!is_null($request->get('client_id'))) {
             return sha1(
-                $request->method().
-                '|'.$request->server('SERVER_NAME').
-                '|'.$request->path().
-                '|'.$request->client_id
+                $parts.'|'.$request->client_id
             );
         }
-
+        
         return sha1(
-            $request->method().
-            '|'.$request->server('SERVER_NAME').
-            '|'.$request->path().
-            '|'.$request->ip()
+            $parts.'|'.$request->ip()
         );
     }
-
+    
+    private function parts(Request $request)
+    {
+        return $request->method().'|'.$request->server('SERVER_NAME').'|'.$request->path();
+    }
+    
     /**
      * Create a 'too many attempts' response.
      *
