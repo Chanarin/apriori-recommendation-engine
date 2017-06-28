@@ -28,7 +28,7 @@ class RedisKey extends Model
      * Belongs-to-one User relationship.
      *
      * @method belongsToOne(App\User)
-     * 
+     *
      * @return mixed
      */
     public function user()
