@@ -40,6 +40,8 @@ $app->configure('database');
 
 $app->configure('cache');
 
+$app->configure('queue');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
