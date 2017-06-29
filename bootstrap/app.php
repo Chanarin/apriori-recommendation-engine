@@ -98,7 +98,7 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-$app->register(Fideloper\Proxy\TrustedProxyServiceProvider::class);
+$app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
 
 $app->register('Vluzrmos\Tinker\TinkerServiceProvider');
 $app->register('Illuminate\Redis\RedisServiceProvider');
