@@ -74,7 +74,6 @@ $app->singleton(
 
 $app->middleware([
 //  App\Http\Middleware\ExampleMiddleware::class
-//  \Fideloper\Proxy\TrustProxies::class,
     \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 ]);
 
@@ -111,7 +110,6 @@ $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-// $app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
 
 
 /*
