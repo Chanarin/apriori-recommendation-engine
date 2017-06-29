@@ -105,8 +105,6 @@ $app->register('Illuminate\Redis\RedisServiceProvider');
 $app->register(Aws\Laravel\AwsServiceProvider::class);
 $app->register(\Dusterio\AwsWorker\Integrations\LumenServiceProvider::class);
 
-$app->register(Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
-
 $app->register(\LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class);
 $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 
