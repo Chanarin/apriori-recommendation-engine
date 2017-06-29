@@ -69,6 +69,5 @@ return array(
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Aws\\Laravel\\' => array($vendorDir . '/aws/aws-sdk-php-laravel/src'),
     'Aws\\' => array($vendorDir . '/aws/aws-sdk-php/src'),
-    'Appzcoder\\LumenRoutesList\\' => array($vendorDir . '/appzcoder/lumen-routes-list/src'),
     'App\\' => array($baseDir . '/app'),
 );

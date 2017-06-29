@@ -15,8 +15,7 @@
         "illuminate/cookie": "^5.4",
         "guzzlehttp/guzzle": "^6.2",
         "dusterio/laravel-aws-worker": "^0.1.9",
-        "aws/aws-sdk-php-laravel": "^3.1",
-        "appzcoder/lumen-routes-list": "^1.0"
+        "aws/aws-sdk-php-laravel": "^3.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
