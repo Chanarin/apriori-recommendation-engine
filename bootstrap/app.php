@@ -110,8 +110,6 @@ $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
