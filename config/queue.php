@@ -52,6 +52,7 @@ return [
             'driver' => 'sqs',
             'key'    => env('AWS_PUBLIC_KEY'),
             'secret' => env('AWS_SECRET_KEY'),
+            'prefix' => env('AWS_QUEUE_PREFIX'),
             'queue'  => env('AWS_QUEUE_NAME'),
             'region' => env('AWS_REGION'),
         ],
