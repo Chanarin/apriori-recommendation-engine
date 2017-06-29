@@ -111,7 +111,7 @@ $app->register(\LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
-$app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
+// $app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
 
 
 /*
