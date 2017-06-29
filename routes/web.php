@@ -15,6 +15,9 @@ $app->get('/', function () {
     return view('index');
 });
 
+$app->post('/queue/worker', 'Dusterio\AwsWorker\Controllers\WorkerController@queue');
+$app->post('/queue/schedule', 'Dusterio\AwsWorker\Controllers\WorkerController@schedule');
+
 $app->group(['middleware' => 'throttle:250'], function () use ($app) {
 
     /*
