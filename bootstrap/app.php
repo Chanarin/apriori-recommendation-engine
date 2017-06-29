@@ -61,12 +61,6 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
-// $app->singleton('cookie', function () use ($app) {
-//     return $app->loadComponent('session', 'Illuminate\Cookie\CookieServiceProvider', 'cookie');
-// });
-
-// $app->bind('Illuminate\Contracts\Cookie\QueueingFactory', 'cookie');
-
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -80,6 +74,7 @@ $app->singleton(
 
 $app->middleware([
 //  App\Http\Middleware\ExampleMiddleware::class
+    'Fideloper\Proxy\TrustProxies',
     \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 ]);
 
@@ -103,6 +98,7 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
+$app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
 
 $app->register('Vluzrmos\Tinker\TinkerServiceProvider');
 $app->register('Illuminate\Redis\RedisServiceProvider');

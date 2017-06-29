@@ -111,6 +111,7 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         ),
         'F' => 
         array (
+            'Fideloper\\Proxy\\' => 16,
             'FastRoute\\' => 10,
             'Faker\\' => 6,
         ),
@@ -349,6 +350,10 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Fideloper\\Proxy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fideloper/proxy/src',
+        ),
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
@@ -441,6 +446,7 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         'App\\Http\\Controllers\\AprioriController' => __DIR__ . '/../..' . '/app/Http/Controllers/AprioriController.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\IsAuthorizedTrait' => __DIR__ . '/../..' . '/app/Http/Controllers/IsAuthorizedTrait.php',
         'App\\Http\\Controllers\\RedisKeyController' => __DIR__ . '/../..' . '/app/Http/Controllers/RedisKeyController.php',
         'App\\Http\\Controllers\\RedisKeyTransactionController' => __DIR__ . '/../..' . '/app/Http/Controllers/RedisKeyTransactionController.php',
         'App\\Http\\Controllers\\TransactionController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionController.php',
@@ -450,7 +456,6 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         'App\\Http\\Middleware\\Authorize' => __DIR__ . '/../..' . '/app/Http/Middleware/Authorize.php',
         'App\\Http\\Middleware\\ThrottleRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/ThrottleRequests.php',
         'App\\Jobs\\CombinationJob' => __DIR__ . '/../..' . '/app/Jobs/CombinationJob.php',
-        'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
         'App\\OauthClient' => __DIR__ . '/../..' . '/app/OauthClient.php',
@@ -460,6 +465,7 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         'App\\RedisKey' => __DIR__ . '/../..' . '/app/RedisKey.php',
         'App\\Transaction' => __DIR__ . '/../..' . '/app/Transaction.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'AprioriControllerTest' => __DIR__ . '/../..' . '/tests/AprioriControllerTest.php',
         'AprioriTest' => __DIR__ . '/../..' . '/tests/AprioriTest.php',
         'AuthControllerTest' => __DIR__ . '/../..' . '/tests/AuthControllerTest.php',
         'Aws\\Acm\\AcmClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Acm/AcmClient.php',
@@ -1292,6 +1298,8 @@ class ComposerStaticInit21a1afadaa122cace7617067aefe0222
         'FastRoute\\RouteCollector' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteCollector.php',
         'FastRoute\\RouteParser' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser.php',
         'FastRoute\\RouteParser\\Std' => __DIR__ . '/..' . '/nikic/fast-route/src/RouteParser/Std.php',
+        'Fideloper\\Proxy\\TrustProxies' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustProxies.php',
+        'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

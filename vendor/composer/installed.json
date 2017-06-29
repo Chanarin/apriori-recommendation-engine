@@ -4933,5 +4933,59 @@
         ],
         "description": "The Illuminate View package.",
         "homepage": "https://laravel.com"
+    },
+    {
+        "name": "fideloper/proxy",
+        "version": "3.3.3",
+        "version_normalized": "3.3.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/fideloper/TrustedProxy.git",
+            "reference": "985eac8f966c03b4d9503cad9b5e5a51d41ce477"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/985eac8f966c03b4d9503cad9b5e5a51d41ce477",
+            "reference": "985eac8f966c03b4d9503cad9b5e5a51d41ce477",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/contracts": "~5.0",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "illuminate/http": "~5.0",
+            "mockery/mockery": "~0.9.3",
+            "phpunit/phpunit": "^5.7"
+        },
+        "time": "2017-05-31T12:50:41+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Fideloper\\Proxy\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Chris Fidao",
+                "email": "fideloper@gmail.com"
+            }
+        ],
+        "description": "Set trusted proxies for Laravel",
+        "keywords": [
+            "load balancing",
+            "proxy",
+            "trusted proxy"
+        ]
     }
 ]
