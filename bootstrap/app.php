@@ -74,7 +74,7 @@ $app->singleton(
 
 $app->middleware([
 //  App\Http\Middleware\ExampleMiddleware::class
-    \Fideloper\Proxy\TrustProxies::class,
+//  \Fideloper\Proxy\TrustProxies::class,
     \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 ]);
 
