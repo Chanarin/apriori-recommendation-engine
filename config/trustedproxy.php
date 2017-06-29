@@ -2,7 +2,7 @@
 
 return [
 
-    'proxies' => '*',
+    'proxies' => '**',
 
     'headers' => [
         \Illuminate\Http\Request::HEADER_CLIENT_IP    => 'X_FORWARDED_FOR',

@@ -74,7 +74,7 @@ $app->singleton(
 
 $app->middleware([
 //  App\Http\Middleware\ExampleMiddleware::class
-    'Fideloper\Proxy\TrustProxies',
+    \Fideloper\Proxy\TrustProxies::class,
     \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 ]);
 
@@ -98,7 +98,7 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-$app->register('Fideloper\Proxy\TrustedProxyServiceProvider');
+$app->register(Fideloper\Proxy\TrustedProxyServiceProvider::class);
 
 $app->register('Vluzrmos\Tinker\TinkerServiceProvider');
 $app->register('Illuminate\Redis\RedisServiceProvider');
