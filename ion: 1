@@ -1,0 +1,100 @@
+2017-06-29 17:15:21    INFO    Added instance [i-00a0c2c6be78eb2d6] to your environment.
+2017-06-29 17:15:21    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 17:15:21    INFO    Environment update completed successfully.
+2017-06-29 17:16:21    INFO    Environment health has transitioned from Severe to Ok. Application update completed 58 seconds ago and took 15 seconds.
+2017-06-29 17:29:35    INFO    Environment update is starting.
+2017-06-29 17:29:43    INFO    Updating environment arera-test's configuration settings.
+2017-06-29 17:30:21    INFO    Environment health has transitioned from Ok to Info. Configuration update in progress (running for 21 seconds).
+2017-06-29 17:30:59    INFO    Successfully deployed new configuration to environment.
+2017-06-29 17:30:59    INFO    Environment update completed successfully.
+2017-06-29 17:32:21    INFO    Environment health has transitioned from Info to Ok. Configuration update completed 42 seconds ago and took 77 seconds.
+2017-06-29 17:53:53    INFO    Environment update is starting.
+2017-06-29 17:54:00    INFO    Updating environment arera-test's configuration settings.
+2017-06-29 17:54:21    INFO    Environment health has transitioned from Ok to Info. Configuration update in progress (running for 21 seconds).
+2017-06-29 17:55:15    INFO    Successfully deployed new configuration to environment.
+2017-06-29 17:55:15    INFO    Environment update completed successfully.
+2017-06-29 17:56:21    INFO    Environment health has transitioned from Info to Ok. Configuration update completed 15 seconds ago and took 76 seconds.
+2017-06-29 18:29:53    INFO    Environment update is starting.
+2017-06-29 18:29:59    INFO    Deploying new version to instance(s).
+2017-06-29 18:30:11    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 18:30:12    INFO    Environment update completed successfully.
+2017-06-29 18:30:20    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 5 seconds).
+2017-06-29 18:31:20    INFO    Environment health has transitioned from Info to Ok. Application update completed 30 seconds ago and took 14 seconds.
+2017-06-29 18:31:52    INFO    Environment update is starting.
+2017-06-29 18:31:59    INFO    Deploying new version to instance(s).
+2017-06-29 18:32:13    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 18:32:13    INFO    Environment update completed successfully.
+2017-06-29 18:32:20    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 12 seconds).
+2017-06-29 18:33:20    INFO    Environment health has transitioned from Info to Ok. Application update completed 38 seconds ago and took 14 seconds.
+2017-06-29 18:40:32    INFO    Environment update is starting.
+2017-06-29 18:40:37    INFO    Deploying new version to instance(s).
+2017-06-29 18:40:50    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 18:40:50    INFO    Environment update completed successfully.
+2017-06-29 18:41:20    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 10 seconds).
+2017-06-29 18:42:20    INFO    Environment health has transitioned from Info to Ok. Application update completed 67 seconds ago and took 13 seconds.
+2017-06-29 19:03:30    INFO    Environment update is starting.
+2017-06-29 19:03:39    INFO    Updating environment arera-test's configuration settings.
+2017-06-29 19:04:20    INFO    Environment health has transitioned from Ok to Info. Configuration update in progress (running for 8 seconds).
+2017-06-29 19:04:54    INFO    Successfully deployed new configuration to environment.
+2017-06-29 19:04:54    INFO    Environment update completed successfully.
+2017-06-29 19:05:14    INFO    Environment update is starting.
+2017-06-29 19:05:19    INFO    Deploying new version to instance(s).
+2017-06-29 19:05:32    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 19:05:32    INFO    Environment update completed successfully.
+2017-06-29 19:07:20    INFO    Environment health has transitioned from Info to Ok.
+2017-06-29 19:36:41    INFO    Environment update is starting.
+2017-06-29 19:37:19    INFO    Environment health has transitioned from Ok to Info. Application update in progress (running for 30 seconds).
+2017-06-29 19:37:27    INFO    Deploying new version to instance(s).
+2017-06-29 19:38:11    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 19:38:11    INFO    Environment update completed successfully.
+2017-06-29 19:39:19    INFO    Environment health has transitioned from Info to Ok. Application update completed 67 seconds ago and took 81 seconds.
+2017-06-29 19:45:28    INFO    requestEnvironmentInfo is starting.
+2017-06-29 19:45:30    INFO    [Instance: i-00a0c2c6be78eb2d6] Successfully finished tailing 4 log(s)
+2017-06-29 19:45:35    INFO    Pulled logs for environment instances.
+2017-06-29 19:50:19    INFO    Environment update is starting.
+2017-06-29 19:51:01    INFO    Deploying new version to instance(s).
+2017-06-29 19:51:19    INFO    Environment health has transitioned from Ok to Info. Application update in progress (running for 18 seconds).
+2017-06-29 19:51:45    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 19:51:45    INFO    Environment update completed successfully.
+2017-06-29 19:53:19    INFO    Environment health has transitioned from Info to Ok. Application update completed 87 seconds ago and took 80 seconds.
+2017-06-29 19:54:21    INFO    requestEnvironmentInfo is starting.
+2017-06-29 19:54:23    INFO    [Instance: i-00a0c2c6be78eb2d6] Successfully finished tailing 4 log(s)
+2017-06-29 19:54:28    INFO    Pulled logs for environment instances.
+2017-06-29 19:58:27    INFO    Environment update is starting.
+2017-06-29 19:58:32    INFO    Deploying new version to instance(s).
+2017-06-29 19:58:45    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 19:58:46    INFO    Environment update completed successfully.
+2017-06-29 19:59:19    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 7 seconds).
+2017-06-29 20:00:19    INFO    Environment health has transitioned from Info to Ok. Application update completed 82 seconds ago and took 14 seconds.
+2017-06-29 20:00:29    INFO    Deleted log fragments for this environment.
+2017-06-29 20:09:22    INFO    Deleted log fragments for this environment.
+2017-06-29 20:10:35    INFO    Environment update is starting.
+2017-06-29 20:10:48    INFO    Updating environment arera-test's configuration settings.
+2017-06-29 20:11:19    INFO    Environment health has transitioned from Ok to Info. Configuration update in progress (running for 26 seconds).
+2017-06-29 20:12:04    INFO    Successfully deployed new configuration to environment.
+2017-06-29 20:12:04    INFO    Environment update completed successfully.
+2017-06-29 20:13:19    INFO    Environment health has transitioned from Info to Ok. Configuration update completed 20 seconds ago and took 76 seconds.
+2017-06-29 21:03:13    INFO    Environment update is starting.
+2017-06-29 21:03:18    INFO    Deploying new version to instance(s).
+2017-06-29 21:03:31    INFO    New application version was deployed to running EC2 instances.
+2017-06-29 21:03:31    INFO    Environment update completed successfully.
+2017-06-29 21:04:18    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 10 seconds).
+2017-06-29 21:05:18    INFO    Environment health has transitioned from Info to Ok. Application update completed 66 seconds ago and took 13 seconds.
+2017-06-30 00:09:22    INFO    Environment update is starting.
+2017-06-30 00:09:27    INFO    Deploying new version to instance(s).
+2017-06-30 00:09:41    INFO    New application version was deployed to running EC2 instances.
+2017-06-30 00:09:41    INFO    Environment update completed successfully.
+2017-06-30 00:10:16    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 9 seconds).
+2017-06-30 00:11:16    INFO    Environment health has transitioned from Info to Ok. Application update completed 85 seconds ago and took 14 seconds.
+2017-06-30 00:16:59    INFO    Environment update is starting.
+2017-06-30 00:17:07    INFO    Updating environment arera-test's configuration settings.
+2017-06-30 00:17:16    INFO    Environment health has transitioned from Ok to Info. Configuration update in progress (running for 7 seconds).
+2017-06-30 00:18:21    INFO    Successfully deployed new configuration to environment.
+2017-06-30 00:18:21    INFO    Environment update completed successfully.
+2017-06-30 00:19:16    INFO    Environment health has transitioned from Info to Ok. Configuration update completed 51 seconds ago and took 75 seconds.
+2017-06-30 00:31:04    INFO    Environment update is starting.
+2017-06-30 00:31:09    INFO    Deploying new version to instance(s).
+2017-06-30 00:31:15    INFO    Environment health has transitioned from Ok to Info. Application update in progress on 1 instance. 0 out of 1 instance completed (running for 7 seconds).
+2017-06-30 00:31:22    INFO    New application version was deployed to running EC2 instances.
+2017-06-30 00:31:22    INFO    Environment update completed successfully.
+2017-06-30 00:32:15    INFO    Environment health has transitioned from Info to Ok. Application update completed 33 seconds ago and took 13 seconds.

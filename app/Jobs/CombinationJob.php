@@ -36,7 +36,7 @@ class CombinationJob extends Job
      */
     public function handle()
     {
-        (new Combination(
+        return (new Combination(
             $this->redisKey->combinations_key,
             $this->redisKey->transactions_key
         ))->zincrby($this->transaction->items, null, $this->transaction->id);
