@@ -65,10 +65,10 @@ class RedisKeyTransactionController extends Controller
     public function storeAsync(Request $request, $id)
     {
         $this->validate($request, [
-            'items.*'    => 'required',
+            'items.*' => 'required',
         ]);
 
-        $transaction = new Transaction($request->items);
+        $transaction = new Transaction(array_unique($request->items));
 
         $redisKey = RedisKey::find($id);
 
