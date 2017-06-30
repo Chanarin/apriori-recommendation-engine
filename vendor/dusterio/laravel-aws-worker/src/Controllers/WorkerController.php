@@ -67,7 +67,7 @@ class WorkerController extends LaravelController
     {
         //$this->validateHeaders($request);
         $body = $this->validateBody($request, $laravel);
-
+        
         $job = new AwsJob($laravel, $request->header('X-Aws-Sqsd-Queue'), [
             'Body' => $body,
             'MessageId' => $request->header('X-Aws-Sqsd-Msgid'),

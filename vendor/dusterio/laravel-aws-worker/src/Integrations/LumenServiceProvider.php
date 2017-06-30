@@ -31,8 +31,8 @@ class LumenServiceProvider extends ServiceProvider
      */
     protected function addRoutes()
     {
-        $this->app->post('/worker/schedule', '\Dusterio\AwsWorker\Controllers\WorkerController@schedule');
-        $this->app->post('/worker/queue', '\Dusterio\AwsWorker\Controllers\WorkerController@queue');
+        $this->app->post('/worker/schedule', 'Dusterio\AwsWorker\Controllers\WorkerController@schedule');
+        $this->app->post('/worker/queue', 'Dusterio\AwsWorker\Controllers\WorkerController@queue');
     }
 
     /**

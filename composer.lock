@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "76ca01344c0f644655f8b5425a5591b2",
+    "content-hash": "799a75f5bc81e7d976ef366cd221c33a",
     "packages": [
+        {
+            "name": "appzcoder/lumen-routes-list",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/appzcoder/lumen-route-list.git",
+                "reference": "8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/appzcoder/lumen-route-list/zipball/8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1",
+                "reference": "8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Appzcoder\\LumenRoutesList\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sohel Amin",
+                    "email": "sohelamincse@gmail.com",
+                    "homepage": "http://www.appzcoder.com"
+                }
+            ],
+            "description": "Lumen Routes List Show",
+            "keywords": [
+                "lumen",
+                "route list"
+            ],
+            "time": "2015-08-25T14:03:42+00:00"
+        },
         {
             "name": "aws/aws-sdk-php",
             "version": "3.30.4",
