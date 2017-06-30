@@ -129,7 +129,7 @@ class RedisKeyTransactionController extends Controller
     public function update(Request $request, int $id, int $transaction_id)
     {
         $this->validate($request, [
-            'items.*'    => 'required|integer',
+            'items.*'    => 'required',
         ]);
 
         $redisKey = RedisKey::find($id);
