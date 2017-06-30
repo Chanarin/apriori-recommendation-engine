@@ -497,7 +497,7 @@
 *   Set the lumen environment for AWS Elastic Beanstalk Deployment - done but needs tune up
 *   Try new and faster ways of getting recommendations with simple size 2 combinations
 *   Promote the API beta version for testing and collaboration
-*   Deploy a beta version of the API and try it out - you can hit the API at [http://arera-test.us-west-2.elasticbeanstalk.com/](http://arera-test.us-west-2.elasticbeanstalk.com)
+*   Deploy a beta version of the API and try it out.
 
 # Notice:
 
