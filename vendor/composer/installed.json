@@ -4858,17 +4858,17 @@
     },
     {
         "name": "aws/aws-sdk-php",
-        "version": "3.30.4",
-        "version_normalized": "3.30.4.0",
+        "version": "3.31.0",
+        "version_normalized": "3.31.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/aws/aws-sdk-php.git",
-            "reference": "69696dd3ec8c92170a4e7083ced867d01b8b3f55"
+            "reference": "21480f1ba2b7a329241f47d3042e9c9ad06e8e5e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/69696dd3ec8c92170a4e7083ced867d01b8b3f55",
-            "reference": "69696dd3ec8c92170a4e7083ced867d01b8b3f55",
+            "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/21480f1ba2b7a329241f47d3042e9c9ad06e8e5e",
+            "reference": "21480f1ba2b7a329241f47d3042e9c9ad06e8e5e",
             "shasum": ""
         },
         "require": {
@@ -4899,7 +4899,7 @@
             "ext-curl": "To send requests using cURL",
             "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages"
         },
-        "time": "2017-06-29T18:44:14+00:00",
+        "time": "2017-06-30T19:39:55+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4936,50 +4936,6 @@
             "glacier",
             "s3",
             "sdk"
-        ]
-    },
-    {
-        "name": "appzcoder/lumen-routes-list",
-        "version": "v1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/appzcoder/lumen-route-list.git",
-            "reference": "8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/appzcoder/lumen-route-list/zipball/8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1",
-            "reference": "8949506c3f6e75a6e4bbfd6e1f74aea58c2f82b1",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/support": "~5.0",
-            "php": ">=5.5.9"
-        },
-        "time": "2015-08-25T14:03:42+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Appzcoder\\LumenRoutesList\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Sohel Amin",
-                "email": "sohelamincse@gmail.com",
-                "homepage": "http://www.appzcoder.com"
-            }
-        ],
-        "description": "Lumen Routes List Show",
-        "keywords": [
-            "lumen",
-            "route list"
         ]
     }
 ]
