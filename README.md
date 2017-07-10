@@ -493,11 +493,11 @@
 
 # To Do List
 
-*   More unit testing - in progress
+*   More unit testing - in progress (almost complete)
 *   Set the lumen environment for AWS Elastic Beanstalk Deployment - done but needs tune up
-*   Try new and faster ways of getting recommendations with simple size 2 combinations
 *   Promote the API beta version for testing and collaboration
-*   Deploy a beta version of the API and try it out.
+*   Deploy a beta version of the API and try it out in real life
+*   Try to get more people involved and improve the API
 
 # Notice:
 
