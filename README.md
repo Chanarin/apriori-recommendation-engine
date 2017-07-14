@@ -498,6 +498,7 @@
 *   Promote the API beta version for testing and collaboration
 *   Deploy a beta version of the API and try it out in real life
 *   Try to get more people involved and improve the API
+*   Build a client and a Laravel package or local Laravel use
 
 # Notice:
 
