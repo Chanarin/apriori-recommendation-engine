@@ -39,7 +39,7 @@ class RedisKeyTransactionController extends Controller
     public function store(Request $request, $id)
     {
         $this->validate($request, [
-            'items.*' => 'required'
+            'items.*' => 'required',
         ]);
 
         $transaction = new Transaction(array_unique($request->items));
