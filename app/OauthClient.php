@@ -33,9 +33,9 @@ class OauthClient extends Model
      */
     public function setOauthClient(string $id, string $secret, string $name) : OauthClient
     {
-        $this->id     = $id;
+        $this->id = $id;
         $this->secret = $secret;
-        $this->name   = $name;
+        $this->name = $name;
 
         return $this;
     }
