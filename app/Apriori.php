@@ -41,8 +41,10 @@ class Apriori extends Association
     /**
      * Apriori constructor.
      *
-     * @param float $support
-     * @param float $confidence
+     * @param string $combinationKey
+     * @param string $transactionKey
+     * @param float  $support
+     * @param float  $confidence
      */
     public function __construct(string $combinationKey, string $transactionKey, float $support = 0.0, float $confidence = 0.0)
     {
