@@ -203,7 +203,7 @@ class Combination extends Association
      *
      * @return void
      */
-    public function zincrby(array $set, $size = null, $txId = null, $score = 1)
+    public function zincrby(array $set, int $size = null, $txId = null, int $score = 1)
     {
         self::validateInputs($set, $size, $score);
 
